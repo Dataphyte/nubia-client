@@ -1,0 +1,107 @@
+/** BLACK OPS ONE FONT  */
+@font-face {
+  font-family: 'Black Ops One';
+  src: url('../assets/fonts/black-ops-one/BlackOpsOne-Regular.ttf')
+    format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/** INTER FONTS 
+thin-100 | light-300 | regular-400 
+medium-500 | bols-700 | black-900 
+*/
+
+/** INTER THIN */
+@font-face {
+  font-family: 'inter';
+  src: url('../assets/fonts/inter/Inter-ThinBETA.ttf') format('truefont');
+  font-weight: 100;
+  font-style: normal;
+}
+
+/** INTER LIGHT */
+@font-face {
+  font-family: 'inter';
+  src: url('../assets/fonts/inter/Inter-LightBETA.ttf') format('truefont');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/** INTER REGULAR */
+@font-face {
+  font-family: 'inter';
+  src: url('../assets/fonts/inter/Inter-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/** INTER MEDIUM */
+@font-face {
+  font-family: 'inter';
+  src: url('../assets/fonts/inter/Inter-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+/** INTER BOLD */
+@font-face {
+  font-family: 'inter';
+  src: url('../assets/fonts/inter/Inter-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/** INTER BLACK */
+@font-face {
+  font-family: 'inter';
+  src: url('../assets/fonts/inter/Inter-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+/** MAGISTRAL FONTS 
+light-300 | normal-400 | medium-500
+bold-700 | black-900
+*/
+
+/** MAGISTRAL light */
+@font-face {
+  font-family: 'magistral';
+  src: url('../assets/fonts/magistral/Magistral-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/** MAGISTRAL NORMAL */
+@font-face {
+  font-family: 'magistral';
+  src: url('../assets/fonts/magistral/Magistral-Book.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/** MAGISTRAL MEDIUM */
+@font-face {
+  font-family: 'magistral';
+  src: url('../assets/fonts/magistral/Magistral-Book.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+/** MAGISTRAL BOLD */
+@font-face {
+  font-family: 'magistral';
+  src: url('../assets/fonts/magistral/Magistral-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/** MAGISTRAL EXTRABOLD */
+@font-face {
+  font-family: 'magistral';
+  src: url('../assets/fonts/magistral/Magistral-ExtraBold.ttf')
+    format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}

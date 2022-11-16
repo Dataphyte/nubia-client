@@ -6,7 +6,8 @@
       "@/svg/*": ["./src/assets/svg/*"],
       "@/icons/*": ["./src/assets/icons/*"],
       "@/images/*": ["./src/assets/images/*"],
-      "@/components/*": ["./src/components/*"]
+      "@/components/*": ["./src/components/*"],
+      "@/hooks,*": ["./src/hooks/*"]
     }
   },
 

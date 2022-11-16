@@ -51,18 +51,10 @@ html {
 
   /* Landing page components */
   .hero-link {
-    @apply text-text-dark hover:text-violet-dark hover:border-violet-main duration-150 ease-out overflow-hidden mix-blend-multiply text-sm py-3 px-12 rounded-md shadow hover:shadow-lg border border-text-dark mt-5 font-magistral font-normal relative after:w-full after:h-0 after:bg-green-main after:absolute after:left-0 after:bottom-0 after:bg-violet-main/5 hover:after:h-full after:duration-300 after:ease-out flex gap-3 items-center animate-bounce active:bg-violet-main active:text-white-off;
+    @apply text-text-dark hover:text-violet-dark hover:border-violet-main duration-150 ease-out overflow-hidden mix-blend-multiply text-sm py-3 px-10 rounded-md shadow hover:shadow-lg border border-text-dark mt-5 font-magistral font-normal relative after:w-full after:h-0 after:bg-green-main after:absolute after:left-0 after:bottom-0 after:bg-violet-main/5 hover:after:h-full after:duration-300 after:ease-out flex gap-3 items-center animate-bounce active:bg-violet-main active:text-white-off hover:pr-12 hover:pl-6 tracking-wider;
   }
 
   .feature__tag {
-    @apply py-2 px-3 rounded-lg shadow-md text-white-off font-magistral w-max;
+    @apply py-2 px-3 rounded-lg text-lg shadow-md text-white-off font-magistral w-max;
   }
-
-  /* .parallax {
-    @apply overflow-hidden flex flex-nowrap whitespace-nowrap m-0 font-black-ops w-full text-5xl text-text-light;
-  }
-
-  .parallax .scroller {
-    @apply font-bold uppercase flex flex-nowrap whitespace-nowrap;
-  } */
 }

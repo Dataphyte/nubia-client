@@ -6,6 +6,7 @@ const useScrolled = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    window.scrollY > 0 ? setScrolled(true) : setScrolled(false);
     const handleScroll = () =>
       window.scrollY > 0 ? setScrolled(true) : setScrolled(false);
 
@@ -16,9 +17,9 @@ const useScrolled = () => {
 
     //   clean-up
     return () => {
-      window.removeeven('scroll', handleScroll);
-      window.removeeven('load', handleScroll);
-      window.removeeven('focus', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('load', handleScroll);
+      window.removeEventListener('focus', handleScroll);
     };
   });
 

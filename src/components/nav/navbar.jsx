@@ -9,8 +9,10 @@ const navItems = [
 
 const Navbar = () => {
   return (
-    <nav className='w-full h-20 flex px-5 md:px-16 lg:px-32 items-center justify-between fixed top-0'>
-      <p className='font-black-ops text-xl lg:text-2xl'>NUBIA</p>
+    <nav className='w-full h-20 flex px-5 md:px-16 lg:px-32 items-center justify-between fixed top-0 z-50'>
+      <Link className='nav__logo-text' href='/'>
+        NUBIA
+      </Link>
 
       {/* ====== NAV LINKS */}
       <span className='flex  px-4 gap-8'>
@@ -24,7 +26,7 @@ const Navbar = () => {
       {/* ====== CALL TO ACTION */}
       <Link
         href='/'
-        className='py-2 px-5 text-sm rounded-lg shadow font-inter bg-violet-dark text-white-off duration-150 hover:shadow-lg'
+        className='py-2 px-5 text-sm rounded-lg shadow font-inter bg-violet-dark text-white-off duration-150 ease-out hover:shadow-lg'
       >
         View stories
       </Link>
@@ -32,4 +34,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

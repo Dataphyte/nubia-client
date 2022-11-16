@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-snap-type: y mandatory;
+}
+
+.parallax {
+  font-family: 'black ops one';
+  overflow: hidden;
+  letter-spacing: -2px;
+  line-height: 0.8;
+  margin: 0;
+  width: 100%;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.parallax .scroller {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 64px;
+  display: flex;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 @layer base {
   html,
   body {
@@ -14,11 +40,29 @@
 }
 
 @layer components {
+  /* Nav components */
+  .nav__logo-text {
+    @apply font-black-ops text-xl lg:text-2xl cursor-pointer;
+  }
+
   .nav-link {
     @apply text-text-light font-inter flex items-center justify-center transition-all duration-150 ease-out hover:text-text-dark relative after:absolute py-1 after:w-0 after:h-[1px] after:duration-500 after:ease-out after:bg-text-dark after:-left-[10%] hover:after:w-[120%] after:origin-center;
   }
 
+  /* Landing page components */
   .hero-link {
-    @apply text-text-dark hover:text-violet-dark hover:border-violet-main duration-150 ease-out animate-bounce overflow-hidden mix-blend-multiply text-sm py-2 px-10 rounded-md shadow hover:shadow-lg border border-text-dark mt-5 font-magistral font-normal relative after:w-full after:h-0 after:bg-green-main after:absolute after:left-0 after:bottom-0 after:bg-violet-main/5 hover:after:h-full after:duration-300 after:ease-out;
+    @apply text-text-dark hover:text-violet-dark hover:border-violet-main duration-150 ease-out overflow-hidden mix-blend-multiply text-sm py-3 px-12 rounded-md shadow hover:shadow-lg border border-text-dark mt-5 font-magistral font-normal relative after:w-full after:h-0 after:bg-green-main after:absolute after:left-0 after:bottom-0 after:bg-violet-main/5 hover:after:h-full after:duration-300 after:ease-out flex gap-3 items-center animate-bounce active:bg-violet-main active:text-white-off;
   }
+
+  .feature__tag {
+    @apply py-2 px-3 rounded-lg shadow-md text-white-off font-magistral w-max;
+  }
+
+  /* .parallax {
+    @apply overflow-hidden flex flex-nowrap whitespace-nowrap m-0 font-black-ops w-full text-5xl text-text-light;
+  }
+
+  .parallax .scroller {
+    @apply font-bold uppercase flex flex-nowrap whitespace-nowrap;
+  } */
 }

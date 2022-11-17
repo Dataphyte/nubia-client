@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Hero from '../../components/hero/home-hero';
 import { classNames } from 'src/utils/classnames';
 import ScrollTexts from '@/components/scroll-texts';
-import { heroPopCards } from '@/data/home-data';
+import { heroPopCards, stepCards } from '@/data/home-data';
 
 export default function Home() {
   return (
@@ -108,9 +108,9 @@ export default function Home() {
       {/* ====== ###### */}
       {/* ====== ###### */}
       {/* ====== METHOD SECTION */}
-      <section className='w-full py-32 flex items-center gap-16 justify-center'>
+      <section className='home__section-container'>
         {/* ====== text section */}
-        <div className='w-full max-w-lg flex flex-col gap-6'>
+        <div className='home__section-box'>
           <h3 className='text-text-dark font-magistral text-3xl font-bold'>
             Use&nbsp;
             <b className='uppercase font-black-ops text-violet-main'>NUBIA</b>
@@ -134,6 +134,53 @@ export default function Home() {
           transition={{ delay: 0.3 }}
           className='w-full max-w-lg h-300 bg-white-main rounded-xl shadow-xl'
         />
+      </section>
+
+      {/* ====== ###### */}
+      {/* ====== ###### */}
+      {/* ====== STEPS SECTION */}
+      <section className='home__section-container'>
+        <div className='flex flex-col w-full max-w-lg items-center justify-center gap-5'>
+          {stepCards.map((card, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, x: -200 }}
+              whileInView={{ opacity: 1, x: card.animation.enter.x }}
+              transition={{ delay: card.animation.delay }}
+              className={classNames(
+                'flex items-center justify-between px-8 rounded-xl bg-white-main w-[350px] py-1 border border-black-thin',
+                card.shadow
+              )}
+            >
+              <lord-icon
+                src={card.iconUrl}
+                trigger='loop'
+                colors='primary:#121331,secondary:#6d28d9'
+                style={{ width: '70px', height: '70px' }}
+              />
+              <p className='font-magistral text-text-thin text-lg'>
+                {card.text}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ====== text area */}
+        <div className='home__section-box'>
+          <h3 className='text-text-dark font-magistral text-3xl font-bold'>
+            Create Stories in&nbsp;
+            <b className='uppercase font-black-ops text-violet-main'>3 steps</b>
+          </h3>
+          <p className='font-magistral text-text-thin text-lg'>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam
+            excepturi velit expedita maxime dolorem quod nulla, officia,
+            molestiae tenetur culpa corporis? Corrupti deleniti magnam
+            consectetur tempora et sunt atque non. Natus vitae libero labore.
+            Temporibus, ex adipisci rerum eveniet, maxime eius nemo aliquid
+            repellendus dolore autem, magnam officia nostrum repellat explicabo
+            ducimus dicta praesentium quae laudantium sunt ullam ab dolorum!
+          </p>
+        </div>
       </section>
     </div>
   );

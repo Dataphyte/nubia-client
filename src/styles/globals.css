@@ -60,4 +60,12 @@ html {
   .feature__tag {
     @apply py-2 px-3 rounded-lg text-lg shadow-md text-white-off font-magistral w-max;
   }
+
+  .home__section-container {
+    @apply w-full py-28 flex items-center gap-16 justify-center;
+  }
+
+  .home__section-box {
+    @apply w-full max-w-lg flex flex-col gap-6 items-start;
+  }
 }

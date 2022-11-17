@@ -66,3 +66,24 @@ export const heroPopCards = [
     },
   },
 ];
+
+export const stepCards = [
+  {
+    iconUrl: 'https://cdn.lordicon.com/wrprwmwt.json',
+    text: 'Upload your Data',
+    shadow: 'shadow',
+    animation: { enter: { x: -20 }, delay: 0.3 },
+  },
+  {
+    iconUrl: 'https://cdn.lordicon.com/ubfkjuri.json',
+    text: 'Create your template',
+    shadow: 'shadow-2xl',
+    animation: { enter: { x: 30 }, delay: 0.4 },
+  },
+  {
+    iconUrl: 'https://cdn.lordicon.com/ufezupnm.json',
+    text: 'Let NUBIA do the writing',
+    shadow: 'shadow-lg',
+    animation: { enter: { x: -80 }, delay: 0.7 },
+  },
+];

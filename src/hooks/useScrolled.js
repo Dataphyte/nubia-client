@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 const useScrolled = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(true);
 
   useEffect(() => {
     window.scrollY > 0 ? setScrolled(true) : setScrolled(false);

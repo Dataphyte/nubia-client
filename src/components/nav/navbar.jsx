@@ -19,8 +19,8 @@ const Navbar = () => {
   return (
     <nav
       className={classNames(
-        'w-full h-20 flex px-5 md:px-16 items-center justify-between fixed top-0 z-50 duration-300 ease-out transition-all',
-        scrolled ? 'bg-white-main shadow-md lg:px-32' : 'lg:px-48'
+        'w-full flex px-5 md:px-16 items-center justify-between fixed top-0 z-50 duration-300 ease-out transition-all',
+        scrolled ? 'bg-white-main shadow-md lg:px-32 h-16' : ' h-20 lg:px-48'
       )}
     >
       <Link className='nav__logo-text' href='/'>
@@ -48,7 +48,7 @@ const Navbar = () => {
         href='/'
         className='py-2 px-5 text-sm rounded-lg shadow font-inter bg-violet-dark text-white-off duration-150 ease-out hover:shadow-lg'
       >
-        View stories
+        Add a story
       </Link>
     </nav>
   );

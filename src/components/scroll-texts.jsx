@@ -39,11 +39,8 @@ function ParallaxText({ children, baseVelocity = 100 }) {
      * This is what changes the direction of the scroll once we
      * switch scrolling directions.
      */
-    if (velocityFactor.get() < 0) {
-      directionFactor.current = -1;
-    } else if (velocityFactor.get() > 0) {
-      directionFactor.current = 1;
-    }
+    if (velocityFactor.get() < 0) directionFactor.current = -1;
+    else if (velocityFactor.get() > 0) directionFactor.current = 1;
 
     moveBy += directionFactor.current * moveBy * velocityFactor.get();
 
@@ -71,7 +68,7 @@ function ParallaxText({ children, baseVelocity = 100 }) {
 
 export default function App() {
   return (
-    <section className='w-full flex items-center justify-center pb-10 flex-col text-text-light'>
+    <section className='w-full flex items-center justify-center py-10 flex-col text-text-light'>
       <ParallaxText baseVelocity={-5}>&nbsp;JOURNALISM-AI &bull;</ParallaxText>
       <ParallaxText baseVelocity={5}> &nbsp;MEET NUBIA -</ParallaxText>
       <ParallaxText baseVelocity={-5}>

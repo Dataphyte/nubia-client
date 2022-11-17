@@ -21,7 +21,7 @@ const useScrolled = () => {
       window.removeEventListener('load', handleScroll);
       window.removeEventListener('focus', handleScroll);
     };
-  });
+  }, []);
 
   return scrolled;
 };

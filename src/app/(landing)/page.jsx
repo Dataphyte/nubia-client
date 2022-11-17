@@ -89,13 +89,14 @@ export default function Home() {
 
         {/* ====== content */}
         <p className='font-inter font-light text-text-thin max-w-xl mt-4 w-full'>
-          <b>Data</b>. It's everywhere. And it's ard to work with.
+          <b>Data</b>. It&apos;s everywhere. And it&apos;s ard to work with.
           <b className='font-black-ops'>NUBIA</b>
           &nbsp;makes it easy for you to use your data in a way that makes sense
-          and helps you understand what's really happening. You have a lot of
-          data. but it's not fitting into reports. You're ready to interpret it,
-          but it doesn't make sense on it's own. You cannot work with the data
-          in it's raw form because it doesn't fit into your report format.
+          and helps you understand what&apos;s really happening. You have a lot
+          of data. but it&apos;s not fitting into reports. You&apos;re ready to
+          interpret it, but it doesn&apos;t make sense on it&apos;s own. You
+          cannot work with the data in it&apos;s raw form because it
+          doesn&apos;t fit into your report format.
         </p>
       </section>
 
@@ -118,11 +119,11 @@ export default function Home() {
 
           {/* ====== content */}
           <p className='font-inter text-text-thin'>
-            <b className='font-black-ops'>NUBIA</b> is at it's first big break
-            and lerom ipsum wjidnjin wdijcvndijsc wijdcnijwc wijdcnw ciwdc wcidj
-            wi ciwdjcwdncij wdciwjcnw dciwdjc wdijc widcj wdciwjdciwdcj dwicjwd
-            cwidjc wdicjwd ciwdjc dwciwdjc wdic idwc dciwjd cidcj dciwjc widcjdc
-            widcj ciwdjc dcidjc wijc .
+            <b className='font-black-ops'>NUBIA</b> is at it&apos;s first big
+            break and lerom ipsum wjidnjin wdijcvndijsc wijdcnijwc wijdcnw ciwdc
+            wcidj wi ciwdjcwdncij wdciwjcnw dciwdjc wdijc widcj wdciwjdciwdcj
+            dwicjwd cwidjc wdicjwd ciwdjc dwciwdjc wdic idwc dciwjd cidcj dciwjc
+            widcjdc widcj ciwdjc dcidjc wijc .
           </p>
         </div>
 

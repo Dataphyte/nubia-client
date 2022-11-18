@@ -1,7 +1,7 @@
 import React from 'react';
 import { classNames } from 'src/utils/classnames';
 
-const MenuBars = ({ fill, sx }) => {
+const CloseIcon = ({ sx, fill }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -9,15 +9,15 @@ const MenuBars = ({ fill, sx }) => {
       viewBox='0 0 24 24'
       strokeWidth='1.5'
       stroke='currentColor'
-      className={(classNames('w-6 h-6'), sx)}
+      className={classNames('w-6 h-6', sx)}
     >
       <path
         stroke-linecap='round'
         stroke-linejoin='round'
-        d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12'
+        d='M6 18L18 6M6 6l12 12'
       />
     </svg>
   );
 };
 
-export default MenuBars;
+export default CloseIcon;

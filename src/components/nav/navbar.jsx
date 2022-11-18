@@ -68,7 +68,7 @@ const Navbar = () => {
 
       <div
         className={classNames(
-          'md:hidden h-screen flex flex-col items-center pt-72 absolute top-0 right-0 bg-[#1E293B] duration-300 ease-out',
+          'md:hidden h-screen flex flex-col items-center pt-44 absolute top-0 right-0 bg-[#1E293B] duration-300 ease-out',
           menuOpen ? 'w-full right-0 opacity-1' : 'w-0 -right-10 opacity-0'
         )}
       >

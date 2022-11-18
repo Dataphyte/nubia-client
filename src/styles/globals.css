@@ -48,8 +48,12 @@ html {
     @apply font-black-ops text-xl lg:text-2xl cursor-pointer;
   }
 
-  .nav-link {
+  .nav__link {
     @apply text-text-light font-inter flex items-center justify-center transition-all duration-150 ease-out hover:text-text-dark relative after:absolute py-1 after:w-0 after:h-[1px] after:duration-500 after:ease-out after:bg-text-dark after:-left-[10%] hover:after:w-[120%] after:origin-center;
+  }
+
+  .nav__link-mobile {
+    @apply text-white-off text-6xl;
   }
 
   /* Landing page components */

@@ -53,7 +53,7 @@ html {
   }
 
   .nav__link-mobile {
-    @apply text-white-off text-6xl;
+    @apply text-white-off text-4xl;
   }
 
   /* Landing page components */

@@ -49,9 +49,9 @@ export default function Home() {
       {/* ====== ###### */}
       {/* ====== ###### */}
       {/* ====== FEATURE SECTION */}
-      <section className='flex w-full h-max flex-col items-center gap-6 py-16 text-center'>
+      <section className='flex w-full h-max flex-col items-center gap-6 py-16 px-5 text-center'>
         {/* ====== header */}
-        <h3 className='font-magistral text-3xl text-text-dark font-bold'>
+        <h3 className='font-magistral text-2xl md:text-3xl text-text-dark font-bold'>
           Boost your accuracy in
         </h3>
 
@@ -75,7 +75,7 @@ export default function Home() {
             Data analysis
           </motion.p>
 
-          <p className='mx-2 text-xl font-medium font-magistral'>&</p>
+          <p className='md:mx-2 text-xl font-medium font-magistral'>&</p>
 
           <motion.p
             initial={{ opacity: 0, x: 50 }}
@@ -88,7 +88,7 @@ export default function Home() {
         </span>
 
         {/* ====== content */}
-        <p className='font-inter font-light text-text-thin max-w-xl mt-4 w-full'>
+        <p className='font-inter font-light text-text-thin max-w-xl mt-4 w-full text-sm md:text-lg'>
           <b>Data</b>. It&apos;s everywhere. And it&apos;s ard to work with.
           <b className='font-black-ops'>NUBIA</b>
           &nbsp;makes it easy for you to use your data in a way that makes sense
@@ -111,7 +111,7 @@ export default function Home() {
       <section className='home__section-container'>
         {/* ====== text section */}
         <div className='home__section-box'>
-          <h3 className='text-text-dark font-magistral text-3xl font-bold'>
+          <h3 className='text-text-dark font-magistral text-3xl font-bold w-max'>
             Use&nbsp;
             <b className='uppercase font-black-ops text-violet-main'>NUBIA</b>
             your way!

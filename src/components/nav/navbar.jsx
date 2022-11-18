@@ -116,10 +116,10 @@ const Navbar = () => {
                 stiffness: 700,
               }}
               className='flex w-max h-max'
+              key={index}
             >
               <Link
                 href={item.href}
-                key={index}
                 className={classNames(
                   'nav__link-mobile',
                   pathname.indexOf(item.href) !== -1 && 'text-violet-main'

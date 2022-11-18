@@ -6,7 +6,7 @@
 @layer base {
   html,
   body {
-    @apply p-0 m-0 font-magistral;
+    @apply p-0 m-0 font-magistral overflow-x-hidden;
   }
 
   * {

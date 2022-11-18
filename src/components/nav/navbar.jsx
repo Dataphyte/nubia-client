@@ -7,6 +7,7 @@ import MenuBars from '@/icons/menu-bars';
 import { usePathname } from 'next/navigation';
 import useScrolled from '@/hooks,useScrolled';
 import { classNames } from 'src/utils/classnames';
+import CloseIcon from '@/icons/close-icon';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -66,12 +67,28 @@ const Navbar = () => {
         <MenuBars sx='w-10 h-8' />
       </span>
 
+      {/* ====== MOBILE MENU BOX */}
       <div
         className={classNames(
           'md:hidden h-screen flex flex-col items-center pt-44 absolute top-0 right-0 bg-[#1E293B] duration-300 ease-out',
           menuOpen ? 'w-full right-0 opacity-1' : 'w-0 -right-10 opacity-0'
         )}
       >
+        {/* ====== close button */}
+        <motion.span
+          initial={{ opacity: 0, rotate: '-90deg', scale: 0.2 }}
+          whileInView={{ opacity: 1, rotate: '0deg', scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+          className={classNames(
+            menuOpen
+              ? 'md:hidden w-14 h-12 p-2 border border-violet-light cursor-pointer rounded-md shadow-lg  absolute right-10 top-6'
+              : 'hidden'
+          )}
+          onClick={handleMenu}
+        >
+          <CloseIcon sx='w-10 h-8 text-violet-light' />
+        </motion.span>
+
         {/* ====== NAV LINKS */}
         <motion.span
           initial={{ opacity: 0, width: 0, border: 'none' }}
@@ -92,7 +109,7 @@ const Navbar = () => {
                 top: `${(index + 1) * 120}px`,
               }}
               transition={{
-                delay: (index + 1) * 0.4,
+                delay: (index + 1) * 0.3,
                 duration: 0.15,
                 type: 'spring',
                 damping: 20,

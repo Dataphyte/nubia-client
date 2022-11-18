@@ -88,7 +88,7 @@ export default function Home() {
         </span>
 
         {/* ====== content */}
-        <p className='font-inter font-light text-text-thin max-w-xl mt-4 w-full text-sm md:text-lg'>
+        <p className='font-inter font-light text-text-thin max-w-xl mt-4 w-full text-sm md:text-lg px-5'>
           <b>Data</b>. It&apos;s everywhere. And it&apos;s ard to work with.
           <b className='font-black-ops'>NUBIA</b>
           &nbsp;makes it easy for you to use your data in a way that makes sense
@@ -139,7 +139,7 @@ export default function Home() {
       {/* ====== ###### */}
       {/* ====== ###### */}
       {/* ====== STEPS SECTION */}
-      <section className='home__section-container'>
+      <section className='home__section-container pt-0'>
         <div className='flex flex-col w-full max-w-lg items-center justify-center gap-5'>
           {stepCards.map((card, idx) => (
             <motion.div
@@ -148,7 +148,7 @@ export default function Home() {
               whileInView={{ opacity: 1, x: card.animation.enter.x }}
               transition={{ delay: card.animation.delay }}
               className={classNames(
-                'flex items-center justify-between px-8 rounded-xl bg-white-main w-[350px] py-1 border border-black-thin',
+                'flex items-center justify-between px-8 rounded-xl bg-white-main w-[250px] lg:w-[350px] py-1 border border-black-thin',
                 card.shadow
               )}
             >

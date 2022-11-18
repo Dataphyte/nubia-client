@@ -66,10 +66,10 @@ html {
   }
 
   .home__section-container {
-    @apply w-full py-28 flex-col lg:flex-row px-5 text-center md:text-left items-center gap-16 justify-center;
+    @apply w-full py-28 flex-col flex lg:flex-row px-5 text-center md:text-left items-center gap-16 justify-center;
   }
 
   .home__section-box {
-    @apply w-full max-w-lg flex flex-col gap-6 items-center md:items-start;
+    @apply w-full max-w-lg flex flex-col gap-6 items-center md:items-start  lg:text-left px-5;
   }
 }

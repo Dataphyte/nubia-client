@@ -61,7 +61,7 @@ const Navbar = () => {
 
       {/* ====== MOBILE MENU */}
       <span
-        className='md:hidden w-10 h-8 p-2 border border-violet-main cursor-pointer rounded-md shadow-lg'
+        className='md:hidden w-10 h-8 flex items-center justify-center border border-violet-main cursor-pointer rounded-md shadow-lg'
         onClick={handleMenu}
       >
         <MenuBars sx='w-8 h-6' />
@@ -81,7 +81,7 @@ const Navbar = () => {
           transition={{ duration: 0.3, delay: 0.4 }}
           className={classNames(
             menuOpen
-              ? 'md:hidden w-10 h-8 p-2 border border-violet-light cursor-pointer rounded-md shadow-lg  absolute right-10 top-6'
+              ? 'md:hidden w-10 h-8 flex items-center justify-center border border-violet-light cursor-pointer rounded-md shadow-lg  absolute right-10 top-6'
               : 'hidden'
           )}
           onClick={handleMenu}
@@ -124,6 +124,7 @@ const Navbar = () => {
                   'nav__link-mobile',
                   pathname.indexOf(item.href) !== -1 && 'text-violet-main'
                 )}
+                onClick={handleMenu}
               >
                 {item.label}
               </Link>

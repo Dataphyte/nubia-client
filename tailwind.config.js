@@ -26,6 +26,7 @@ module.exports = {
       },
       black: {
         main: '#000000',
+        bg: '#292929',
         light: '#71717A',
         thin: '#E4E4E7',
       },

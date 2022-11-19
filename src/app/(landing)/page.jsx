@@ -8,7 +8,7 @@ import { heroPopCards, stepCards } from '@/data/home-data';
 
 export default function Home() {
   return (
-    <div className='min-h-screen w-full flex items-center justify-start flex-col bg-white-off'>
+    <div className='page__container'>
       <Hero />
 
       {/* ====== ###### */}
@@ -51,9 +51,7 @@ export default function Home() {
       {/* ====== FEATURE SECTION */}
       <section className='flex w-full h-max flex-col items-center gap-6 py-16 px-5 text-center'>
         {/* ====== header */}
-        <h3 className='font-magistral text-2xl md:text-3xl text-text-dark font-bold'>
-          Boost your accuracy in
-        </h3>
+        <h3 className='home__section-heading'>Boost your accuracy in</h3>
 
         {/* ====== tags */}
         <span className='flex w-full items-center justify-center gap-2'>
@@ -88,7 +86,7 @@ export default function Home() {
         </span>
 
         {/* ====== content */}
-        <p className='font-inter font-light text-text-thin max-w-xl mt-4 w-full text-sm md:text-lg px-5'>
+        <p className='font-inter font-light text-text-thin max-w-2xl mt-4 w-full text-base lg:text-lg  px-5'>
           <b>Data</b>. It&apos;s everywhere. And it&apos;s ard to work with.
           <b className='font-black-ops'>NUBIA</b>
           &nbsp;makes it easy for you to use your data in a way that makes sense
@@ -111,14 +109,14 @@ export default function Home() {
       <section className='home__section-container'>
         {/* ====== text section */}
         <div className='home__section-box'>
-          <h3 className='text-text-dark font-magistral text-3xl font-bold w-max'>
+          <h3 className='home__section-heading'>
             Use&nbsp;
             <b className='uppercase font-black-ops text-violet-main'>NUBIA</b>
             your way!
           </h3>
 
           {/* ====== content */}
-          <p className='font-inter text-text-thin'>
+          <p className='font-inter text-text-thin text-base xl:text-lg'>
             <b className='font-black-ops'>NUBIA</b> is at it&apos;s first big
             break and lerom ipsum wjidnjin wdijcvndijsc wijdcnijwc wijdcnw ciwdc
             wcidj wi ciwdjcwdncij wdciwjcnw dciwdjc wdijc widcj wdciwjdciwdcj
@@ -139,8 +137,8 @@ export default function Home() {
       {/* ====== ###### */}
       {/* ====== ###### */}
       {/* ====== STEPS SECTION */}
-      <section className='home__section-container pt-0'>
-        <div className='flex flex-col w-full max-w-lg items-center justify-center gap-5'>
+      <section className='home__section-container flex-col-reverse lg:flex-row pt-0'>
+        <div className='flex flex-col w-full ml-14 lg:m-0 max-w-lg items-center justify-center gap-5'>
           {stepCards.map((card, idx) => (
             <motion.div
               key={idx}
@@ -167,11 +165,11 @@ export default function Home() {
 
         {/* ====== text area */}
         <div className='home__section-box'>
-          <h3 className='text-text-dark font-magistral text-3xl font-bold'>
+          <h3 className='home__section-heading'>
             Create Stories in&nbsp;
             <b className='uppercase font-black-ops text-violet-main'>3 steps</b>
           </h3>
-          <p className='font-magistral text-text-thin text-lg'>
+          <p className='font-magistral text-text-thin text-base lg:text-lg'>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam
             excepturi velit expedita maxime dolorem quod nulla, officia,
             molestiae tenetur culpa corporis? Corrupti deleniti magnam

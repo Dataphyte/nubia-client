@@ -163,7 +163,7 @@ const Page = () => {
             BUT <b className='text-violet-main'>WHY?</b>
           </h3>
           <p className='text-left'>
-            The vast size of Africa, its thousands of localities, are
+            The vast size of Africa, it&apos;s thousands of localities, are
             under-reported and sparsely contextualised leading to many unknown
             and unreported grassroots economies, politics and natural resources.
           </p>

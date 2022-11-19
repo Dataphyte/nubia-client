@@ -123,7 +123,7 @@ export default function Home() {
             create templates, add services and load data or upload locally and
             even save to a database or cloud service, always remember to include
             the class names in the response Just create a route and do it your
-            own way! It's that simple.
+            own way! It&apos;s that simple.
           </p>
         </div>
 

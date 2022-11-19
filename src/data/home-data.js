@@ -78,12 +78,12 @@ export const stepCards = [
     iconUrl: 'https://cdn.lordicon.com/ubfkjuri.json',
     text: 'Create your template',
     shadow: 'shadow-2xl',
-    animation: { enter: { x: 30 }, delay: 0.4 },
+    animation: { enter: { x: 30 }, delay: 0.7 },
   },
   {
     iconUrl: 'https://cdn.lordicon.com/ufezupnm.json',
     text: 'Let NUBIA do the writing',
     shadow: 'shadow-lg',
-    animation: { enter: { x: -80 }, delay: 0.7 },
+    animation: { enter: { x: -80 }, delay: 0.4 },
   },
 ];

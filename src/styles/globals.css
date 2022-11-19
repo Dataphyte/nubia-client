@@ -6,7 +6,7 @@
 @layer base {
   html,
   body {
-    @apply p-0 m-0 font-magistral;
+    @apply p-0 m-0 font-magistral overflow-x-hidden;
   }
 
   * {
@@ -17,28 +17,6 @@
 /* ------------------------------------------------ */
 html {
   scroll-snap-type: y mandatory;
-}
-
-.parallax {
-  font-family: 'black ops one';
-  overflow: hidden;
-  letter-spacing: -2px;
-  line-height: 0.8;
-  width: 100%;
-  white-space: nowrap;
-  display: flex;
-  flex-wrap: nowrap;
-  transform: rotate(-2deg);
-}
-
-.parallax .scroller {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 64px;
-  display: flex;
-  white-space: nowrap;
-  display: flex;
-  flex-wrap: nowrap;
 }
 
 /* ------------------------------------------------ */

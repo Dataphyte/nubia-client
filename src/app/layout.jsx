@@ -11,6 +11,7 @@ export default function RootLayout({ children }) {
 
       <body className='bg-white-off'>
         <Script src='https://cdn.lordicon.com/qjzruarw.js' />
+
         {children}
       </body>
     </html>

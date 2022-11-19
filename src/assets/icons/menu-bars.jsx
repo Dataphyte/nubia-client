@@ -12,8 +12,8 @@ const MenuBars = ({ fill, sx }) => {
       className={(classNames('w-6 h-6'), sx)}
     >
       <path
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeLinecap='round'
+        strokeLineJoin='round'
         d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12'
       />
     </svg>

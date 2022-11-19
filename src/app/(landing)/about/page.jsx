@@ -21,7 +21,7 @@ const Page = () => {
       {/* ====== ########## */}
       {/* ====== ########## */}
       {/* ====== ABOUT SECTION */}
-      <div className='relative bg-white py-16 sm:py-24'>
+      <div className='relative bg-white py-5 sm:py-16'>
         <div className='lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:items-start lg:gap-24 lg:px-8'>
           <div className='relative sm:py-16 lg:py-0'>
             <div
@@ -73,31 +73,8 @@ const Page = () => {
                 <div className='absolute inset-0 bg-violet-light mix-blend-multiply' />
                 <div className='absolute inset-0 bg-gradient-to-t from-violet-dark opacity-90' />
                 <div className='relative px-8'>
-                  <div>
-                    <img
-                      className='h-12'
-                      src='https://tailwindui.com/img/logos/workcation.svg?color=white'
-                      alt='Workcation'
-                    />
-                  </div>
-                  <blockquote className='mt-8'>
-                    <div className='relative text-lg font-medium text-white md:flex-grow'>
-                      <svg
-                        className='absolute top-0 left-0 h-8 w-8 -translate-x-3 -translate-y-2 transform text-indigo-400'
-                        fill='currentColor'
-                        viewBox='0 0 32 32'
-                        aria-hidden='true'
-                      >
-                        <path d='M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z' />
-                      </svg>
-                      <p className='relative text-white-off font-inter font-light'>
-                        Tincidunt integer commodo, cursus etiam aliquam neque,
-                        et. Consectetur pretium in volutpat, diam. Montes, magna
-                        cursus nulla feugiat dignissim id lobortis amet.
-                      </p>
-                    </div>
-
-                    <footer className='mt-4'>
+                  <blockquote className='mt-8 h-32 relative'>
+                    <footer className='mt-4 absolute bottom-0'>
                       <p className='text-base font-semibold text-violet-light'>
                         Joshua Olufemi, CEO at Dataphyte
                       </p>
@@ -113,16 +90,16 @@ const Page = () => {
             <div className='pt-12 sm:pt-16 lg:pt-20'>
               <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl '>
                 On a mission to <b className='text-violet-dark'>Empower</b>
-                &nbsp;teams
+                &nbsp;News Rooms
               </h2>
               <div className='mt-6 space-y-6 text-text-thin text-sm md:text-base lg:text-lg font-inter'>
                 <p className='text-lg'>
                   <b className='font-black-ops text-text-light'>NUBIA</b>, a
-                  project conceived at the Journalism-AI 2022 fellowship, is an
-                  open-source tool which was initially aimed at being an
-                  AI-powered news distribution platform that transforms web
-                  camera, geospatial and socioeconomic data into data-driven
-                  alerts and reports.
+                  project conceived at the Journalism-AI 2022 fellowship by
+                  Datahpyte Nigeria and Fedrelandsvennen, is an open-source tool
+                  which was initially aimed at being an AI-powered news
+                  distribution platform that transforms web camera, geospatial
+                  and socioeconomic data into data-driven alerts and reports.
                 </p>
                 <p className='text-base leading-7'>
                   Nubia algorithmically generates news. It is designed to help
@@ -176,8 +153,59 @@ const Page = () => {
           </div>
         </div>
       </div>
+
+      {/* ====== ########### */}
+      {/* ====== ########### */}
+      {/* ====== WHY SECTION */}
+      <section className='home__section-container'>
+        <div className='home__section-box'>
+          <h3 className='home__section-heading text-left'>
+            BUT <b className='text-violet-main'>WHY?</b>
+          </h3>
+          <p className='text-left'>
+            The vast size of Africa, its thousands of localities, are
+            under-reported and sparsely contextualised leading to many unknown
+            and unreported grassroots economies, politics and natural resources.
+          </p>
+          <p className='text-left'>
+            Country level and international data on climate change, health,
+            education, agriculture, poverty and many more are produced
+            periodically across Africa. Yet, little amount of the data is
+            reproduced as insights, analyses or development news
+          </p>
+          <p className='text-left'>
+            Over 40 million African diaspora population rely heavily on
+            international news platforms to understand their home countries
+            which oftentimes lack in-depth analysis and local context which are
+            often locked in data silos and unprocessed data sources such as
+            satellite imagery and geospatial research
+          </p>
+        </div>
+
+        <div className='w-full max-w-lg h-400 flex items-center justify-center px-0 md:px-10 py-10 relative'>
+          <lord-icon
+            src='https://cdn.lordicon.com/fazmtdnb.json'
+            trigger='loop'
+            colors='primary:#121331,secondary:#6d28d9'
+            class='w-32 h-32 absolute z-10 -left-10 md:left-12 lg:top-5 hover:animate-spin cursor-pointer'
+          />
+          <span className='bg-white-main w-80 h-80 shadow-lg hover:shadow-2xl rounded-full mt-16 ml-0 md:ml-16 border border-black-thin relative flex items-center justify-center duration-300 ease-out cursor-pointer'>
+            <lord-icon
+              src='https://cdn.lordicon.com/utzmfilx.json'
+              trigger='hover'
+              colors='primary:#121331,secondary:#6d28d9'
+              class='w-full h-full'
+            />
+          </span>
+        </div>
+      </section>
     </div>
   );
 };
+// https://cdn.lordicon.com/utzmfilx.json
 
 export default Page;
+
+/*
+https://images.unsplash.com/photo-1584931423298-c576fda54bd2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80
+*/

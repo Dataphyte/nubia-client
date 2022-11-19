@@ -5,7 +5,7 @@
       "@/styles/*": ["./src/styles/*"],
       "@/svg/*": ["./src/assets/svg/*"],
       "@/icons/*": ["./src/assets/icons/*"],
-      "@/images/*": ["./src/assets/images/*"],
+      "@/assets/*": ["./src/assets/*"],
       "@/components/*": ["./src/components/*"],
       "@/hooks,*": ["./src/hooks/*"],
       "@/data/*": ["./src/data/*"]

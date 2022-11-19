@@ -9,7 +9,7 @@ const Hero = () => {
         ABOUT NUBIA
       </h3>
       <p className='w-3/4 text-sm md:text-lg text-text-thin font-inter font-light -mt-2 max-w-3xl '>
-        With the world inundated with complex data, Nubia's AI tool is an
+        With the world inundated with complex data, Nubia&apos;s AI tool is an
         invaluable resource for a newsroom of tomorrow that needs to understand
         data.
       </p>

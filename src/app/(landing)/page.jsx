@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Hero from '../../components/hero/home-hero';
 import { classNames } from 'src/utils/classnames';
@@ -118,10 +119,11 @@ export default function Home() {
           {/* ====== content */}
           <p className='font-inter text-text-thin text-base xl:text-lg'>
             <b className='font-black-ops'>NUBIA</b> is at it&apos;s first big
-            break and lerom ipsum wjidnjin wdijcvndijsc wijdcnijwc wijdcnw ciwdc
-            wcidj wi ciwdjcwdncij wdciwjcnw dciwdjc wdijc widcj wdciwjdciwdcj
-            dwicjwd cwidjc wdicjwd ciwdjc dwciwdjc wdic idwc dciwjd cidcj dciwjc
-            widcjdc widcj ciwdjc dcidjc wijc .
+            break and is open to contributions and suggestons. For now, you can
+            create templates, add services and load data or upload locally and
+            even save to a database or cloud service, always remember to include
+            the class names in the response Just create a route and do it your
+            own way! It&apos;s that simple.
           </p>
         </div>
 
@@ -130,8 +132,14 @@ export default function Home() {
           initial={{ opacity: 0, x: 300 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
-          className='w-full max-w-lg h-300 bg-white-main rounded-xl shadow-xl'
-        />
+          className='w-full max-w-lg h-300 bg-white-main rounded-xl shadow-xl relative overflow-hidden border border-black-thin'
+        >
+          <Image
+            src='https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bmV3c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60'
+            fill
+            className='object-cover object-center'
+          />
+        </motion.div>
       </section>
 
       {/* ====== ###### */}

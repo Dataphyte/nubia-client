@@ -62,4 +62,16 @@ html {
   .hero__container {
     @apply flex flex-col gap-3 w-full items-center text-center pt-32 pb-14;
   }
+
+  /* PARALLAX TEXT */
+  .parallax {
+    @apply font-black-ops flex overflow-hidden flex-nowrap w-full whitespace-nowrap -rotate-2;
+    letter-spacing: -2px;
+    line-height: 0.8;
+  }
+
+  .parallax .scroller {
+    @apply font-bold uppercase flex whitespace-nowrap flex-nowrap;
+    font-size: 64px;
+  }
 }

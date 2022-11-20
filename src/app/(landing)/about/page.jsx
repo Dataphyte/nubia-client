@@ -90,7 +90,7 @@ const Page = () => {
             <div className='pt-12 sm:pt-16 lg:pt-20'>
               <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl '>
                 On a mission to <b className='text-violet-dark'>Empower</b>
-                &nbsp;News Rooms
+                &nbsp;Newsrooms
               </h2>
               <div className='mt-6 space-y-6 text-text-thin text-sm md:text-base lg:text-lg font-inter'>
                 <p className='text-lg'>

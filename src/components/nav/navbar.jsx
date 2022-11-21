@@ -53,7 +53,7 @@ const Navbar = () => {
 
       {/* ====== CALL TO ACTION */}
       <Link
-        href='/'
+        href='https://github.com/Dataphyte/Nubia-server'
         className='hidden md:block py-2 px-5 text-sm rounded-lg shadow font-inter bg-violet-dark text-white-off duration-150 ease-out hover:shadow-lg'
       >
         Add a story
@@ -131,6 +131,13 @@ const Navbar = () => {
             </motion.span>
           ))}
         </motion.span>
+
+        <Link
+          href='https://github.com/Dataphyte/Nubia-server'
+          className='text-white-off absolute bottom-14 font-inter font-medium bg-violet-main w-[90%] flex items-center py-3 shadow-lg rounded-lg justify-center'
+        >
+          Add a story
+        </Link>
       </div>
     </nav>
   );

@@ -22,7 +22,7 @@ html {
 /* ------------------------------------------------ */
 @layer components {
   .page__container {
-    @apply min-h-screen w-full flex items-center justify-start flex-col bg-white-off;
+    @apply min-h-screen w-full flex items-center justify-start flex-col bg-white-off relative;
   }
   /* Nav components */
   .nav__logo-text {
@@ -47,18 +47,18 @@ html {
   }
 
   .home__section-container {
-    @apply w-full py-28 flex-col flex lg:flex-row px-5 text-center md:text-left items-center gap-16 justify-center;
+    @apply w-full py-28 flex-col flex lg:flex-row px-3 text-center md:text-left items-center gap-16 justify-center;
   }
 
   .home__section-box {
-    @apply w-full max-w-lg flex flex-col gap-6 items-center md:items-start  lg:text-left px-5;
+    @apply w-full max-w-lg flex flex-col gap-6 items-center md:items-start  lg:text-left;
   }
 
   .home__section-heading {
     @apply text-text-dark font-magistral text-3xl xl:text-4xl font-bold w-max;
   }
 
-  /* HERO COMONENTS */
+  /* HERO COMPONENTS */
   .hero__container {
     @apply flex flex-col gap-3 w-full items-center text-center pt-32 pb-14;
   }

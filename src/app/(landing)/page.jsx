@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import Hero from '../../components/hero/home-hero';
+import Hero from '../../components/hero';
 import { classNames } from 'src/utils/classnames';
 import ScrollTexts from '@/components/scroll-texts';
 import { heroPopCards, stepCards } from '@/data/home-data';
@@ -10,7 +10,12 @@ import { heroPopCards, stepCards } from '@/data/home-data';
 export default function Home() {
   return (
     <div className='page__container'>
-      <Hero />
+      <Hero
+        heading='MEET NUBIA'
+        subHeading=' An open-source AI tool that draws insight from your data and makes it
+        into readable and relatable stories. Data driven stories for the modern
+        Journalist.'
+      />
 
       {/* ====== ###### */}
       {/* ====== ###### */}
@@ -53,7 +58,6 @@ export default function Home() {
       <section className='flex w-full h-max flex-col items-center gap-6 py-16 px-5 text-center'>
         {/* ====== header */}
         <h3 className='home__section-heading'>Boost your accuracy in</h3>
-
         {/* ====== tags */}
         <span className='flex w-full items-center justify-center gap-2'>
           <motion.p
@@ -88,14 +92,12 @@ export default function Home() {
 
         {/* ====== content */}
         <p className='font-inter font-light text-text-thin max-w-2xl mt-4 w-full text-base lg:text-lg  px-5'>
-          <b>Data</b>. It&apos;s everywhere. And it&apos;s ard to work with.
-          <b className='font-black-ops'>NUBIA</b>
-          &nbsp;makes it easy for you to use your data in a way that makes sense
-          and helps you understand what&apos;s really happening. You have a lot
-          of data. but it&apos;s not fitting into reports. You&apos;re ready to
-          interpret it, but it doesn&apos;t make sense on it&apos;s own. You
-          cannot work with the data in it&apos;s raw form because it
-          doesn&apos;t fit into your report format.
+          <b className='font-black-ops'>Data</b> is everywhere but difficult for
+          you to turn it into report or you have the dataset but find it hard to
+          make sense of it on your own.&nbsp;
+          <b className='font-black-ops'>NUBIA</b>&nbsp; makes it easy for you to
+          understand what&apos;s really happening in your data and to help you
+          generate tons of stories within it.
         </p>
       </section>
 
@@ -110,14 +112,14 @@ export default function Home() {
       <section className='home__section-container'>
         {/* ====== text section */}
         <div className='home__section-box'>
-          <h3 className='home__section-heading'>
+          <h3 className='home__section-heading text-left'>
             Use&nbsp;
             <b className='uppercase font-black-ops text-violet-main'>NUBIA</b>
             your way!
           </h3>
 
           {/* ====== content */}
-          <p className='font-inter text-text-thin text-base xl:text-lg'>
+          <p className='font-inter text-text-thin text-base xl:text-lg text-left'>
             <b className='font-black-ops'>NUBIA</b> is at it&apos;s first big
             break and is open to contributions and suggestons. For now, you can
             create templates, add services and load data or upload locally and
@@ -173,18 +175,22 @@ export default function Home() {
 
         {/* ====== text area */}
         <div className='home__section-box'>
-          <h3 className='home__section-heading'>
+          <h3 className='home__section-heading text-left'>
             Create Stories in&nbsp;
             <b className='uppercase font-black-ops text-violet-main'>3 steps</b>
           </h3>
-          <p className='font-magistral text-text-thin text-base lg:text-lg'>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam
-            excepturi velit expedita maxime dolorem quod nulla, officia,
-            molestiae tenetur culpa corporis? Corrupti deleniti magnam
-            consectetur tempora et sunt atque non. Natus vitae libero labore.
-            Temporibus, ex adipisci rerum eveniet, maxime eius nemo aliquid
-            repellendus dolore autem, magnam officia nostrum repellat explicabo
-            ducimus dicta praesentium quae laudantium sunt ullam ab dolorum!
+          <p className='font-magistral text-text-thin text-base lg:text-lg text-left'>
+            At the moment, there is no interface to directly add data and
+            templates so, these would have to be added directly to the github
+            repo and exposed as a route to be consumed by a client. The
+            contributor can pull the repo, make edits and open a Pull Request
+            (PR) to this effect. Please do note that every story added at this
+            point is public and can be viewed by everyone. We are working
+            towards creating a user based interface where users can make
+            templates and add data forn their stories through a Graphic User
+            Interface (GUI). Users would be abe to make their stories public or
+            private as they wish. SInce this project is open-source,
+            contributions towards this cause is also accepted.
           </p>
         </div>
       </section>

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Hero from '@/components/hero/about-hero';
+import Hero from '@/components/hero';
 import AboutImg from '../../../assets/images/2022-Fellows-jai.webp';
 
 const stats = [
@@ -13,10 +13,15 @@ const stats = [
   { label: 'Cost', value: 'Free' },
 ];
 
-const Page = () => {
+const About = () => {
   return (
     <div className='page__container'>
-      <Hero />
+      <Hero
+        heading='  ABOUT NUBIA'
+        subHeading=" With the world inundated with complex data, Nubia's AI tool is an
+        invaluable resource for a newsroom of tomorrow that needs to understand
+        data."
+      />
 
       {/* ====== ########## */}
       {/* ====== ########## */}
@@ -110,10 +115,10 @@ const Page = () => {
                   at large.
                 </p>
                 <p className='text-base leading-7'>
-                  Nubia helps you to build, manage and publish news articles.
-                  You can automate the news article generation process for
-                  multiple articles, create custom templates or view templates
-                  directly from the tool using the contribution guidelines.
+                  Nubia helps you to build and manage news articles. You can
+                  automate the news article generation process for multiple
+                  articles, create custom templates or view templates directly
+                  from the tool using the contribution guidelines.
                 </p>
               </div>
             </div>
@@ -159,21 +164,19 @@ const Page = () => {
       {/* ====== WHY SECTION */}
       <section className='home__section-container'>
         <div className='home__section-box'>
-          <h3 className='home__section-heading text-left'>
-            BUT <b className='text-violet-main'>WHY?</b>
-          </h3>
+          <h3 className='home__section-heading text-left'>Why ?</h3>
           <p className='text-left'>
             The vast size of Africa, it&apos;s thousands of localities, are
             under-reported and sparsely contextualised leading to many unknown
             and unreported grassroots economies, politics and natural resources.
           </p>
-          <p className='text-left'>
+          <p className='text-left text-text-light'>
             Country level and international data on climate change, health,
             education, agriculture, poverty and many more are produced
             periodically across Africa. Yet, little amount of the data is
             reproduced as insights, analyses or development news
           </p>
-          <p className='text-left'>
+          <p className='text-left text-text-light'>
             Over 40 million African diaspora population rely heavily on
             international news platforms to understand their home countries
             which oftentimes lack in-depth analysis and local context which are
@@ -204,7 +207,7 @@ const Page = () => {
 };
 // https://cdn.lordicon.com/utzmfilx.json
 
-export default Page;
+export default About;
 
 /*
 https://images.unsplash.com/photo-1584931423298-c576fda54bd2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80

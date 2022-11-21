@@ -2,16 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import CursorArrowRays from '@/icons/cursor-arrow-rays';
 
-const Hero = () => {
+const Hero = ({ heading, subHeading = '' }) => {
   return (
     <header className='hero__container'>
-      <h1 className='text-4xl md:text-6xl font-black font-magistral text-text-dark'>
-        MEET NUBIA
+      <h1 className='text-4xl md:text-6xl font-black font-magistral text-text-dark max-w-3xl'>
+        {heading}
       </h1>
       <p className='w-3/4 text-sm md:text-lg text-text-thin font-inter font-light -mt-2 max-w-3xl '>
-        An open-source AI tool that draws insight from your data and makes it
-        into readable and relatable stories. Data driven stories for the modern
-        Journalist.
+        {subHeading}
       </p>
 
       {/* ====== CALL TO ACTION */}
@@ -23,4 +21,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default React.memo(Hero);

@@ -1,5 +1,26 @@
 import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import HighRes from '../../../assets/images/high-res-prototype.jpeg';
+import LowRes from '../../../assets/images/low-res-prototype.jpeg';
 import Hero from '@/components/hero';
+
+const comTools = [
+  { name: 'YSeop', link: 'https://www.yseop.com/' },
+  { name: 'AX Semantics', link: 'https://en.ax-semantics.com/' },
+  { name: 'Narrativa', link: 'https://www.narrativa.com/' },
+  { name: 'Arria', link: 'https://www.arria.com/' },
+  { name: 'RADAR', link: 'https://pa.media/radar/' },
+  { name: 'Wordsmith', link: 'https://automatedinsights.com/wordsmith/' },
+];
+const openSource = [
+  { name: 'Core NLG', link: 'https://github.com/societe-generale/core-nlg' },
+  { name: 'Simplenlg', link: 'https://github.com/simplenlg/simplenlg' },
+  {
+    name: 'Page detector',
+    link: 'https://wordpress.org/plugins/page-detector/',
+  },
+];
 
 const Journey = () => {
   return (
@@ -134,23 +155,8 @@ const Journey = () => {
               content for local, regional and global audiences.
             </p>
           </div>
+
           <div className='prose prose-lg prose-indigo mx-auto mt-6 text-gray-500'>
-            <p>
-              Faucibus commodo massa rhoncus, volutpat.
-              <strong>Dignissim</strong> sed <strong>eget risus enim</strong>.
-              Mattis mauris semper sed amet vitae sed turpis id. Id dolor
-              praesent donec est. Odio penatibus risus viverra tellus varius sit
-              neque erat velit. Faucibus commodo massa rhoncus, volutpat.
-              Dignissim sed eget risus enim.
-              <a href='#'>Mattis mauris semper</a> sed amet vitae sed turpis id.
-            </p>
-            <ul role='list'>
-              <li>Quis elit egestas venenatis mattis dignissim.</li>
-              <li>
-                Cras cras lobortis vitae vivamus ultricies facilisis tempus.
-              </li>
-              <li>Orci in sit morbi dignissim metus diam arcu pretium.</li>
-            </ul>
             <p>
               We tagged the project &apos;Nubia&apos;, based on the historical
               and anthropological significance of the name to Africa and the
@@ -165,7 +171,6 @@ const Journey = () => {
               across Africa. Yet, little data is reproduced as insights,
               analysis, or development news.
             </p>
-
             {/* ====== The call */}
             <h2>
               The <b className='text-violet-dark'>call</b>
@@ -203,7 +208,6 @@ const Journey = () => {
               the newsroom from satellite, socioeconomic, weather and web camera
               data.
             </p>
-
             {/* ====== The crawl */}
             <h2>
               The <b className='text-violet-dark'>crawl</b>, or what we learnt
@@ -219,51 +223,167 @@ const Journey = () => {
               massive public data on socioeconomic indicators and development
               themes across cities, countries, and continents.
             </p>
-            <blockquote>
-              <p>
-                Sagittis scelerisque nulla cursus in enim consectetur quam.
-                Dictum urna sed consectetur neque tristique pellentesque.
-                Blandit amet, sed aenean erat arcu morbi.
-              </p>
-            </blockquote>
             <p>
               We started by designing a tool to parse datasets and store data as
               JSON files. From there, the data is managed and organised in a way
               that allows for the generation of articles that could be published
               more or less directly to the news site.
             </p>
+            {/* ====== low res image */}
             <figure>
-              <img
+              <Image
                 className='w-full rounded-lg'
-                src='https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=facearea&w=1310&h=873&q=80&facepad=3'
-                alt=''
+                src={LowRes}
+                alt='Low-Res Prototype'
                 width={1310}
                 height={873}
               />
-              <figcaption>
-                Sagittis scelerisque nulla cursus in enim consectetur quam.
-              </figcaption>
+              <figcaption>Low-Res Prototype</figcaption>
             </figure>
-
+            <p>
+              While we were hoping to build a model that aggregates data, parses
+              it, and then generates insights all together, we realised that we
+              might not have enough time to achieve all of the above during the
+              Fellowship. After all, we were trying to perform three
+              related-but-distinct operations at once: NLP, NLG, and Web alert.
+            </p>
+            <p>
+              We understood that for the duration of the Fellowship, we should
+              narrow our goal to creating a tool that takes clean datasets and
+              manually-written templates to generate articles based on multiple
+              locations or named entities in the datasets.
+            </p>
+            <p>
+              At this rate, we realised we might only need an algorithm
+              framework which can replace entry points pre-defined in a template
+              with the value of an external dataset parsed to javascript objects
+              to generate sentences. From there, we can proceed to return those
+              generated articles as a response from API endpoints to whatever
+              client side is receiving or calling them.
+            </p>
+            {/* ====== high res image */}{' '}
+            <figure>
+              <Image
+                className='w-full rounded-lg'
+                src={HighRes}
+                alt='High-Res Prototype'
+                width={1310}
+                height={873}
+              />
+              <figcaption>High-Res Prototype</figcaption>
+            </figure>
+            <p>
+              The MVP will require us to provide support to anyone who wants to
+              generate stories via Nubia. In the future, we plan to add features
+              that will allow users to upload their own datasets and design
+              their template without support from the Nubia team.
+            </p>
+            <p>
+              Based on consultations, we realised our work could be simplified
+              if we had access to OpenAI API, but the platform is currently
+              inaccessible to our region, Africa.
+            </p>
             {/* ====== The counsel */}
             <h2>
               The <b className='text-violet-dark'>counsel</b>: what we&apos;ve
               learnt
             </h2>
             <p>
-              Purus morbi dignissim senectus mattis <a href='#'>adipiscing</a>.
-              Amet, massa quam varius orci dapibus volutpat cras. In amet eu
-              ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut
-              viverra ridiculus non molestie. Gravida quis fringilla amet eget
-              dui tempor dignissim. Facilisis auctor venenatis varius nunc,
-              congue erat ac. Cras fermentum convallis quam.
+              We&aos;re still building out our idea, but we&apos;ve already
+              learned a few things worth sharing along the way. First lesson is
+              to be clear about the aspect(s) of AI or machine learning that
+              your project requires. Thanks to counsel from&nbsp;
+              <Link
+                href='https://uk.linkedin.com/in/grogers'
+                target='_blank'
+                className='inline-link'
+              >
+                Gary Rogers
+              </Link>
+              , we were able to understand that the data types we initially
+              thought to use had to be different from what we planned to use for
+              our project.
             </p>
             <p>
-              Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus
-              enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor
-              praesent donec est. Odio penatibus risus viverra tellus varius sit
-              neque erat velit.
+              We have also reviewed various&nbsp;
+              <Link
+                href='https://github.com/accelerated-text/awesome-nlg'
+                target='_blank'
+                className='inline-link'
+              >
+                listings
+              </Link>
+              ,&nbsp;
+              <Link
+                href='https://www.npmjs.com/search?q=NLG'
+                target='_blank'
+                className='inline-link'
+              >
+                libraries
+              </Link>
+              , and frameworks dedicated to Natural Language Generation (NLG).
+              One of our favourite posts, and the one we found most useful for
+              building our MVP is&nbsp;
+              <Link
+                href='https://medium.com/voice-tech-podcast/introducing-rosaenlg-an-open-source-natural-language-generation-library-7ea711989621'
+                target='_blank'
+                className='inline-link'
+              >
+                RosaeNLG
+              </Link>
+              . Below you can find a list of other commercial and open-source
+              tools we tested before settling on RosaeNLG.
             </p>
+            <p>
+              <strong>Commercial tools for NLG:</strong>
+            </p>
+            <ul role='list'>
+              {comTools.map((link, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={link.link}
+                    target='_blank'
+                    className='inline-link'
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p>
+              <strong>Open-source tools and libraries:</strong>
+            </p>
+            <ul role='list'>
+              {openSource.map((link, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={link.link}
+                    target='_blank'
+                    className='inline-link'
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                Rosae NLG &#45;&nbsp;
+                <Link
+                  href='https://rosaenlg.org/rosaenlg/3.2.5/index.html'
+                  target='_blank'
+                  className='inline-link'
+                >
+                  Documentation
+                </Link>
+                &nbsp; &&nbsp;
+                <Link
+                  href='https://github.com/RosaeNLG'
+                  target='_blank'
+                  className='inline-link'
+                >
+                  Github Repository
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

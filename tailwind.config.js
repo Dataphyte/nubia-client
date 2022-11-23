@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx}'],
@@ -15,43 +17,6 @@ module.exports = {
       medium: 500,
       bold: 700,
       black: 900,
-    },
-
-    colors: {
-      transparent: 'transparent',
-
-      white: {
-        main: '#ffffff',
-        off: '#FAF9F6',
-      },
-      black: {
-        main: '#000000',
-        bg: '#292929',
-        light: '#71717A',
-        thin: '#E4E4E7',
-      },
-      text: {
-        thin: '#71717A',
-        light: '#52525B',
-        medium: '#3F3F46',
-        dark: '#27272A',
-        black: '#18181B',
-      },
-      blue: {
-        main: '#3B82F6',
-        dark: '#1D4ED8',
-        light: '#93C5FD',
-      },
-      green: {
-        main: '#10B981',
-        dark: '#047857',
-        light: '#A7F3D0',
-      },
-      violet: {
-        main: '#8B5CF6',
-        dark: '#6D28D9',
-        light: '#DDD6FE',
-      },
     },
 
     extend: {
@@ -75,7 +40,49 @@ module.exports = {
         800: '800px',
         900: '900px',
       },
+      colors: {
+        white: {
+          main: '#ffffff',
+          off: '#FAF9F6',
+        },
+        black: {
+          main: '#000000',
+          bg: '#292929',
+          light: '#71717A',
+          thin: '#E4E4E7',
+        },
+        text: {
+          thin: '#71717A',
+          light: '#52525B',
+          medium: '#3F3F46',
+          dark: '#27272A',
+          black: '#18181B',
+        },
+        blue: {
+          main: '#3B82F6',
+          dark: '#1D4ED8',
+          light: '#93C5FD',
+        },
+        green: {
+          main: '#10B981',
+          dark: '#047857',
+          light: '#A7F3D0',
+        },
+        violet: {
+          main: '#8B5CF6',
+          dark: '#6D28D9',
+          light: '#DDD6FE',
+        },
+        red: {
+          main: '#F43F5E',
+          light: '#FECDD3',
+          dark: '#BE123C',
+        },
+        sky: colors.sky,
+        teal: colors.teal,
+        rose: colors.rose,
+      },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 };

@@ -1,9 +1,18 @@
+'use client';
+
 import React from 'react';
+import Lottie from 'lottie-react';
+import LoadingLottie from '../assets/animations/loading-lottie.json';
 
 const Loading = () => {
   return (
     <div className='w-full h-screen bg-white-off flex items-center justify-center'>
-      <p className='font-black-ops text-3xl text-text-dark'> Loading...</p>
+      <Lottie
+        animationData={LoadingLottie}
+        autoplay
+        loop
+        style={{ width: '100%', height: '100%' }}
+      />
     </div>
   );
 };

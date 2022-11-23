@@ -54,7 +54,7 @@ html {
   }
 
   .home__section-box {
-    @apply w-full max-w-lg flex flex-col gap-6 items-center md:items-start  lg:text-left;
+    @apply w-full max-w-lg flex flex-col gap-6 md:items-start  lg:text-left;
   }
 
   .home__section-heading {

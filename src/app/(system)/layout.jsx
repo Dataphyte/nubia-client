@@ -1,8 +1,10 @@
 'use client';
 
+import Link from 'next/link';
+import Head from './head';
 import { Fragment, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import { classNames } from 'src/utils/classnames';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3BottomLeftIcon,
@@ -13,7 +15,6 @@ import {
   DocumentTextIcon,
 } from '@heroicons/react/24/outline';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import { classNames } from 'src/utils/classnames';
 
 const navigation = [
   {
@@ -30,12 +31,13 @@ const userNavigation = [
   { name: 'Sign out', href: '#' },
 ];
 
-export default function Layout({ children }) {
+const Layout = ({ children }) => {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <>
+      <Head />
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -104,6 +106,7 @@ export default function Layout({ children }) {
                               : 'text-white-off hover:bg-violet-main hover:text-white-main',
                             'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                           )}
+                          onClick={() => setSidebarOpen(false)}
                         >
                           <item.icon
                             className={classNames(
@@ -302,4 +305,6 @@ export default function Layout({ children }) {
       </div>
     </>
   );
-}
+};
+
+export default Layout;

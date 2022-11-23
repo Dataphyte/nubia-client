@@ -12,7 +12,7 @@ export default function Home() {
     <div className='page__container'>
       <Hero
         heading='MEET NUBIA'
-        subHeading=' An open-source AI tool that draws insight from your data and makes it
+        subHeading='An open-source AI tool that draws insight from your data and makes it
         into readable and relatable stories. Data driven stories for the modern
         Journalist.'
       />

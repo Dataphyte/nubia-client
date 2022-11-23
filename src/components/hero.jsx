@@ -13,7 +13,7 @@ const Hero = ({ heading, subHeading = '' }) => {
       </p>
 
       {/* ====== CALL TO ACTION */}
-      <Link href='/' className='hero-link group'>
+      <Link href='tool/stories' className='hero-link group'>
         Try it out
         <CursorArrowRays sx='w-5 h-5 duration-150 ease-out -translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 absolute group-hover:right-6' />
       </Link>

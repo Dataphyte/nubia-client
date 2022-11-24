@@ -1,13 +1,44 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Hero from '../../components/hero';
 import { classNames } from 'src/utils/classnames';
 import ScrollTexts from '@/components/scroll-texts';
 import { heroPopCards, stepCards } from '@/data/home-data';
+import FeaturePopup from '@/components/pop-ups/feature-popup';
+
+const featureContent = {
+  feat_1: {
+    title: 'Story telling',
+    bg: 'bg-[#1E293B]',
+    body: 'Nubia Improves accuracy in story telling by taking off the burdern of Journalists from drawing insight from raw and dense data.',
+    icon: 'https://cdn.lordicon.com/flqcnwch.json',
+  },
+  feat_2: {
+    title: 'Data analysis',
+    bg: 'bg-violet-main',
+    body: 'The stories produced by Nubia have been pre-analyzed, restructured and sorted well enough to be used right away for story telling.',
+    icon: 'https://cdn.lordicon.com/nbdmfygb.json',
+  },
+  feat_3: {
+    title: 'Repetitive tasks',
+    bg: 'bg-green-main',
+    body: 'Due to the ability of Nubia to treat each entry point one after the other, There is no need for manual generation of stories that use the same template or have the same format.',
+    icon: 'https://cdn.lordicon.com/jvucoldz.json',
+  },
+};
 
 export default function Home() {
+  const [featureModalOpen, setFeatureModalOpen] = useState(false);
+  const [currentFeature, setCurrentFeature] = useState(featureContent.feat_1);
+
+  const handleFeat = (feat) => {
+    setFeatureModalOpen(true);
+    setCurrentFeature(feat);
+  };
+
   return (
     <div className='page__container'>
       <Hero
@@ -56,6 +87,15 @@ export default function Home() {
       {/* ====== ###### */}
       {/* ====== FEATURE SECTION */}
       <section className='flex w-full h-max flex-col items-center gap-6 py-16 px-5 text-center'>
+        {/* ====== Popup to explain what each points means */}
+        {featureModalOpen && (
+          <FeaturePopup
+            state={featureModalOpen}
+            setState={setFeatureModalOpen}
+            content={currentFeature}
+          />
+        )}
+
         {/* ====== header */}
         <h3 className='home__section-heading'>Boost your accuracy in</h3>
         {/* ====== tags */}
@@ -65,6 +105,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className='feature__tag bg-[#1E293B]'
+            onClick={() => handleFeat(featureContent.feat_1)}
           >
             Story telling
           </motion.p>
@@ -74,6 +115,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
             className='feature__tag bg-violet-main'
+            onClick={() => handleFeat(featureContent.feat_2)}
           >
             Data analysis
           </motion.p>
@@ -85,8 +127,9 @@ export default function Home() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.4 }}
             className='feature__tag bg-green-main'
+            onClick={() => handleFeat(featureContent.feat_3)}
           >
-            Recurssion
+            Repetitive tasks
           </motion.p>
         </span>
 

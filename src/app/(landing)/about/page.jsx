@@ -55,7 +55,7 @@ const About = () => {
                       y={0}
                       width={4}
                       height={4}
-                      className='text-gray-200'
+                      className='text-gray-500'
                       fill='currentColor'
                     />
                   </pattern>

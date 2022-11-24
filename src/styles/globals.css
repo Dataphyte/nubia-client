@@ -30,7 +30,7 @@ html {
   }
 
   .nav__link {
-    @apply text-text-light font-inter flex items-center justify-center transition-all duration-150 ease-out hover:text-text-dark relative after:absolute py-1 after:w-0 after:h-[1px] after:duration-500 after:ease-out after:bg-text-dark after:-left-[10%] hover:after:w-[120%] after:origin-center;
+    @apply text-text-light font-inter flex items-center justify-center transition-all duration-150 ease-out hover:text-text-dark relative after:absolute py-1 after:w-0 after:h-[1px] after:duration-500 after:ease-out after:bg-text-dark after:left-[10%]  after:bottom-0 hover:after:w-[80%] after:origin-center;
   }
 
   .nav__link-mobile {
@@ -46,7 +46,7 @@ html {
   }
 
   .feature__tag {
-    @apply py-2 px-3 rounded-lg text-sm md:text-lg shadow-md text-white-off font-magistral w-max;
+    @apply py-2 px-3 rounded-lg text-sm md:text-lg shadow-md text-white-off font-magistral w-max cursor-pointer hover:shadow-xl  transition-shadow  duration-300 ease-out;
   }
 
   .home__section-container {

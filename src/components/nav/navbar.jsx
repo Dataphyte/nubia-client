@@ -27,7 +27,7 @@ const Navbar = () => {
   return (
     <nav
       className={classNames(
-        'w-full flex px-10 md:px-16 items-center justify-between fixed top-0 z-50 duration-300 ease-out transition-all',
+        'w-full flex px-10 md:px-16 items-center justify-between fixed top-0 z-40 duration-300 ease-out transition-all',
         scrolled ? 'bg-white-main shadow-md lg:px-32 h-16' : ' h-20 lg:px-48'
       )}
     >

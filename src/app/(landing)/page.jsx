@@ -6,29 +6,13 @@ import { motion } from 'framer-motion';
 import Hero from '../../components/hero';
 import { classNames } from 'src/utils/classnames';
 import ScrollTexts from '@/components/scroll-texts';
-import { heroPopCards, stepCards } from '@/data/home-data';
+import {
+  heroPopCards,
+  stepCards,
+  featureContent,
+  popCardData,
+} from '@/data/home-data';
 import FeaturePopup from '@/components/pop-ups/feature-popup';
-
-const featureContent = {
-  feat_1: {
-    title: 'Story telling',
-    bg: 'bg-[#1E293B]',
-    body: 'Nubia Improves accuracy in story telling by taking off the burdern of Journalists from drawing insight from raw and dense data.',
-    icon: 'https://cdn.lordicon.com/flqcnwch.json',
-  },
-  feat_2: {
-    title: 'Data analysis',
-    bg: 'bg-violet-main',
-    body: 'The stories produced by Nubia have been pre-analyzed, restructured and sorted well enough to be used right away for story telling.',
-    icon: 'https://cdn.lordicon.com/nbdmfygb.json',
-  },
-  feat_3: {
-    title: 'Repetitive tasks',
-    bg: 'bg-green-main',
-    body: 'Due to the ability of Nubia to treat each entry point one after the other, There is no need for manual generation of stories that use the same template or have the same format.',
-    icon: 'https://cdn.lordicon.com/jvucoldz.json',
-  },
-};
 
 export default function Home() {
   const [featureModalOpen, setFeatureModalOpen] = useState(false);
@@ -72,14 +56,16 @@ export default function Home() {
             transition={{ delay: card.animation.transition.delay }}
             viewport={{ once: true }}
             className={classNames(
-              'bg-white-main rounded-lg shadow-lg absolute',
+              'bg-white-main rounded-lg shadow-lg absolute overflow-hidden',
               card.position,
               card.size,
               card.ringed &&
                 'ring-2 ring-violet-main ring-offset-4 border border-black-thin'
             )}
             key={card.name}
-          />
+          >
+            <Image src={card.image} alt='some text' fill />
+          </motion.div>
         ))}
       </section>
 

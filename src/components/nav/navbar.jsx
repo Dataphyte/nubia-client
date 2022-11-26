@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import MenuBars from '@/icons/menu-bars';
 import { usePathname } from 'next/navigation';
-import useScrolled from '@/hooks,useScrolled';
+import useScrolled from '@/hooks/useScrolled';
 import { classNames } from 'src/utils/classnames';
 import CloseIcon from '@/icons/close-icon';
 

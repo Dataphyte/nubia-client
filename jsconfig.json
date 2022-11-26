@@ -7,9 +7,10 @@
       "@/icons/*": ["./src/assets/icons/*"],
       "@/assets/*": ["./src/assets/*"],
       "@/components/*": ["./src/components/*"],
-      "@/hooks,*": ["./src/hooks/*"],
+      "@/hooks/*": ["./src/hooks/*"],
       "@/data/*": ["./src/data/*"],
-      "@/utils/*": ["./src/utils/*"]
+      "@/utils/*": ["./src/utils/*"],
+      "@/global/*": ["./src/global/*"]
     }
   },
 

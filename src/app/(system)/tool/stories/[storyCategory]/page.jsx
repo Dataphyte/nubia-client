@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 // ======= utility imports -->
-import { storyStore } from '@/global/story';
+import { storyStore } from '@/global/storyStore';
 import Lottie from 'lottie-react';
 
 // ======= animation imports -->
@@ -12,7 +13,7 @@ import LoadingLottie from '../../../../../assets/animations/loading-lottie.json'
 // ======= loading omponent -->
 const Loader = () => (
   <div className='w-full h-600 flex items-center justify-center'>
-    <div className='w-300 h-300 flex flex-col gap-3 font-bold text-xl text-text-light text-center items-center justify-center'>
+    <div className='w-300 h-300 flex flex-col gap-3 font-medium text-xl text-text-light text-center items-center justify-center'>
       <Lottie
         animationData={LoadingLottie}
         autoplay
@@ -24,22 +25,27 @@ const Loader = () => (
   </div>
 );
 
-const Page = () => {
-  const { currentStory } = storyStore();
+const StoryCategory = () => {
+  const router = useRouter();
+  const { currentStoryCategory, setCurrentStory, storyRoute } = storyStore();
   return (
     <div className='w-full h-auto flex flex-col gap-5 items-center justify-center'>
-      {!currentStory && <Loader />}
+      {!currentStoryCategory && <Loader />}
 
-      {currentStory && (
+      {currentStoryCategory && (
         <>
           <h3 className='text-2xl font-bold tracking-wider text-text-dark'>
             Generated FAAC stories
           </h3>
           <div className='w-full grid grid-cols-3 gap-5 items-center h-auto prose prose-lg'>
-            {currentStory.data.template.map((story, idx) => (
+            {currentStoryCategory.data.template.map((story, idx) => (
               <div
                 key={idx}
                 className=' flex items-center justify-center w-full h-200 col-span-3 md:col-span-1 bg-white-main  rounded-lg shadow-md hover:shadow-xl hover:border-violet-main duration-300 ease-out cursor-pointer border'
+                onClick={() => {
+                  setCurrentStory(story);
+                  router.push(`tool/stories/${storyRoute}/${story.title}`);
+                }}
               >
                 <p className='text-2xl font-medium font-inter text-text-light'>
                   {story.title} state
@@ -53,4 +59,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default StoryCategory;

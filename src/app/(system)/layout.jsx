@@ -1,39 +1,43 @@
 'use client';
 
-import Link from 'next/link';
 import Head from './head';
-import { Fragment, useState } from 'react';
+import Link from 'next/link';
+import { Fragment, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { classNames } from 'src/utils/classnames';
+
+// ======= component imports -->
 import { Dialog, Menu, Transition } from '@headlessui/react';
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import {
   Bars3BottomLeftIcon,
   BellIcon,
-  ChartBarIcon,
   PowerIcon,
   XMarkIcon,
-  DocumentTextIcon,
 } from '@heroicons/react/24/outline';
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 
-const navigation = [
-  {
-    name: 'Stories',
-    href: '/tool/stories',
-    icon: DocumentTextIcon,
-    current: true,
-  },
-  { name: 'Data', href: '/tool/data', icon: ChartBarIcon },
-];
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-];
+// ======= utils imports -->
+import useSWR from 'swr';
+import { fetcher } from '@/utils/fetcher';
+import { storyStore } from '@/global/story';
+import { classNames } from 'src/utils/classnames';
+
+// ======= data imports -->
+import { navigation, userNavigation } from '@/data/toolData';
 
 const Layout = ({ children }) => {
+  const { storyRoute, setCurrentStory } = storyStore();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { data, error } = useSWR(
+    storyRoute ? 'https://nubia-server.oa.r.appspot.com/' + storyRoute : null,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (error) console.error(error);
+    console.info(data);
+    setCurrentStory(data);
+  }, [data, error]);
 
   return (
     <>
@@ -168,7 +172,7 @@ const Layout = ({ children }) => {
                     className={classNames(
                       pathname.indexOf(item.href) !== -1
                         ? 'bg-violet-dark text-white-main'
-                        : 'text-black-thin hover:bg-text-thin hover:text-white-main',
+                        : 'text-black-thin hover:bg-violet-main/10 hover:text-white-main',
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md tracking-wider'
                     )}
                   >
@@ -231,7 +235,7 @@ const Layout = ({ children }) => {
                     </div>
                     <input
                       id='search-field'
-                      className='block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm'
+                      className='block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 bg-transparent placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm'
                       placeholder='Search'
                       type='search'
                       name='search'

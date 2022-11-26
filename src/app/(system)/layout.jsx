@@ -18,14 +18,14 @@ import {
 // ======= utils imports -->
 import useSWR from 'swr';
 import { fetcher } from '@/utils/fetcher';
-import { storyStore } from '@/global/story';
+import { storyStore } from '@/global/storyStore';
 import { classNames } from 'src/utils/classnames';
 
 // ======= data imports -->
 import { navigation, userNavigation } from '@/data/toolData';
 
 const Layout = ({ children }) => {
-  const { storyRoute, setCurrentStory } = storyStore();
+  const { storyRoute, setCurrentStoryCategory } = storyStore();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data, error } = useSWR(
@@ -36,7 +36,7 @@ const Layout = ({ children }) => {
   useEffect(() => {
     if (error) console.error(error);
     console.info(data);
-    setCurrentStory(data);
+    setCurrentStoryCategory(data);
   }, [data, error]);
 
   return (

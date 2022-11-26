@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { storyStore } from '@/global/story';
+import { storyStore } from '@/global/storyStore';
 import { classNames } from 'src/utils/classnames';
 
 const stories = [

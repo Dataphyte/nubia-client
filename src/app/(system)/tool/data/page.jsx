@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 
 // ======= utility imports -->
-import { storyStore } from '@/global/story';
+import { storyStore } from '@/global/storyStore';
 
 const DataPage = () => {
   const { currentStory } = storyStore();

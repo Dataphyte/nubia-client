@@ -2,6 +2,7 @@
 
 import Head from './head';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
@@ -25,8 +26,9 @@ import { classNames } from 'src/utils/classnames';
 import { navigation, userNavigation } from '@/data/toolData';
 
 const Layout = ({ children }) => {
-  const { storyRoute, setCurrentStoryCategory } = storyStore();
+  const router = useRouter();
   const pathname = usePathname();
+  const { storyRoute, setCurrentStoryCategory } = storyStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data, error } = useSWR(
     storyRoute ? 'https://nubia-server.oa.r.appspot.com/' + storyRoute : null,
@@ -219,6 +221,12 @@ const Layout = ({ children }) => {
             >
               <span className='sr-only'>Open sidebar</span>
               <Bars3BottomLeftIcon className='h-6 w-6' aria-hidden='true' />
+            </button>
+            <button
+              className='px-3 h-full text-text-thin border hover:border-red-400 hover:text-red-400 hover:shadow-lg duration-300 ease-out'
+              onClick={() => router.back()}
+            >
+              Back
             </button>
             <div className='flex flex-1 justify-between px-4'>
               <div className='flex flex-1'>

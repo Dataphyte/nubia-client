@@ -10,7 +10,7 @@ const SingleStory = () => {
     <div className='w-full h-auto flex flex-col items-center relative gap-3 py-2'>
       <div
         dangerouslySetInnerHTML={{ __html: currentStory.story }}
-        className='prose w-full flex items-center flex-col prose-lg'
+        className='prose w-full flex items-center flex-col prose-lg prose-p:font-inter prose-p:text-text-light prose-h1:text-text-dark'
       />
     </div>
   );

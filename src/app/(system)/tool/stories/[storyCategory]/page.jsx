@@ -14,11 +14,11 @@ import LoadingLottie from '../../../../../assets/animations/loading-lottie.json'
 const Loader = () => (
   <div className='w-full h-600 flex items-center justify-center'>
     <div className='w-300 h-300 flex flex-col gap-3 font-medium text-xl text-text-light text-center items-center justify-center'>
-      <Lottie
-        animationData={LoadingLottie}
-        autoplay
-        loop
-        style={{ width: '100%', height: '200px' }}
+      <lord-icon
+        src='https://cdn.lordicon.com/ukodqrxd.json'
+        trigger='loop'
+        colors='primary:#121331,secondary:#6d28d9'
+        style={{ width: '150px', height: '150px' }}
       />
       <p>Hang in there while we get your stories</p>
     </div>

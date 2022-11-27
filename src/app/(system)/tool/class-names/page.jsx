@@ -7,45 +7,6 @@ import { storyStore } from '@/global/storyStore';
 // ======= icon imports -->
 import { CodeBracketSquareIcon } from '@heroicons/react/24/outline';
 
-const people = [
-  {
-    name: 'Jane Cooper',
-    title: 'Regional Paradigm Technician',
-    role: 'Admin',
-    email: 'janecooper@example.com',
-    telephone: '+1-202-555-0170',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-  },
-  {
-    name: 'Jane Cooper',
-    title: 'Regional Paradigm Technician',
-    role: 'Admin',
-    email: 'janecooper@example.com',
-    telephone: '+1-202-555-0170',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-  },
-  {
-    name: 'Jane Cooper',
-    title: 'Regional Paradigm Technician',
-    role: 'Admin',
-    email: 'janecooper@example.com',
-    telephone: '+1-202-555-0170',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-  },
-  {
-    name: 'Jane Cooper',
-    title: 'Regional Paradigm Technician',
-    role: 'Admin',
-    email: 'janecooper@example.com',
-    telephone: '+1-202-555-0170',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-  },
-];
-
 const ClasNames = () => {
   const { currentStoryCategory } = storyStore();
   console.log(currentStoryCategory && currentStoryCategory.data.classnames);
@@ -62,7 +23,7 @@ const ClasNames = () => {
             currentStoryCategory.data.classnames.map((story, idx) => (
               <li
                 key={idx}
-                className='col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow'
+                className='col-span-1 divide-y divide-gray-200 rounded-lg bg-white-main shadow'
               >
                 <div className='flex w-full items-center justify-between space-x-6 p-6'>
                   <div className='flex-1 '>
@@ -79,7 +40,7 @@ const ClasNames = () => {
                     </p>
                   </div>
                   <lord-icon
-                    src='https://cdn.lordicon.com/buqfvmsj.json'
+                    src='https://cdn.lordicon.com/fgpwnxiv.json'
                     trigger='hover'
                     colors='primary:#121331,secondary:#6d28d9'
                     style={{ width: '50px', height: '50px' }}

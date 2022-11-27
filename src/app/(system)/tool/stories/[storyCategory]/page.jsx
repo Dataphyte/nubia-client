@@ -5,10 +5,6 @@ import { useRouter } from 'next/navigation';
 
 // ======= utility imports -->
 import { storyStore } from '@/global/storyStore';
-import Lottie from 'lottie-react';
-
-// ======= animation imports -->
-import LoadingLottie from '../../../../../assets/animations/loading-lottie.json';
 
 // ======= loading omponent -->
 const Loader = () => (

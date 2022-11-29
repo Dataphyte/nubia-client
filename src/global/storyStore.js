@@ -8,11 +8,13 @@ export const storyStore = create(
     (set) => ({
       storyRoute: null,
       currentStory: null,
+      currentData: null,
       currentStoryCategory: null,
-      setStoryRoute: (payload) => set({ storyRoute: payload }),
-      setCurrentStory: (payload) => set({ currentStory: payload }),
-      setCurrentStoryCategory: (payload) =>
-        set({ currentStoryCategory: payload }),
+      setCurrentData: (currentData) => set({ currentData }),
+      setStoryRoute: (storyRoute) => set({ storyRoute }),
+      setCurrentStory: (currentStory) => set({ currentStory }),
+      setCurrentStoryCategory: (currentStoryCategory) =>
+        set({ currentStoryCategory }),
     }),
     { name: 'story-details', getStorage: () => sessionStorage }
   )

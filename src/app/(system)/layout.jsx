@@ -36,9 +36,11 @@ const Layout = ({ children }) => {
   );
 
   useEffect(() => {
-    if (error) console.error(error);
-    console.info(data);
-    setCurrentStoryCategory(data);
+    (() => {
+      if (error) return console.error(error);
+      console.info(data);
+      !error && data && setCurrentStoryCategory(data.data);
+    })();
   }, [data, error]);
 
   return (

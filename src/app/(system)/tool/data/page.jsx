@@ -12,7 +12,12 @@ const DataPage = () => {
   return (
     <>
       {!currentStory && <NoStory toBeViewed='Data' />}
-      {currentStory && <h2>There is a story now!</h2>}
+      {currentStory && (
+        <h2>
+          There is a story now! <br />
+          But I am still working on it so nothing shows for now..
+        </h2>
+      )}
     </>
   );
 };

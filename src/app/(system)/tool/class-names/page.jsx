@@ -9,7 +9,7 @@ import { CodeBracketSquareIcon } from '@heroicons/react/24/outline';
 
 const ClasNames = () => {
   const { currentStoryCategory } = storyStore();
-  console.log(currentStoryCategory && currentStoryCategory.data.classnames);
+  console.log(currentStoryCategory && currentStoryCategory.classnames);
 
   return (
     <>
@@ -20,7 +20,7 @@ const ClasNames = () => {
           className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
         >
           {currentStoryCategory &&
-            currentStoryCategory.data.classnames.map((story, idx) => (
+            currentStoryCategory.classnames.map((story, idx) => (
               <li
                 key={idx}
                 className='col-span-1 divide-y divide-gray-200 rounded-lg bg-white-main shadow'

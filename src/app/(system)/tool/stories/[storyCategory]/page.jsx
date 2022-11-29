@@ -34,7 +34,7 @@ const StoryCategory = () => {
             Generated FAAC stories
           </h3>
           <div className='w-full grid grid-cols-3 gap-5 items-center h-auto prose prose-lg'>
-            {currentStoryCategory.data.template.map((story, idx) => (
+            {currentStoryCategory.template.map((story, idx) => (
               <div
                 key={idx}
                 className=' flex items-center justify-center w-full h-200 col-span-3 md:col-span-1 bg-white-main  rounded-lg shadow-md hover:shadow-xl hover:border-violet-main duration-300 ease-out cursor-pointer border'

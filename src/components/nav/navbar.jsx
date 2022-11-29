@@ -13,6 +13,7 @@ const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About Nubia', href: 'about' },
   { label: 'Our journey', href: 'journey' },
+  { label: 'How it works', href: 'how-it-works' },
 ];
 
 const Navbar = () => {
@@ -70,7 +71,7 @@ const Navbar = () => {
       {/* ====== MOBILE MENU BOX */}
       <div
         className={classNames(
-          'md:hidden h-screen flex flex-col items-center pt-44 absolute top-0 right-0 bg-[#1E293B] duration-300 ease-out',
+          'md:hidden h-screen flex flex-col items-center pt-28 absolute top-0 right-0 bg-[#1E293B] duration-300 ease-out',
           menuOpen ? 'w-full right-0 opacity-1' : 'w-0 -right-10 opacity-0'
         )}
       >
@@ -98,26 +99,10 @@ const Navbar = () => {
             borderTop: 'thin solid gray',
           }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className='flex h-full flex-col items-center justify-center px-4 gap-28 border-t border-white-off/80 pt-28 md:hidden whitespace-nowrap overflow-hidden relative'
+          className='flex h-full flex-col items-center px-4 gap-10 border-t border-white-off/80 pt-10 md:hidden whitespace-nowrap overflow-hidden relative'
         >
           {navItems.map((item, index) => (
-            <motion.span
-              initial={{ opacity: 0, position: 'absolute', top: 0 }}
-              whileInView={{
-                opacity: 1,
-                position: 'absolute',
-                top: `${(index + 1) * 70}px`,
-              }}
-              transition={{
-                delay: (index + 1) * 0.3,
-                duration: 0.15,
-                type: 'spring',
-                damping: 20,
-                stiffness: 700,
-              }}
-              className='flex w-max h-max'
-              key={index}
-            >
+            <span className='flex w-max h-max' key={index}>
               <Link
                 href={item.href}
                 className={classNames(
@@ -128,16 +113,16 @@ const Navbar = () => {
               >
                 {item.label}
               </Link>
-            </motion.span>
+            </span>
           ))}
-        </motion.span>
 
-        <Link
-          href='https://github.com/Dataphyte/Nubia-server'
-          className='text-white-off absolute bottom-14 font-inter font-medium bg-violet-main w-[90%] flex items-center py-3 shadow-lg rounded-lg justify-center'
-        >
-          Add a story
-        </Link>
+          <Link
+            href='https://github.com/Dataphyte/Nubia-server'
+            className='text-white-off font-inter font-medium bg-violet-main w-[90%] flex items-center py-3 shadow-lg rounded-lg justify-center'
+          >
+            Add a story
+          </Link>
+        </motion.span>
       </div>
     </nav>
   );

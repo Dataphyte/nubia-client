@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Head from './head';
 import Hero from '@/components/hero';
 import AboutImg from '../../../assets/images/2022-Fellows-jai.webp';
 
@@ -16,6 +17,7 @@ const stats = [
 const About = () => {
   return (
     <div className='page__container'>
+      <Head />
       <Hero
         heading='  ABOUT NUBIA'
         subHeading=" With the world inundated with complex data, Nubia's AI tool is an

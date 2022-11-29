@@ -39,7 +39,7 @@ html {
 
   /* Landing page components */
   .hero-link {
-    @apply text-text-dark hover:text-violet-dark hover:border-violet-main duration-150 ease-out overflow-hidden mix-blend-multiply text-sm py-3 px-10 rounded-md shadow hover:shadow-lg border border-text-dark mt-5 font-magistral font-normal relative after:w-full after:h-0 after:bg-green-main after:absolute after:left-0 after:bottom-0 after:bg-violet-main/5 hover:after:h-full after:duration-300 after:ease-out flex gap-3 items-center animate-bounce active:bg-violet-main active:text-white-off hover:pr-12 hover:pl-6 tracking-wider;
+    @apply text-text-dark hover:text-violet-dark hover:border-violet-main duration-300 ease-out overflow-hidden mix-blend-multiply text-sm py-3 px-10 rounded-md shadow hover:shadow-lg border border-text-dark mt-5 font-magistral font-normal relative after:w-full after:h-0 after:bg-green-main after:absolute after:left-0 after:bottom-0 after:bg-violet-main/5 hover:after:h-full after:duration-300 after:ease-out flex gap-3 items-center animate-bounce active:bg-violet-main active:text-white-off hover:pr-14 hover:pl-6 tracking-wider;
   }
   .inline-link {
     @apply font-magistral font-bold text-text-thin no-underline hover:text-violet-main duration-150;

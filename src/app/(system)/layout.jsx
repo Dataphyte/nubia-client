@@ -28,20 +28,36 @@ import { navigation, userNavigation } from '@/data/toolData';
 const Layout = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { storyRoute, setCurrentStoryCategory } = storyStore();
+  const { storyRoute, setCurrentStoryCategory, setCurrentData } = storyStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { data, error } = useSWR(
-    storyRoute ? 'https://nubia-server.oa.r.appspot.com/' + storyRoute : null,
+  const { data: Story, error } = useSWR(
+    storyRoute ? `https://nubia-server.oa.r.appspot.com/${storyRoute}` : null,
+    fetcher
+  );
+  const { data: StoryData, error: dataError } = useSWR(
+    storyRoute
+      ? `https://nubia-server.oa.r.appspot.com/${storyRoute}/data`
+      : null,
     fetcher
   );
 
+  // ======= Story effect -->
   useEffect(() => {
     (() => {
       if (error) return console.error(error);
-      console.info(data);
-      !error && data && setCurrentStoryCategory(data.data);
+      !error && Story && setCurrentStoryCategory(Story.data);
+      Story && console.log(Story);
     })();
-  }, [data, error]);
+  }, [Story, error]);
+
+  // ======= data effect -->
+  useEffect(() => {
+    (() => {
+      if (dataError) return console.error(dataError);
+      !error && StoryData && setCurrentData(StoryData.data);
+      StoryData && console.log(StoryData);
+    })();
+  }, [StoryData, dataError]);
 
   return (
     <>

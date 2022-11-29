@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from './head';
 import Link from 'next/link';
+import Image from 'next/image';
 import Hero from '@/components/hero';
 
 const HowItWorks = () => {
@@ -24,7 +25,7 @@ const HowItWorks = () => {
                 The tech Stuff
               </h2>
               <p className='mt-2 text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl'>
-                Nubia: what's going on?
+                Nubia: what&apos;s going on?
               </p>
             </div>
             <div className='relative z-10 mx-auto max-w-prose text-base lg:mx-0 lg:max-w-5xl lg:pr-72'>
@@ -169,9 +170,11 @@ const HowItWorks = () => {
                   </div>
                   <cite className='relative flex items-center rounded-b-lg bg-violet-dark py-5 px-6 not-italic sm:mt-10 sm:items-start sm:py-5 sm:pl-12 sm:pr-10'>
                     <span className='relative rounded-full border-2 border-white sm:absolute sm:top-0 sm:-translate-y-1/2 sm:transform'>
-                      <img
+                      <Image
                         className='h-12 w-12 rounded-full bg-indigo-300 sm:h-20 sm:w-20'
                         src='https://www.tutorialsteacher.com/Content/images/home/typescript.svg'
+                        width={300}
+                        height={300}
                         style={{ objectFit: 'cover' }}
                         alt=''
                       />

@@ -168,6 +168,7 @@ export default function Home() {
           <Image
             src='https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bmV3c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60'
             fill
+            alt=''
             className='object-cover object-center'
           />
         </motion.div>

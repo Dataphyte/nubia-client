@@ -4,6 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Hero from '@/components/hero';
 
+// ======= image imports -->
+import TemplateImage from '../../../assets/images/template-snapshot.png';
+import ParserImage from '../../../assets/images/parser-snapshot.png';
+import ServiceImage from '../../../assets/images/service-snapshot.png';
+import RouteImage from '../../../assets/images/route-snapshot.png';
+
 const HowItWorks = () => {
   return (
     <div className='page_container'>
@@ -68,9 +74,9 @@ const HowItWorks = () => {
                   <ul role='list'>
                     <li>Creation of Story template</li>
                     <li>Adding of csv data source</li>
+                    <li>Adding of service for new story</li>
                     <li>Parsing of csv Data to JSON</li>
                     <li>Adding of controller for new story</li>
-                    <li>Adding of service for new story</li>
                     <li>
                       Connecting the whole system in the sequence: Template
                       &rarr; Service &rarr; Controller &rarr; Route
@@ -276,19 +282,6 @@ const HowItWorks = () => {
             </p>
           </div>
           <div className='prose prose-lg prose-indigo mx-auto mt-6 text-gray-500'>
-            {/* ====== add csv data source */}
-            <h3>Adding CSV Data source</h3>
-            <p>
-              At the moment, the data files are added to the repo under the data
-              folder. This data is then run through an utility function that
-              parses the data to Javascript objects. Very soon, data storage
-              would be moved into a cloud file storage like AWS S3, Google cloud
-              file storage, Azure or whatever cloud platform is deemed worthy at
-              the time, then the urls would be stored in a database. The data
-              parsing utility would also be re-written to accommodate cvs from
-              urls
-            </p>
-
             {/* ====== create template */}
             <h3>Creating the template</h3>
             <p>
@@ -309,6 +302,105 @@ const HowItWorks = () => {
               is no syntax highling for rosae and a lot of the commands would be
               flagged as in-appropriate by the IDE or syntax formating plugins.
             </p>
+            <figure>
+              <Image
+                src={TemplateImage}
+                alt='faac-template'
+                width={1020}
+                height={800}
+              />
+              <figcaption>
+                An example rosaenlg template very similar to pug
+              </figcaption>
+            </figure>
+            {/* ====== add csv data source */}
+            <h3>Adding CSV Data source</h3>
+            <p>
+              At the moment, the data files are added to the repo under the data
+              folder. This data is then run through an utility function that
+              parses the data to Javascript objects. Very soon, data storage
+              would be moved into a cloud file storage like AWS S3, Google cloud
+              file storage, Azure or whatever cloud platform is deemed worthy at
+              the time, then the urls would be stored in a database. The data
+              parsing utility would also be re-written to accommodate cvs from
+              urls
+            </p>
+            {/* ====== add service */}
+            <h3>Creating a service for the story</h3>
+            <p>
+              After creation of the temoplate and adding of data, a service
+              should be created to house the logic of the story creation:
+              parsing the data, calling the template engine, storing data to
+              database and all other major logic.{' '}
+            </p>
+            <figure>
+              <Image
+                src={ServiceImage}
+                alt='faac-service-image'
+                width={1020}
+                height={800}
+              />
+              <figcaption>Example service creating FAAC stories</figcaption>
+            </figure>
+
+            {/* ====== parse data */}
+            <h3>Parsing of CSV data to JSON</h3>
+            <p>
+              There is a data parsing utility provided in the code repo that
+              supports csv and takes in 3 parameters which are
+            </p>
+            <ul role='list' className='text-base'>
+              <li>The data to be parsed</li>
+              <li>
+                A callback function that gets called automatically by the parser
+                and passes each entry on the data as a argument to the callback.
+              </li>
+              <li>
+                A final call back function that passes the final parsed result
+                as argument and calls the callback upon parse completion
+              </li>
+            </ul>
+            <figure>
+              <Image
+                src={ParserImage}
+                alt='nubia-parser-utility'
+                width={1020}
+                height={800}
+              />
+              <figcaption>Parser utility function</figcaption>
+            </figure>
+
+            {/* ====== controllers  */}
+            <h3>Create the Controller for the Story</h3>
+            <p>
+              After completion of service, a controller is created to handle
+              incoming requests, assign classnames and call the appropriate
+              services.
+            </p>
+
+            {/* ====== routing */}
+            <h3>Wiring it all to a route</h3>
+            <p>
+              After the controller is ready and sends a valid response object to
+              the user, a route would be created specifying the story
+              end-points. The typical naming convention for this is&nbsp;
+              <em>
+                host.com/<strong>story-name</strong>
+              </em>
+              &nbsp; and the route for getting the corresponding data is&nbsp;
+              <em>
+                host.com/story-name/<strong>data</strong>
+              </em>
+            </p>
+            <figure>
+              <Image
+                src={RouteImage}
+                alt='route-image'
+                width={1020}
+                height={800}
+              />
+              <figcaption>Route specification</figcaption>
+            </figure>
           </div>
         </div>
       </div>

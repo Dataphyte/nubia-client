@@ -4,6 +4,7 @@ import Image from 'next/image';
 import HighRes from '../../../assets/images/high-res-prototype.jpeg';
 import LowRes from '../../../assets/images/low-res-prototype.jpeg';
 import Hero from '@/components/hero';
+import Head from './head';
 
 const comTools = [
   { name: 'YSeop', link: 'https://www.yseop.com/' },
@@ -25,6 +26,7 @@ const openSource = [
 const Journey = () => {
   return (
     <div className='page__container'>
+      <Head />
       <Hero
         heading='OUR JOURNEY'
         subHeading='The call, the crawl, and the counsels'

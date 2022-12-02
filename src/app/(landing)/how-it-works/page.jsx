@@ -76,46 +76,6 @@ const HowItWorks = () => {
                       &rarr; Service &rarr; Controller &rarr; Route
                     </li>
                   </ul>
-                  <p>
-                    After successful wiring up of the various components, the
-                    route is ready to be queried by a client and used to
-                    generate stories.
-                  </p>
-
-                  {/* ====== create template */}
-                  <h3>Creating the template</h3>
-                  <p>
-                    For templating, Nubia uses&nbsp;
-                    <strong>
-                      <Link
-                        href='/'
-                        target='_blank'
-                        className=' no-underline font-bold text-text-light '
-                      >
-                        Rosaenlg
-                      </Link>
-                    </strong>
-                    &nbsp; which is an NLG open-source tool built ontop of Pug
-                    (Actually, it&apos;s pug on steroids). Rosaenlg adds
-                    additional features to pug, making able to perform tasks pug
-                    normally would not ba able to achieve. This can be a little
-                    bit tricky as there is no syntax highling for rosae and a
-                    lot of the commands would be flagged as in-appropriate by
-                    the IDE or syntax formating plugins.
-                  </p>
-
-                  {/* ====== add csv data source */}
-                  <h3>Adding CSV Data source</h3>
-                  <p>
-                    At the moment, the data files are added to the repo under
-                    the data folder. This data is then run through an utility
-                    function that parses the data to Javascript objects. Very
-                    soon, data storage would be moved into a cloud file storage
-                    like AWS S3, Google cloud file storage, Azure or whatever
-                    cloud platform is deemed worthy at the time, then the urls
-                    would be stored in a database. The data parsing utility
-                    would also be re-written to accommodate cvs from urls
-                  </p>
                 </div>
               </div>
               <div className='relative mx-auto mt-12 max-w-prose text-base lg:mt-0 lg:max-w-none'>
@@ -309,43 +269,45 @@ const HowItWorks = () => {
                 Following the sequence
               </span>
             </h1>
-            <p className='mt-8 text-xl leading-8 text-gray-500'>
-              Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem.
-              At arcu, sit dui mi, nibh dui, diam eget aliquam. Quisque id at
-              vitae feugiat egestas ac. Diam nulla orci at in viverra
-              scelerisque eget. Eleifend egestas fringilla sapien.
+
+            <p>
+              After successful wiring up of the various components, the route is
+              ready to be queried by a client and used to generate stories.
             </p>
           </div>
           <div className='prose prose-lg prose-indigo mx-auto mt-6 text-gray-500'>
-            <ul role='list'>
-              <li>Quis elit egestas venenatis mattis dignissim.</li>
-              <li>
-                Cras cras lobortis vitae vivamus ultricies facilisis tempus.
-              </li>
-              <li>Orci in sit morbi dignissim metus diam arcu pretium.</li>
-            </ul>
-            <h2>Creating the services</h2>
+            {/* ====== add csv data source */}
+            <h3>Adding CSV Data source</h3>
             <p>
-              Id orci tellus laoreet id ac. Dolor, aenean leo, ac etiam
-              consequat in. Convallis arcu ipsum urna nibh. Pharetra, euismod
-              vitae interdum mauris enim, consequat vulputate nibh. Maecenas
-              pellentesque id sed tellus mauris, ultrices mauris. Tincidunt enim
-              cursus ridiculus mi. Pellentesque nam sed nullam sed diam turpis
-              ipsum eu a sed convallis diam.
+              At the moment, the data files are added to the repo under the data
+              folder. This data is then run through an utility function that
+              parses the data to Javascript objects. Very soon, data storage
+              would be moved into a cloud file storage like AWS S3, Google cloud
+              file storage, Azure or whatever cloud platform is deemed worthy at
+              the time, then the urls would be stored in a database. The data
+              parsing utility would also be re-written to accommodate cvs from
+              urls
             </p>
-            <blockquote>
-              <p>
-                Sagittis scelerisque nulla cursus in enim consectetur quam.
-                Dictum urna sed consectetur neque tristique pellentesque.
-                Blandit amet, sed aenean erat arcu morbi.
-              </p>
-            </blockquote>
-            <h2>Everything you need to get up and running</h2>
+
+            {/* ====== create template */}
+            <h3>Creating the template</h3>
             <p>
-              Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus
-              enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor
-              praesent donec est. Odio penatibus risus viverra tellus varius sit
-              neque erat velit.
+              For templating, Nubia uses&nbsp;
+              <strong>
+                <Link
+                  href='/'
+                  target='_blank'
+                  className=' no-underline font-bold text-text-light '
+                >
+                  Rosaenlg
+                </Link>
+              </strong>
+              &nbsp; which is an NLG open-source tool built ontop of Pug
+              (Actually, it&apos;s pug on steroids). Rosaenlg adds additional
+              features to pug, making able to perform tasks pug normally would
+              not ba able to achieve. This can be a little bit tricky as there
+              is no syntax highling for rosae and a lot of the commands would be
+              flagged as in-appropriate by the IDE or syntax formating plugins.
             </p>
           </div>
         </div>

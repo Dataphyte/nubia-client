@@ -5,12 +5,11 @@ import TwitterIcon from '@/icons/twitter-icon';
 
 const navigation = {
   main: [
-    { name: 'About', href: '#' },
-    { name: 'Blog', href: '#' },
-    { name: 'Jobs', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Accessibility', href: '#' },
-    { name: 'Partners', href: '#' },
+    { name: 'About', href: 'about' },
+    { name: 'Contribute', href: '#' },
+    { name: 'Dataphyte', href: 'https://dataphyte.com' },
+    { name: 'tool', href: 'tool/stories' },
+    { name: 'Our Journey', href: 'journey' },
   ],
 
   social: [

@@ -13,6 +13,7 @@ import {
   popCardData,
 } from '@/data/home-data';
 import FeaturePopup from '@/components/pop-ups/feature-popup';
+import Head from './head';
 
 export default function Home() {
   const [featureModalOpen, setFeatureModalOpen] = useState(false);
@@ -25,6 +26,7 @@ export default function Home() {
 
   return (
     <div className='page__container'>
+      <Head />
       <Hero
         heading='MEET NUBIA'
         subHeading='An open-source AI tool that draws insight from your data and makes it

@@ -43,8 +43,24 @@ export default function Home() {
           initial={{ opacity: 0, scale: 1.5 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className='w-72 h-[400px] rounded-3xl shadow-2xl z-10 bg-white-main border border-black-thin'
-        />
+          className='w-72 h-[400px] rounded-3xl shadow-2xl z-10 bg-white-main border border-black-thin px-4 py-5 gap-1 flex flex-col items-center'
+        >
+          {/* ====== title */}
+          <div className='w-full h-10 bg-gray-800 rounded-lg mt-5' />
+
+          {/* ====== body */}
+          <div className='w-full h-2 bg-gray-500 rounded-lg mt-3' />
+          {[1, 2, 3, 4, 5, 6].map((item) => (
+            <div className='w-full h-2 bg-gray-500 rounded-lg' key={item} />
+          ))}
+
+          {/* ====== sub title */}
+          <div className='w-full h-6 bg-gray-800 rounded-lg mt-3' />
+          <div className='w-full h-2 bg-gray-500 rounded-lg mt-3' />
+          {[1, 2, 3, 4, 5, 6].map((item) => (
+            <div className='w-full h-2 bg-gray-500 rounded-lg' key={item} />
+          ))}
+        </motion.div>
 
         {/* ====== pop-out cards */}
         {heroPopCards.map((card) => (

@@ -43,7 +43,7 @@ const StoryCategory = () => {
                   router.push(`tool/stories/${storyRoute}/${story.title}`);
                 }}
               >
-                <p className='text-2xl font-medium font-inter text-text-light'>
+                <p className='text-2xl font-medium font-inter text-text-light text-center'>
                   {story.title} state
                 </p>
               </div>

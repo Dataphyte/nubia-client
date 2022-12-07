@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import CursorArrowRays from '@/icons/cursor-arrow-rays';
+import MailIcon from '@/icons/mail-icon';
 
 const Hero = ({ heading, subHeading = '' }) => {
   return (

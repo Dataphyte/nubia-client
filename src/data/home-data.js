@@ -105,17 +105,20 @@ export const featureContent = {
     bg: 'bg-[#1E293B]',
     body: 'Nubia Improves accuracy in story telling by taking off the burdern of Journalists from drawing insight from raw and dense data.',
     icon: 'https://cdn.lordicon.com/flqcnwch.json',
+    btnText: 'Ok',
   },
   feat_2: {
     title: 'Data analysis',
     bg: 'bg-violet-main',
     body: 'The stories produced by Nubia have been pre-analyzed, restructured and sorted well enough to be used right away for story telling.',
     icon: 'https://cdn.lordicon.com/nbdmfygb.json',
+    btnText: 'Ok',
   },
   feat_3: {
     title: 'Repetitive tasks',
     bg: 'bg-green-main',
     body: 'Due to the ability of Nubia to treat each entry point one after the other, There is no need for manual generation of stories that use the same template or have the same format.',
     icon: 'https://cdn.lordicon.com/jvucoldz.json',
+    btnText: 'Ok',
   },
 };

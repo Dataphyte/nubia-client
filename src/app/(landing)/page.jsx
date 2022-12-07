@@ -60,6 +60,7 @@ export default function Home() {
           {[1, 2, 3, 4, 5, 6].map((item) => (
             <div className='w-full h-2 bg-gray-500 rounded-lg' key={item} />
           ))}
+          <div className='w-2/3 h-8 bg-gray-800 rounded-lg mt-3' />
         </motion.div>
 
         {/* ====== pop-out cards */}

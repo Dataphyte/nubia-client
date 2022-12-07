@@ -1,8 +1,23 @@
 import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import { useRouter } from 'next/navigation';
 import { classNames } from '@/utils/classnames';
+import { Dialog, Transition } from '@headlessui/react';
+import Link from 'next/link';
 
-export default function FeaturePopup({ state, setState, content }) {
+export default function FeaturePopup({
+  state,
+  setState,
+  content = {
+    icon: null,
+    title: '',
+    body: '',
+    bg: null,
+    btnText: '',
+    btnLink: '/',
+  },
+}) {
+  const router = useRouter();
+
   return (
     <Transition.Root show={state} as={Fragment}>
       <Dialog as='div' className='relative z-50' onClose={setState}>
@@ -34,6 +49,7 @@ export default function FeaturePopup({ state, setState, content }) {
                   <lord-icon
                     src={content.icon}
                     trigger='loop'
+                    delay='1000'
                     colors='primary:#121331,secondary:#6d28d9'
                     style={{ width: '70px', height: '70px' }}
                   />
@@ -50,16 +66,31 @@ export default function FeaturePopup({ state, setState, content }) {
                   </div>
                 </div>
                 <div className='mt-5 sm:mt-6'>
-                  <button
-                    type='button'
-                    className={classNames(
-                      content.bg,
-                      'w-full py-1.5 duration-300 hover:shadow-lg rounded-md shadow-md text-white-off'
-                    )}
-                    onClick={() => setState(false)}
-                  >
-                    Ok
-                  </button>
+                  {content.btnLink ? (
+                    <Link
+                      type='button'
+                      className={classNames(
+                        content.bg,
+                        'w-full py-1.5 duration-300 hover:shadow-lg rounded-md shadow-md text-white-off flex items-center justify-center'
+                      )}
+                      onClick={() => setState(false)}
+                      href={content.btnLink}
+                      target='_blank'
+                    >
+                      {content.btnText}
+                    </Link>
+                  ) : (
+                    <button
+                      type='button'
+                      className={classNames(
+                        content.bg,
+                        'w-full py-1.5 duration-300 hover:shadow-lg rounded-md shadow-md text-white-off'
+                      )}
+                      onClick={() => setState(false)}
+                    >
+                      {content.btnText}
+                    </button>
+                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

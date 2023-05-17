@@ -40,6 +40,15 @@ export default function RootLayout({ children }) {
           />
         )}
         {children}
+        <Script
+          async
+          data-nscript='afterinteractive'
+          src='https://www.googletagmanager.com/gtag/js?id=G-JRMY44JJX0'
+        >
+          {` window.dataLayer = window.dataLayer || []; function gtag()
+          {dataLayer.push(arguments)}
+          gtag('js', new Date()); gtag('config', '${process.env.NEXT_PUBLIC_G_TAG}'')`}
+        </Script>
       </body>
     </html>
   );

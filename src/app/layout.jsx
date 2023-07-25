@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 import { subscribeStore } from '@/global/subscribeStore';
 import FeaturePopup from '@/components/pop-ups/feature-popup';
 
+import 'react-quill/dist/quill.snow.css';
+
 export default function RootLayout({ children }) {
   const [subModalOpen, setSubModalOpen] = useState(false);
   const { seen, setSeen } = subscribeStore();

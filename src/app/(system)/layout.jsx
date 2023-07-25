@@ -24,6 +24,7 @@ import { classNames } from 'src/utils/classnames';
 
 // ======= data imports -->
 import { navigation, userNavigation } from '@/data/toolData';
+import Notification from '@/src/components/pop-ups/notification';
 
 const Layout = ({ children }) => {
   const router = useRouter();
@@ -332,6 +333,7 @@ const Layout = ({ children }) => {
             </div>
           </main>
         </div>
+        <Notification />
       </div>
     </>
   );

@@ -77,4 +77,9 @@ html {
     @apply font-bold uppercase flex whitespace-nowrap flex-nowrap;
     font-size: 64px;
   }
+
+  /* FORM COMPONENTS */
+  .form__input {
+    @apply rounded-lg text-lg font-magistral shadow px-3 border focus:ring-violet-main h-10;
+  }
 }

@@ -6,6 +6,7 @@ import React from 'react';
 import AddDataCard from '@/src/components/tool-components/project-cards/AddDataCard';
 import StoryTemplateCard from '@/src/components/tool-components/project-cards/SToryTemplateCard';
 import { projectStore } from '@/src/global/projectStore';
+import CustomizeFeatures from '@/src/components/tool-components/project-cards/CustomizeFeatures';
 
 const quickActions = [
   { title: 'Overview', icon: 'https://cdn.lordicon.com/gmzxduhd.json' },
@@ -21,7 +22,7 @@ const EditProject = () => {
   const { currentTab, setCurrentTab } = projectStore();
 
   return (
-    <div className='w-full h-screen flex flex-col gap-3 relative'>
+    <div className='w-full min-h-screen flex flex-col gap-3 relative'>
       <ProjectStatus />
       <h1 className='text-3xl font-magistral font-bold'>New Project 1</h1>
 
@@ -57,7 +58,7 @@ const EditProject = () => {
             Overview: <p>Edit project</p>,
             'Add Data': <AddDataCard />,
             'Write Template': <StoryTemplateCard />,
-            'Customize features': <p>Customize features</p>,
+            'Customize features': <CustomizeFeatures />,
           }[currentTab]
         }
       </section>

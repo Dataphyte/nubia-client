@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
+import { projectStore } from '@/src/global/projectStore';
+import { classNames } from '@/src/utils/classnames';
 
 const DynamicEditor = dynamic(() => import('react-quill'), {
   loading: () => <p>Loading...</p>,
@@ -9,7 +11,8 @@ const DynamicEditor = dynamic(() => import('react-quill'), {
 
 const StoryTemplateCard = () => {
   const editorRef = useRef(null);
-  const [value, setValue] = useState('');
+  const { template, setTemplate, setStatus } = projectStore();
+  const [value, setValue] = useState(template);
   const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
@@ -18,8 +21,17 @@ const StoryTemplateCard = () => {
   }, []);
 
   useEffect(() => {
-    console.log(value);
-  }, [value]);
+    console.log(template);
+    template.length > 20 ? setStatus(3, true) : setStatus(3, false);
+  }, [template]);
+
+  // ======= handle save button -->
+  const handleSave = () => {
+    // TODO: Make it save to database
+    setTemplate(value);
+    console.log('Clicked!!');
+  };
+
   return (
     <div className='flex flex-col gap-3 w-full h-max py-2'>
       <span>
@@ -36,7 +48,16 @@ const StoryTemplateCard = () => {
       </span>
 
       <span className='flex items-center gap-5 mt-3'>
-        <button className='text-sm shadow-md rounded-md py-2 px-8 bg-green-main text-white-off duration-300 ease-out transition-all cursor-pointer hover:shadow-lg w-max'>
+        <button
+          className={classNames(
+            'text-sm shadow-md rounded-md py-2 px-8 duration-300 ease-out transition-allhover:shadow-lg w-max',
+            value === template
+              ? 'bg-black-thin text-black-main cursor-not-allowed'
+              : 'bg-green-main cursor-pointer text-white-off'
+          )}
+          disabled={value === template}
+          onClick={handleSave}
+        >
           Save
         </button>
 

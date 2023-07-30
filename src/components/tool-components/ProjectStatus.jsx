@@ -7,6 +7,7 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from '@heroicons/react/24/outline';
+import { projectStore } from '@/src/global/projectStore';
 
 const ProjectStatus = () => {
   const [open, setOpen] = useState(false);
@@ -41,31 +42,23 @@ export default ProjectStatus;
 // ======= Project status -->
 //=============================================>
 const Status = ({ action }) => {
+  const { status } = projectStore();
+
   return (
     <div className='w-full h-full p-4 flex flex-col gap-2 font-medium'>
-      {/* -- project details */}
-      <span className='text-sm flex items-center justify-between w-full'>
-        <p>Project details </p>
-        <CheckCircleIcon className='w-5 h-5 text-green-main' />
-      </span>
-
-      {/* -- add data */}
-      <span className='text-sm flex items-center justify-between w-full'>
-        <p>Add Data </p>
-        <XCircleIcon className='w-5 h-5 text-red-main' />
-      </span>
-
-      {/* -- Add template */}
-      <span className='text-sm flex items-center justify-between w-full'>
-        <p>Write a template </p>
-        <XCircleIcon className='w-5 h-5 text-red-main' />
-      </span>
-
-      {/* -- select features */}
-      <span className='text-sm flex items-center justify-between w-full'>
-        <p>Customize Features </p>
-        <XCircleIcon className='w-5 h-5 text-red-main' />
-      </span>
+      {status.map((status) => (
+        <span
+          className='text-sm flex items-center justify-between w-full'
+          key={status.id}
+        >
+          <p>{status.text} </p>
+          {status.complete ? (
+            <CheckCircleIcon className='w-5 h-5 text-green-main' />
+          ) : (
+            <XCircleIcon className='w-5 h-5 text-red-main' />
+          )}
+        </span>
+      ))}
 
       <button
         className='py-1 px-3 rounded text-white-off text-sm bg-violet-main shadow-md mt-3'

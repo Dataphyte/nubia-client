@@ -4,7 +4,7 @@ import { classNames } from '@/src/utils/classnames';
 import ProjectStatus from '@/src/components/tool-components/ProjectStatus';
 import React from 'react';
 import AddDataCard from '@/src/components/tool-components/project-cards/AddDataCard';
-import StoryTemplateCard from '@/src/components/tool-components/project-cards/SToryTemplateCard';
+import StoryTemplateCard from '@/src/components/tool-components/project-cards/StoryTemplateCard';
 import { projectStore } from '@/src/global/projectStore';
 import CustomizeFeatures from '@/src/components/tool-components/project-cards/CustomizeFeatures';
 

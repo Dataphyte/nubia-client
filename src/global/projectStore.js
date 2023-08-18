@@ -5,7 +5,7 @@ export const projectStore = create(
   persist(
     (set, get) => ({
       currentTab: 'Overview',
-      projectsData: null,
+      projectData: null,
       status: [
         { id: 1, text: 'Project Details', complete: true },
         { id: 2, text: 'Add Data', complete: false },

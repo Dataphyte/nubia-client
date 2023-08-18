@@ -5,7 +5,7 @@ import '../styles/fonts.css';
 import Script from 'next/script';
 import { useState, useEffect } from 'react';
 import { subscribeStore } from '@/global/subscribeStore';
-import FeaturePopup from '@/components/pop-ups/feature-popup';
+// import FeaturePopup from '@/components/pop-ups/feature-popup';
 
 import 'react-quill/dist/quill.snow.css';
 
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
 
       <body className='bg-white-off'>
         <Script src='https://cdn.lordicon.com/qjzruarw.js' />
-        {subModalOpen && (
+        {/* {subModalOpen && (
           <FeaturePopup
             state={subModalOpen}
             setState={setSubModalOpen}
@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
               body: 'Nubia is constantly growing and new features would continue to be added at the speed of light ⚡️. Subscribe to be notified of important features!',
             }}
           />
-        )}
+        )} */}
         {children}
         <Script
           async

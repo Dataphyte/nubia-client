@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import { classNames } from '@/utils/classnames';
-import { Dialog, Transition } from '@headlessui/react';
+import { Transition, Dialog } from '@headlessui/react';
 import Link from 'next/link';
 
 export default function FeaturePopup({

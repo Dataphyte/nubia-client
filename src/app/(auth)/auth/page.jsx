@@ -1,13 +1,29 @@
 'use client';
 
-import React, { useState } from 'react';
 import Link from 'next/link';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { userStore } from '@/src/global/userStore';
+import { auth } from '@/src/firebase';
 
 //=============================================>
 // ======= Main component -->
 //=============================================>
 const AuthPage = () => {
+  const { setUser } = userStore();
   const [authAction, setAuthAction] = useState('signin');
+  const [userDetails, setUserDetails] = useState({ email: '', password: '' });
+
+  // ======= handle login -->
+  const handleSignin = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(
+      auth,
+      userDetails.email,
+      userDetails.password
+    ).then((userCredentials) => console.log(userCredentials));
+  };
 
   return (
     <div className='w-full h-screen min-h-400px bg-white-off flex items-center flex-col justify-center'>
@@ -16,7 +32,7 @@ const AuthPage = () => {
           <h1 className='font-bold text-3xl'>Sign in to your Account</h1>
           <p className='font-light mt-1.5'>
             Don't have an account?&nbsp;
-            <Link className='inline-link' href='#'>
+            <Link className='inline-link' href='auth/signup'>
               Create a new account
             </Link>
           </p>
@@ -29,6 +45,10 @@ const AuthPage = () => {
               required
               type='email'
               name='email'
+              value={userDetails.email}
+              onChange={(e) =>
+                setUserDetails((state) => ({ ...state, email: e.target.value }))
+              }
               autoComplete='email'
               className='form__input'
             />
@@ -41,6 +61,13 @@ const AuthPage = () => {
               required
               type='password'
               name='password'
+              value={userDetails.password}
+              onChange={(e) =>
+                setUserDetails((state) => ({
+                  ...state,
+                  password: e.target.value,
+                }))
+              }
               autoComplete='password'
               className='form__input'
             />
@@ -49,6 +76,7 @@ const AuthPage = () => {
           <button
             type='submit'
             className='bg-violet-main text-white-off text-lg shadow rounded-md py-2 px-14 mt-3 w-max'
+            onClick={handleSignin}
           >
             Login
           </button>

@@ -28,6 +28,29 @@ export const fileLoader = (event, setState, details, setShow, setContent) => {
         }),
         contents,
         details,
+        features: [
+          {
+            id: 1,
+            name: 'GraphQL API',
+            href: '#',
+            type: 'Data',
+            formula: 'Age * 300 - ( start_time )',
+          },
+          {
+            id: 2,
+            name: 'GraphQL API',
+            href: '#',
+            type: 'Custom',
+            formula: 'Age * 300 - ( start_time )',
+          },
+          {
+            id: 3,
+            name: 'New feature API',
+            href: '#',
+            type: 'Custom',
+            formula: 'Age * 300 - ( start_time )',
+          },
+        ],
       });
 
     if (!setState)

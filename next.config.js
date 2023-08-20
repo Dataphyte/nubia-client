@@ -6,10 +6,6 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'www.tutorialsteacher.com'],
   },
-  webpack(config) {
-    config.infrastructureLogging = { debug: /PackFileCache/ };
-    return config;
-  },
 };
 
 module.exports = nextConfig;

@@ -6,23 +6,28 @@ import dynamic from 'next/dynamic';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { userStore } from '@/src/global/userStore';
 import { auth } from '@/src/firebase';
+import { useRouter } from 'next/navigation';
 
 //=============================================>
 // ======= Main component -->
 //=============================================>
 const AuthPage = () => {
   const { setUser } = userStore();
+  const router = useRouter();
   const [authAction, setAuthAction] = useState('signin');
   const [userDetails, setUserDetails] = useState({ email: '', password: '' });
-
   // ======= handle login -->
-  const handleSignin = (e) => {
+  const handleSignin = async (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(
-      auth,
-      userDetails.email,
-      userDetails.password
-    ).then((userCredentials) => console.log(userCredentials));
+    signInWithEmailAndPassword(auth, userDetails.email, userDetails.password)
+      .then((userCredentials) => {
+        setUser(userCredentials.user);
+        router.push('tool/dashboard');
+      })
+      .catch((err) => {
+        console.log(err.message); // TODO: remove before push to prod env
+        alert('Email or password wrong');
+      });
   };
 
   return (

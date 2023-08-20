@@ -1,4 +1,4 @@
-import create from 'zustand';
+import {create} from 'zustand';
 
 export const notificationStore = create((set) => ({
   content: { text: '', type: 'success', description: '' },

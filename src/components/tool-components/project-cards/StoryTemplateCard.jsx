@@ -7,24 +7,20 @@ import { classNames } from '@/src/utils/classnames';
 import { PlusSmallIcon } from '@heroicons/react/20/solid';
 import ReactQuill from 'react-quill';
 
-const DynamicEditor = dynamic(() => import('react-quill'), {
-  loading: () => (
-    <div className='w-full h-130 flex flex-col gap-3 font-medium text-xl text-text-light text-center items-center justify-center'>
-      <lord-icon
-        src='https://cdn.lordicon.com/ukodqrxd.json'
-        trigger='loop'
-        colors='primary:#121331,secondary:#6d28d9'
-        style={{ width: '80px', height: '80px' }}
-      />
-      <p>Loading editor...</p>
-    </div>
-  ),
-  ssr: false,
-});
-
-const ForwardedRefComponent = React.forwardRef((props, ref) => (
-  <DynamicEditor {...props} forwardedRef={ref} />
-));
+// const DynamicEditor = dynamic(() => import('react-quill'), {
+//   loading: () => (
+//     <div className='w-full h-130 flex flex-col gap-3 font-medium text-xl text-text-light text-center items-center justify-center'>
+//       <lord-icon
+//         src='https://cdn.lordicon.com/ukodqrxd.json'
+//         trigger='loop'
+//         colors='primary:#121331,secondary:#6d28d9'
+//         style={{ width: '80px', height: '80px' }}
+//       />
+//       <p>Loading editor...</p>
+//     </div>
+//   ),
+//   ssr: false,
+// });
 
 const StoryTemplateCard = () => {
   const editorRef = useRef(null);

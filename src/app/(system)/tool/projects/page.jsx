@@ -57,7 +57,10 @@ const Projects = () => {
         >
           {userProjects.map((project) => (
             <div className='col-span-3 lg:col-span-1 border p-4 rounded shadow-md cursor-pointer duratrion-200 transition-all ease-in-out hover:ring-2 hover:ring-violet-light bg-white-main hover:shadow-xl flex flex-col gap-1'>
-              <p className='font-bold text-text-medium text-lg'>
+              <p
+                className='font-bold text-text-medium text-lg'
+                key={project._id}
+              >
                 {project.title}
               </p>
               <p className='text-sm font-thin'>

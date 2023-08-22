@@ -36,7 +36,7 @@ const AuthPage = () => {
         <div className='font-magistral'>
           <h1 className='font-bold text-3xl'>Sign in to your Account</h1>
           <p className='font-light mt-1.5'>
-            Don't have an account?&nbsp;
+            Don&apos;t have an account?&nbsp;
             <Link className='inline-link' href='auth/signup'>
               Create a new account
             </Link>

@@ -1,18 +1,20 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { projectStore } from '@/src/global/projectStore';
 import { classNames } from '@/src/utils/classnames';
-import { PlusSmallIcon } from '@heroicons/react/20/solid';
+import { projectStore } from '@/src/global/projectStore';
+import React, { useState, useEffect, useRef } from 'react';
+import { PlusSmallIcon, XMarkIcon } from '@heroicons/react/20/solid';
 
 const StoryTemplateCard = () => {
   const editorRef = useRef(null);
+  const [cursorPositiuon, setCursorPosition] = useState(0);
+  const [showFeatMenu, setShowFeatMenu] = useState(false);
   const [Editor, setEditor] = useState(
     <div>
       <p>Loading</p>
     </div>
   );
-  const { template, setTemplate, setStatus } = projectStore();
+  const { template, setTemplate, setStatus, projectData } = projectStore();
   const [value, setValue] = useState(template);
   const [isAvailable, setIsAvailable] = useState(false);
 
@@ -42,11 +44,12 @@ const StoryTemplateCard = () => {
 
   // ======= handle add feature -->
   const addFeat = () => {
-    setValue(
-      (state) =>
-        `${state.slice(0, -4)} <b><em>{{ new Feature }}</em></b> ${state.slice(
-          -4
-        )} `
+    const cursorPosition = editorRef.current.unprivilegedEditor.getSelection();
+    editorRef.current.editor?.insertText(
+      cursorPosition ? cursorPosition : 0,
+      ' [- TEXT! -] ',
+      'bold',
+      true
     );
   };
 
@@ -65,9 +68,45 @@ const StoryTemplateCard = () => {
         )}
         <button
           className='w-7 h-7 rounded-md shadow border hover:border-black-light flex items-center justify-center absolute top-2 right-3 md:right-5 transition-all duration-300 ease-out hover:bg-white-off hover:shadow-md'
-          onClick={addFeat}
+          onClick={() => {
+            setShowFeatMenu((state) => !state);
+            // console.log(projectData.features);
+          }}
         >
-          <PlusSmallIcon className='w-full h-full text-black-main' />
+          {
+            {
+              false: <PlusSmallIcon className='w-8 h-8 text-black-main' />,
+              true: <XMarkIcon className='w-5 h-5 text-black-main' />,
+            }[showFeatMenu]
+          }
+          <span
+            className={classNames(
+              'w-44 min-h-20 py-3 px-1.5 h-max bg-white-main border transition-all duration-300 ease-out hover:border-violet-main absolute -right-3 rounded-md shadow-lg',
+              showFeatMenu
+                ? 'flex top-10 items-center justify-center '
+                : 'opacity-0 top-0 pointer-events-none'
+            )}
+          >
+            <ul
+              onClick={addFeat}
+              className='flex flex-col items-start justify-center gap-1.5 w-full'
+            >
+              {projectData ? (
+                projectData.features.map((data, idx) => {
+                  return (
+                    <li
+                      key={idx}
+                      className='text-text-dark w-full hover:bg-violet-light hover:shadow-md rounded-md py-1'
+                    >
+                      {data.name}
+                    </li>
+                  );
+                })
+              ) : (
+                <p className='w-full text-center'>No Data</p>
+              )}
+            </ul>
+          </span>
         </button>
       </span>
 
@@ -89,7 +128,6 @@ const StoryTemplateCard = () => {
           Show RawText
         </button>
       </span>
-      {/* {isAvailable && <ReactQuill />} */}
     </div>
   );
 };

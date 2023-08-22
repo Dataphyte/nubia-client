@@ -1,11 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useEffect, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { userStore } from '@/src/global/userStore';
-import { auth } from '@/src/firebase';
 import { useRouter } from 'next/navigation';
 
 //=============================================>
@@ -14,11 +12,14 @@ import { useRouter } from 'next/navigation';
 const AuthPage = () => {
   const { setUser } = userStore();
   const router = useRouter();
+  const [auth, setAuth] = useState(null);
   const [authAction, setAuthAction] = useState('signin');
   const [userDetails, setUserDetails] = useState({ email: '', password: '' });
+
   // ======= handle login -->
   const handleSignin = async (e) => {
     e.preventDefault();
+    // signInWithRedirect(auth, provider);
     signInWithEmailAndPassword(auth, userDetails.email, userDetails.password)
       .then((userCredentials) => {
         setUser(userCredentials.user);
@@ -29,6 +30,13 @@ const AuthPage = () => {
         alert('⚠️\nEmail or password incorrect! \nPlease check and try again');
       });
   };
+
+  useEffect(() => {
+    setAuth(() => {
+      const { auth } = require('@/src/utils/firebase/firebase');
+      return auth;
+    });
+  }, []);
 
   return (
     <div className='w-full h-screen min-h-400px bg-white-off flex items-center flex-col justify-center'>

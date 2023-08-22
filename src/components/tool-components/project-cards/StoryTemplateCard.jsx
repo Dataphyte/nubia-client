@@ -1,29 +1,17 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import { projectStore } from '@/src/global/projectStore';
 import { classNames } from '@/src/utils/classnames';
 import { PlusSmallIcon } from '@heroicons/react/20/solid';
-import ReactQuill from 'react-quill';
-
-// const DynamicEditor = dynamic(() => import('react-quill'), {
-//   loading: () => (
-//     <div className='w-full h-130 flex flex-col gap-3 font-medium text-xl text-text-light text-center items-center justify-center'>
-//       <lord-icon
-//         src='https://cdn.lordicon.com/ukodqrxd.json'
-//         trigger='loop'
-//         colors='primary:#121331,secondary:#6d28d9'
-//         style={{ width: '80px', height: '80px' }}
-//       />
-//       <p>Loading editor...</p>
-//     </div>
-//   ),
-//   ssr: false,
-// });
 
 const StoryTemplateCard = () => {
   const editorRef = useRef(null);
+  const [Editor, setEditor] = useState(
+    <div>
+      <p>Loading</p>
+    </div>
+  );
   const { template, setTemplate, setStatus } = projectStore();
   const [value, setValue] = useState(template);
   const [isAvailable, setIsAvailable] = useState(false);
@@ -31,6 +19,11 @@ const StoryTemplateCard = () => {
   useEffect(() => {
     // ======= Avoid Nextjs runtime error "document is not defined" -->
     window && document && setIsAvailable(true);
+
+    setEditor(() => {
+      const ReactQuill = require('react-quill');
+      return ReactQuill;
+    });
   }, []);
 
   useEffect(() => {
@@ -61,7 +54,7 @@ const StoryTemplateCard = () => {
     <div className='flex flex-col gap-3 w-full h-max py-2'>
       <span className='relative'>
         {isAvailable && (
-          <ReactQuill
+          <Editor
             theme='snow'
             ref={editorRef}
             value={value}

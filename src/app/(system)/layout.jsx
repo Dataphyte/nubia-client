@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { userStore } from '@/src/global/userStore';
 
 // ======= component imports -->
 import { Dialog, Menu, Transition } from '@headlessui/react';
@@ -27,6 +28,7 @@ import { navigation, userNavigation } from '@/data/toolData';
 import Notification from '@/src/components/pop-ups/notification';
 
 const Layout = ({ children }) => {
+  const { user } = userStore();
   const router = useRouter();
   const pathname = usePathname();
   const { storyRoute, setCurrentStoryCategory, setCurrentData } = storyStore();
@@ -41,6 +43,13 @@ const Layout = ({ children }) => {
       : null,
     fetcher
   );
+
+  // ======= user effect -->
+  useEffect(() => {
+    if (!user) {
+      router.replace('/auth');
+    }
+  });
 
   // ======= Story effect -->
   useEffect(() => {

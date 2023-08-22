@@ -26,13 +26,13 @@ const AuthPage = () => {
       })
       .catch((err) => {
         console.log(err.message); // TODO: remove before push to prod env
-        alert('Email or password wrong');
+        alert('⚠️\nEmail or password incorrect! \nPlease check and try again');
       });
   };
 
   return (
     <div className='w-full h-screen min-h-400px bg-white-off flex items-center flex-col justify-center'>
-      <div className='flex flex-col gap-3'>
+      <div className='w-full md:w-max first-letter:flex flex-col gap-3 bg-white-main py-12 px-7 rounded-lg shadow-md'>
         <div className='font-magistral'>
           <h1 className='font-bold text-3xl'>Sign in to your Account</h1>
           <p className='font-light mt-1.5'>
@@ -58,7 +58,6 @@ const AuthPage = () => {
               className='form__input'
             />
           </div>
-
           {/* -- Password */}
           <div className='w-full flex flex-col justify-start gap-1'>
             <label htmlFor='password'>Password</label>
@@ -77,14 +76,24 @@ const AuthPage = () => {
               className='form__input'
             />
           </div>
-          {/* --- Submit Button  ----->*/}
-          <button
-            type='submit'
-            className='bg-violet-main text-white-off text-lg shadow rounded-md py-2 px-14 mt-3 w-max'
-            onClick={handleSignin}
-          >
-            Login
-          </button>
+          <span className='flex w-full justify-between items-center'>
+            {/* --- Submit Button  ----->*/}
+            <button
+              type='submit'
+              className='bg-violet-main text-white-off shadow rounded-md py-1.5 px-14 mt-3 w-max'
+              onClick={handleSignin}
+            >
+              Login
+            </button>
+
+            <button
+              type='button'
+              className='bg-green-main text-white-off shadow rounded-md py-1.5 px-14 mt-3 w-max'
+              onClick={() => router.push('/')}
+            >
+              Home
+            </button>
+          </span>
         </form>
       </div>
     </div>

@@ -1,9 +1,14 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import CursorArrowRays from '@/icons/cursor-arrow-rays';
 import MailIcon from '@/icons/mail-icon';
+import { userStore } from '../global/userStore';
 
 const Hero = ({ heading, subHeading = '' }) => {
+  const { user } = userStore();
+
   return (
     <header className='hero__container'>
       <h1 className='text-4xl md:text-6xl font-black font-magistral text-text-dark max-w-3xl uppercase'>
@@ -14,7 +19,7 @@ const Hero = ({ heading, subHeading = '' }) => {
       </p>
 
       {/* ====== CALL TO ACTION */}
-      <Link href='tool/dashboard' className='hero-link group'>
+      <Link href={user ? 'tool/dashboard' : 'auth'} className='hero-link group'>
         Try it out
         <CursorArrowRays sx='w-5 h-5 duration-300 ease-out -translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 absolute right-8 group-hover:right-5' />
       </Link>

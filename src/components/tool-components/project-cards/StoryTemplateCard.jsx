@@ -43,14 +43,18 @@ const StoryTemplateCard = () => {
   };
 
   // ======= handle add feature -->
-  const addFeat = () => {
+  const addFeat = (data) => {
     const cursorPosition = editorRef.current.unprivilegedEditor.getSelection();
-    editorRef.current.editor?.insertText(
-      cursorPosition ? cursorPosition : 0,
-      ' [- TEXT! -] ',
-      'bold',
-      true
-    );
+    cursorPosition
+      ? editorRef.current.editor?.insertText(
+          cursorPosition,
+          ` {{ ${data} }} `,
+          'bold',
+          true
+        )
+      : alert(
+          '📝 Place your cursor where you want to add a feature on the Editor.'
+        );
   };
 
   return (
@@ -87,16 +91,14 @@ const StoryTemplateCard = () => {
                 : 'opacity-0 top-0 pointer-events-none'
             )}
           >
-            <ul
-              onClick={addFeat}
-              className='flex flex-col items-start justify-center gap-1.5 w-full'
-            >
+            <ul className='flex flex-col items-start justify-center gap-1.5 w-full'>
               {projectData ? (
                 projectData.features.map((data, idx) => {
                   return (
                     <li
                       key={idx}
                       className='text-text-dark w-full hover:bg-violet-light hover:shadow-md rounded-md py-1'
+                      onClick={() => addFeat(data.name)}
                     >
                       {data.name}
                     </li>

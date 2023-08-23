@@ -9,14 +9,14 @@ const dataCards = [
 
 const Dashboard = () => {
   return (
-    <div className='w-full py-5 px-2 md:px-5 grid grid-cols-5 gap-7'>
+    <div className='w-full py-5 px-2 md:px-5 grid grid-cols-4 gap-7'>
       {/* -- section 1 */}
-      <div className='col-span-2 h-56 rounded-md shadow-md bg-white-main border'></div>
+      <div className='col-span-2 h-44 rounded-md shadow-md bg-white-main border'></div>
 
-      <div className='col-span-3 h-56 rounded-md shadow-md bg-white-main'></div>
+      <div className='col-span-2 h-44 rounded-md shadow-md bg-white-main'></div>
 
       {/* -- section2  */}
-      <dl className='mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4 col-span-5'>
+      <dl className='mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4 col-span-4'>
         {dataCards.map((item) => (
           <div
             key={item.name}
@@ -33,7 +33,7 @@ const Dashboard = () => {
       </dl>
 
       {/* -- section 3 */}
-      <div className='col-span-3 h-500 rounded-md shadow-md bg-white-main'></div>
+      <div className='col-span-2 h-500 rounded-md shadow-md bg-white-main'></div>
 
       <div className='col-span-2 h-500 rounded-md shadow-md bg-white-main'></div>
     </div>

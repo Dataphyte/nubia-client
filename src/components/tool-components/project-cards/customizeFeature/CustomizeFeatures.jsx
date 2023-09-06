@@ -5,12 +5,70 @@ import { projectStore } from '@/src/global/projectStore';
 import { classNames } from '@/src/utils/classnames';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/20/solid';
+import {
+  PencilIcon,
+  TrashIcon,
+  PlusIcon,
+  PlusSmallIcon,
+  MinusIcon,
+} from '@heroicons/react/20/solid';
+import EditFeatFormula from './EditFeatFormula';
 
 const CustomizeFeatures = () => {
   const [currentFeat, setCurrentFeat] = useState({});
-  const { projectData, setProjectData } = projectStore();
+  const { features, setFeatures } = projectStore();
   const [showEditForm, setShowEditForm] = useState(false);
+
+  useEffect(() => {
+    setFeatures([
+      {
+        id: 1,
+        name: 'Feature 1',
+        href: '#',
+        type: 'Data',
+        formula: null,
+      },
+      {
+        id: 2,
+        name: 'Feature 2',
+        href: '#',
+        type: 'Data',
+        formula: null,
+      },
+      {
+        id: 3,
+        name: 'New feature API',
+        href: '#',
+        type: 'Custom',
+        formula: JSON.stringify([
+          {
+            type: 'Data',
+            field: 'Filed 1',
+            value: null,
+            operand: '+',
+          },
+          {
+            type: 'Custom',
+            field: null,
+            value: '300',
+            operand: '-',
+          },
+          {
+            type: 'Data',
+            field: 'Filed 5',
+            value: null,
+            operand: '*',
+          },
+          {
+            type: 'Data',
+            field: 'Filed 1',
+            value: null,
+            operand: '/',
+          },
+        ]),
+      },
+    ]);
+  }, []);
 
   return (
     <div className='flex flex-col gap-2 w-full'>
@@ -24,8 +82,8 @@ const CustomizeFeatures = () => {
         role='list'
         className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
       >
-        {projectData &&
-          projectData.features.map((feature) => (
+        {features &&
+          features.map((feature) => (
             <li
               key={feature.id}
               className='col-span-1 divide-y divide-gray-200 rounded-lg bg-white lg:col-span-1 border shadow-md cursor-pointer duratrion-200 transition-all ease-in-out hover:ring-2 hover:ring-violet-light bg-white-main hover:shadow-xl flex flex-col gap-1'
@@ -48,7 +106,7 @@ const CustomizeFeatures = () => {
                     </span>
                   </div>
                   <p className='mt-1 truncate text-sm text-gray-500'>
-                    {feature.formula}
+                    {feature.formula || '__Nan__'}
                   </p>
                 </div>
               </div>
@@ -70,16 +128,13 @@ const CustomizeFeatures = () => {
                     </p>
                   </div>
                   <div className='-ml-px flex w-0 flex-1 group'>
-                    <a
-                      href={`tel:${feature.telephone}`}
-                      className='relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900'
-                    >
+                    <p className='relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900'>
                       <TrashIcon
                         className='h-5 w-5 text-gray-400 group-hover:text-red-main'
                         aria-hidden='true'
                       />
                       Delete
-                    </a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -110,12 +165,25 @@ export default CustomizeFeatures;
 const FeatEditorForm = ({ open, setOpen, feature }) => {
   const [localFeat, setLocalFeat] = useState(feature);
   const [DataFeat, setDataFeat] = useState(false);
+  const [featureFormula, setFeatureFormula] = useState([{}]);
+  const [showFormularEdit, setShowFormulaEdit] = useState(false);
   const { projectData, setProjectData } = projectStore();
 
   useEffect(() => {
     setLocalFeat(feature);
     console.log(localFeat);
   }, [feature]);
+
+  // ======= edit feature formula -->
+  const handleFormulaEdit = (action, formula) => {
+    if (action === 'add') {
+      setFeatureFormula((state) => [...state, formula]);
+    } else if (action === 'delete') {
+      // setFeatureFormula(state => ([...state, formula ]))
+    }
+
+    return;
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -262,13 +330,75 @@ const FeatEditorForm = ({ open, setOpen, feature }) => {
                             </div>
 
                             {/* -- Customize feature */}
-                            <div className='sm:col-span-3'>
+                            <div className='sm:col-span-6 w-full transition-all duration-300 ease-out h-max'>
                               <label
-                                htmlFor='feature-type'
+                                htmlFor='feature-formula'
                                 className='block text-sm font-medium leading-6 text-gray-900'
                               >
-                                Manage custom feature
+                                Manage custom feature formula
                               </label>
+
+                              {
+                                {
+                                  Data: (
+                                    <p className='p-1.5 rounded bg-red-light border px-3 text-xs mt-4'>
+                                      ⚡Feature formula only available For
+                                      Custom Features
+                                    </p>
+                                  ),
+                                  Custom: (
+                                    <div
+                                      id='feature-formula'
+                                      className='w-full min-h-20 py-2 px-1 h-max transition-all duration-300 ease-out flex flex-col gap-3'
+                                    >
+                                      {feature.type === 'Custom' &&
+                                        localFeat.formula &&
+                                        JSON.parse(localFeat.formula).map(
+                                          (entry, idx) => (
+                                            <span
+                                              key={idx}
+                                              className='w-full flex items-center justify-between py-1 px-3 border rounded-md hover:shadow-md border-gray-400 bg-white-off'
+                                            >
+                                              <p>
+                                                {entry.value ? (
+                                                  entry.value
+                                                ) : (
+                                                  <em>
+                                                    <b>{entry.field}</b>
+                                                  </em>
+                                                )}
+                                              </p>
+                                              <p className='px-3 text-lg h-max w-max'>
+                                                {` [ ${entry.operand} ]`}
+                                              </p>
+                                              <button
+                                                type='button'
+                                                className='rounded-md shadow-md  bg-red-main p-0.5 transition-all ease-out duration-200 group relative'
+                                              >
+                                                <MinusIcon className='h-3 w-4 text-white-main font-bold' />
+                                                <div className='tool__tip right-0'>
+                                                  <p>Delete entry</p>
+                                                </div>
+                                              </button>
+                                            </span>
+                                          )
+                                        )}
+
+                                      {/* -- add entry btn */}
+                                      <button
+                                        type='button'
+                                        className='rounded-md shadow-md border bg-white-off p-0.5 transition-all ease-out duration-200 hover:border-violet-main group relative mt-2 w-max hover:shadow-lg'
+                                        onClick={() => setShowFormulaEdit(true)}
+                                      >
+                                        <PlusSmallIcon className='h-5 w-5 text-black-bg' />
+                                        <div className='tool__tip'>
+                                          <p>Add new Entry</p>
+                                        </div>
+                                      </button>
+                                    </div>
+                                  ),
+                                }[localFeat.type]
+                              }
                             </div>
                           </div>
                         </div>
@@ -281,6 +411,10 @@ const FeatEditorForm = ({ open, setOpen, feature }) => {
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
+              <EditFeatFormula
+                open={showFormularEdit}
+                setOpen={setShowFormulaEdit}
+              />
             </div>
           </div>
         </div>

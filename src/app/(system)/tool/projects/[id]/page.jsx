@@ -6,7 +6,8 @@ import React from 'react';
 import AddDataCard from '@/src/components/tool-components/project-cards/AddDataCard';
 import StoryTemplateCard from '@/src/components/tool-components/project-cards/StoryTemplateCard';
 import { projectStore } from '@/src/global/projectStore';
-import CustomizeFeatures from '@/src/components/tool-components/project-cards/CustomizeFeatures';
+import CustomizeFeatures from '@/src/components/tool-components/project-cards/customizeFeature/CustomizeFeatures';
+import ProjectOverview from '@/src/components/tool-components/project-cards/ProjectOverview';
 
 const quickActions = [
   { title: 'Overview', icon: 'https://cdn.lordicon.com/gmzxduhd.json' },
@@ -55,7 +56,7 @@ const EditProject = () => {
       <section className='mt-6'>
         {
           {
-            Overview: <p>Edit project</p>,
+            Overview: <ProjectOverview />,
             'Add Data': <AddDataCard />,
             'Write Template': <StoryTemplateCard />,
             'Customize features': <CustomizeFeatures />,

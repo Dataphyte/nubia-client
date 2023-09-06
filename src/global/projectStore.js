@@ -16,6 +16,14 @@ export const projectStore = create(
       template: '',
       features: [],
       setFeatures: (features) => set({ features }),
+      editFeatures: (action, data, id) => {
+        if (action === 'add')
+          set((state) => ({ features: state.features.push(data) }));
+        else if (action === 'delete')
+          set((state) => ({
+            features: state.features.pop((feat) => feat.id === id),
+          }));
+      },
       setTemplate: (template) => set({ template }),
       setStatus: (id, status) =>
         set((state) => ({
@@ -28,7 +36,7 @@ export const projectStore = create(
     }),
     {
       name: 'project-data',
-      getStorage: () => sessionStorage,
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );

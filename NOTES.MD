@@ -1,16 +1,18 @@
-# **IMPORTANT NOTES**
+# <p align = 'center'>**IMPORTANT NOTES**</p>
+
+## 📝 Table of Contents
 
 - [Things to Review](#review)
 - [Issues to review](#issues)
 - [Suggestions to consider](#suggestions)
 - [Important Schemas](#schemas)
 
-## REVIEW M<a name = 'review'></a>
+## 👀 REVIEW <a name = 'review'></a>
 
 - What happens when the user has set features and template but changes data
 - What happens to a feature in template if it has been added to the template but deleted from the feature customization list
 
-## ISSUES <a name = 'issues'></a>
+## ⚠️ ISSUES <a name = 'issues'></a>
 
 - Ref on Template editor not returning Quill instance
 - Based on above issue, inserting features in between template text is nearly impossible as cursor index cannot be determined (Lack of access to Quill instance === Lack of access to it's methods). Hence features can only be appended to temp0late text as a whole.
@@ -18,11 +20,11 @@
 
 - What happens if the user wants to create a story with 2 different datasets that have different layout and field count.
 
-## SUGGESTIONS <a name = 'suggestions'></a>
+## 💭 SUGGESTIONS <a name = 'suggestions'></a>
 
 - Get a new template library
 
-## IMPORTANT SCHEMAS <a name = 'schemas'></a>
+## 📋 IMPORTANT SCHEMAS <a name = 'schemas'></a>
 
 ### Project Schema
 
@@ -54,7 +56,7 @@
             {
               type: 'Data' | 'Custom', // Type of value
               field?: String,  // Field from dataset (if the type is data)
-              value: String | Number, // Value to add (if the type is custom)
+              value: String // Value to add (if the type is custom)
               operand: '+' | '-' | '*' | '/' | null, // Operant to prefix with the next value
             }
        ],

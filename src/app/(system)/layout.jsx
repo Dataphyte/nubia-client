@@ -45,11 +45,12 @@ const Layout = ({ children }) => {
   );
 
   // ======= user effect -->
-  useEffect(() => {
-    if (!user) {
-      router.replace('/auth');
-    }
-  });
+  // TODO: Uncomment to check for user
+  // useEffect(() => {
+  //   if (!user) {
+  //     router.replace('/auth');
+  //   }
+  // });
 
   // ======= Story effect -->
   useEffect(() => {

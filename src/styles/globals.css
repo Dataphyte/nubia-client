@@ -82,4 +82,9 @@ html {
   .form__input {
     @apply rounded-lg text-lg font-magistral shadow px-3 border focus:ring-violet-main h-10;
   }
+
+  /* Random components */
+  .tool__tip {
+    @apply p-1.5 rounded-md shadow-md z-10  bg-black-bg/70 text-white-off text-xs absolute w-max bottom-0 pointer-events-none hidden group-hover:-bottom-10 group-hover:block transition-all duration-200 ease-out;
+  }
 }

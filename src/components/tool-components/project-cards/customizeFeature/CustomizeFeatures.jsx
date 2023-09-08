@@ -128,7 +128,14 @@ const CustomizeFeatures = () => {
                     </p>
                   </div>
                   <div className='-ml-px flex w-0 flex-1 group'>
-                    <p className='relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900'>
+                    <p
+                      className='relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900'
+                      onClick={() =>
+                        setFeatures(
+                          features.filter((feat) => feat.id !== feature.id)
+                        )
+                      }
+                    >
                       <TrashIcon
                         className='h-5 w-5 text-gray-400 group-hover:text-red-main'
                         aria-hidden='true'
@@ -178,12 +185,22 @@ const FeatEditorForm = ({ open, setOpen, feature }) => {
   const handleFormulaEdit = (action, formula) => {
     if (action === 'add') {
       setFeatureFormula((state) => [...state, formula]);
+      setLocalFeat((state) => ({
+        ...state,
+        formula:
+          typeof state.formula === 'string'
+            ? state.formula.slice(0, -1) + ',' + JSON.stringify(formula) + ']'
+            : JSON.stringify([formula]),
+      }));
     } else if (action === 'delete') {
       // setFeatureFormula(state => ([...state, formula ]))
     }
 
     return;
   };
+  useEffect(() => {
+    console.log(localFeat);
+  }, [featureFormula]);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -289,7 +306,11 @@ const FeatEditorForm = ({ open, setOpen, feature }) => {
                                     }))
                                   }
                                   value={localFeat.type}
+                                  defaultValue='None'
                                 >
+                                  <option value='None' disabled>
+                                    ~~ Select Type ~~
+                                  </option>
                                   <option value='Data'>Data</option>
                                   <option value='Custom'>Custom</option>
                                 </select>
@@ -315,8 +336,11 @@ const FeatEditorForm = ({ open, setOpen, feature }) => {
                                       : ' ring-green-main '
                                   )}
                                   disabled={localFeat.type == 'Custom'}
+                                  defaultValue='None'
                                 >
-                                  <option>~~ Select field ~~</option>
+                                  <option disabled value='None'>
+                                    ~~ Select field ~~
+                                  </option>
                                   {projectData &&
                                     projectData.parsed.meta.fields.map(
                                       (field, idx) => (
@@ -414,6 +438,7 @@ const FeatEditorForm = ({ open, setOpen, feature }) => {
               <EditFeatFormula
                 open={showFormularEdit}
                 setOpen={setShowFormulaEdit}
+                action={handleFormulaEdit}
               />
             </div>
           </div>

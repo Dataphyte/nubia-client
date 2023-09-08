@@ -3,9 +3,15 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import { projectStore } from '@/src/global/projectStore';
+import { classNames } from '@/src/utils/classnames';
 
 export default function EditFeatFormula({ open, setOpen, action }) {
-  //   const [open, setOpen] = useState(true);
+  const [formula, setFormula] = useState({
+    type: 'Data',
+    field: '',
+    value: '',
+    operand: null,
+  });
   const { projectData } = projectStore();
 
   const cancelButtonRef = useRef(null);
@@ -69,6 +75,16 @@ export default function EditFeatFormula({ open, setOpen, action }) {
                           <select
                             id='type'
                             name='type'
+                            value={formula.type}
+                            onChange={(e) =>
+                              setFormula((state) => ({
+                                ...state,
+                                type: e.target.value,
+                                /**Clear the value when the type is changed */
+                                value:
+                                  e.target.value === 'Data' ? '' : state.value,
+                              }))
+                            }
                             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
                           >
                             <option>Data</option>
@@ -89,10 +105,30 @@ export default function EditFeatFormula({ open, setOpen, action }) {
                           <select
                             id='field'
                             name='field'
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                            value={formula.field}
+                            onChange={(e) =>
+                              setFormula((state) => ({
+                                ...state,
+                                field: e.target.value,
+                              }))
+                            }
+                            className={classNames(
+                              'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6',
+                              formula.type === 'Custom'
+                                ? 'ring-red-main cursor-not-allowed'
+                                : ' ring-green-main '
+                            )}
+                            disabled={formula.type == 'Custom'}
                           >
-                            <option>Data</option>
-                            <option>Custom</option>
+                            <option>~~ Select field ~~</option>
+                            {projectData &&
+                              projectData.parsed.meta.fields.map(
+                                (field, idx) => (
+                                  <option key={idx} value={field}>
+                                    {field}
+                                  </option>
+                                )
+                              )}
                           </select>
                         </div>
                       </div>
@@ -110,7 +146,24 @@ export default function EditFeatFormula({ open, setOpen, action }) {
                             id='value'
                             name='value'
                             type='text'
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                            className={classNames(
+                              'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6',
+                              formula.type === 'Data'
+                                ? 'ring-red-main cursor-not-allowed bg-gray-100 text-red-main'
+                                : ' ring-green-main '
+                            )}
+                            disabled={formula.type == 'Data'}
+                            value={
+                              formula.type === 'Data'
+                                ? '--Select custom to enable--'
+                                : formula.value
+                            }
+                            onChange={(e) =>
+                              setFormula((state) => ({
+                                ...state,
+                                value: e.target.value,
+                              }))
+                            }
                           />
                         </div>
                       </div>
@@ -127,6 +180,13 @@ export default function EditFeatFormula({ open, setOpen, action }) {
                           <select
                             id='field'
                             name='field'
+                            value={formula.operand}
+                            onChange={(e) =>
+                              setFormula((state) => ({
+                                ...state,
+                                operand: e.target.value,
+                              }))
+                            }
                             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
                           >
                             <option>None</option>
@@ -144,7 +204,10 @@ export default function EditFeatFormula({ open, setOpen, action }) {
                   <button
                     type='button'
                     className='inline-flex w-full justify-center rounded-md bg-violet-dark px-3 py-2 text-sm font-semibold text-white-main shadow-sm hover:bg-violet-main focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-dark sm:col-start-2'
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      action('add', formula);
+                      setOpen(false);
+                    }}
                   >
                     Add
                   </button>

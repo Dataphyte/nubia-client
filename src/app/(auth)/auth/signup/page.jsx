@@ -1,13 +1,183 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import UserIconLocal from '@/src/assets/icons/user-icon';
 
+// ======= Icon imports -->
+import EyeIconLocal from '@/src/assets/icons/eye-icon';
+import EyeSlashIconLocal from '@/src/assets/icons/eye-slash-icon';
+
 const SignUp = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [userData, setUserData] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    accountType: 'personal',
+    organization: {},
+  });
+
+  // ======= handle form change -->
+  const handleFormChange = (e, field) => {
+    setUserData((state) => ({ ...state, [field]: e.target.value }));
+  };
+
+  // ======= handle signup -->
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    // ======= form check -->
+    if (userData.password !== userData.confirmPassword)
+      alert('Passwords do not match!');
+    else {
+      // Proceed to signup
+    }
+  };
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
   return (
     <div className='flex- w-full h-screen flex items-center justify-center overflow-hidden'>
       {/* -- SIgnup section */}
-      <section className='w-full lg:w-3/5 h-full'>
-        <form></form>
+      <section className='w-full lg:w-3/5 h-full flex flex-col items-center justify-center relative'>
+        <Link
+          className='absolute top-5 left-5 font-bold text-lg text-violet-dark py-0.5 px-3 rounded-md border border-violet-main shadow-md lg:hidden'
+          href='/'
+        >
+          NUBIA
+        </Link>
+        <form
+          className='w-4/5 h-max py-5 bg-gren-400 flex flex-col items-center justify-center gap-4'
+          onSubmit={handleSignup}
+        >
+          <p className='mb-5 text-4xl font-bold text-text-dark'>
+            Create Account
+          </p>
+          {/* -- first name */}
+          <div className='w-full sm:w-[60%] relative flex items-center'>
+            <input
+              type='text'
+              required
+              placeholder='First name'
+              autoComplete='given-name'
+              minLength={3}
+              className='signup__form-input'
+              value={userData.firstname}
+              onChange={(e) => handleFormChange(e, 'firstname')}
+            />
+          </div>
+
+          {/* -- last name */}
+          <div className='w-full sm:w-[60%] relative flex items-center'>
+            <input
+              type='text'
+              required
+              placeholder='Last name'
+              autoComplete='family-name'
+              minLength={3}
+              className='signup__form-input'
+              value={userData.lastname}
+              onChange={(e) => handleFormChange(e, 'lastname')}
+            />
+          </div>
+
+          {/* -- email */}
+          <div className='w-full sm:w-[60%] relative flex items-center'>
+            <input
+              type='email'
+              placeholder='example@email.com'
+              required
+              autoComplete='email'
+              className='signup__form-input'
+              value={userData.email}
+              onChange={(e) => handleFormChange(e, 'email')}
+            />
+          </div>
+
+          {/* -- password */}
+          <div className='w-full sm:w-[60%] relative flex items-center'>
+            {
+              {
+                true: (
+                  <EyeIconLocal
+                    sx='absolute right-3 text-text-medium cursor-pointer'
+                    action={() => setShowPassword(false)}
+                  />
+                ),
+                false: (
+                  <EyeSlashIconLocal
+                    sx='absolute right-3 text-text-medium cursor-pointer'
+                    action={() => setShowPassword(true)}
+                  />
+                ),
+              }[showPassword]
+            }
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder='Password'
+              required
+              minLength={6}
+              className='signup__form-input'
+              value={userData.password}
+              onChange={(e) => handleFormChange(e, 'password')}
+            />
+          </div>
+
+          {/* -- confirm password */}
+          <div className='w-full sm:w-[60%] relative flex items-center'>
+            {
+              {
+                true: (
+                  <EyeIconLocal
+                    sx='absolute right-3 text-text-medium cursor-pointer'
+                    action={() => setShowPassword(false)}
+                  />
+                ),
+                false: (
+                  <EyeSlashIconLocal
+                    sx='absolute right-3 text-text-medium cursor-pointer'
+                    action={() => setShowPassword(true)}
+                  />
+                ),
+              }[showPassword]
+            }
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder='Confirm Password'
+              required
+              className='signup__form-input'
+              value={userData.confirmPassword}
+              onChange={(e) => handleFormChange(e, 'confirmPassword')}
+            />
+          </div>
+
+          {/* -- Account type */}
+          <div className='w-full sm:w-[60%] relative flex items-center'>
+            <label htmlFor='account-type' className='w-1/3 font-medium text-lg'>
+              Account type
+            </label>
+            <select
+              className='w-2/3 bg-gray-200/60 text-base text-text-medium duration-300 transition-all ease-out focus:ring-violet-light outline-none focus:ring-1 border-none focus:bg-violet-50 focus:shadow-lg rounded-md'
+              value={userData.accountType}
+              onChange={(e) => handleFormChange(e, 'accountType')}
+            >
+              <option value='personal'>Personal</option>
+              <option value='organization'>Organization</option>
+            </select>
+          </div>
+
+          <button
+            type='submit'
+            className='w-full sm:w-[60%] py-2 rounded-md border shadow-lg bg-violet-dark text-white-off font-medium text-lg duration-300 ease-out transition-all mt-10'
+          >
+            Sign me up!
+          </button>
+        </form>
       </section>
 
       {/* -- Singin Section */}
@@ -68,19 +238,22 @@ const SignUp = () => {
             ></animate>
           </path>
         </svg>
-        <div className='w-2/3 h-[75%] bg-white-off/80 rounded-xl shadow-lg z-20 flex flex-col items-center justify-center py-10 px-5 text-center gap-10 duration-300 ease-out transition-all hover:bg-white-off/90 hover:scale-105 hover:shadow-xl relative'>
-          <p className='font-bold text-3xl absolute top-10 left-6 text-text-dark'>
+        <div className='w-2/3 h-[75%] bg-white-off/80 rounded-xl shadow-lg z-20 flex flex-col items-center justify-center py-10 px-5 text-center gap-5 duration-300 ease-out transition-all hover:bg-white-off/90 hover:scale-[101%] hover:shadow-2xl relative'>
+          <Link
+            className='font-bold text-2xl absolute top-8 left-4 text-text-dark hover:text-violet-dark hover:border border-violet-main rounded-lg py-1 px-3 duration-300 ease-out transition-all hover:shadow-md'
+            href='/'
+          >
             NUBIA
-          </p>
-          <p className='font-bold text-5xl text-text-dark'>
+          </Link>
+          <p className='font-bold text-4xl text-text-dark'>
             Welcome&nbsp;<b className='text-violet-dark'>Back!</b>
           </p>
-          <p className='text-lg text-text-medium'>
-            To access your account, <br /> go to the signin page to laod your
+          <p className=' text-text-medium font-inter'>
+            Do you have an account? <br /> go to the sign in page to load your
             profile
           </p>
           <Link href='/auth' className='hero-link group px-20 mt-20'>
-            Signin
+            Sign In
             <UserIconLocal sx='w-5 h-3 duration-300 ease-out -translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 absolute right-8 group-hover:right-5' />
           </Link>
         </div>

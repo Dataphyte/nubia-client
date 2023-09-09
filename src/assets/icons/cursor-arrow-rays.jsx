@@ -1,7 +1,7 @@
 import React from 'react';
 import { classNames } from 'src/utils/classnames';
 
-const CursorArrowRays = ({ fill, sx }) => {
+const CursorArrowRays = ({ fill, sx, action }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -9,6 +9,7 @@ const CursorArrowRays = ({ fill, sx }) => {
       viewBox='0 0 24 24'
       strokeWidth='1.5'
       stroke='currentColor'
+      onClick={action}
       className={classNames('w-6 h-6', sx)}
     >
       <path

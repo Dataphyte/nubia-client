@@ -1,7 +1,7 @@
 import React from 'react';
 import { classNames } from 'src/utils/classnames';
 
-const MenuBars = ({ fill, sx }) => {
+const MenuBars = ({ fill, sx, action }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -10,6 +10,7 @@ const MenuBars = ({ fill, sx }) => {
       strokeWidth='1.5'
       stroke='currentColor'
       className={(classNames('w-6 h-6'), sx)}
+      onClick={action}
     >
       <path
         strokeLinecap='round'

@@ -83,6 +83,10 @@ html {
     @apply rounded-lg text-lg font-magistral shadow px-3 border focus:ring-violet-main h-10;
   }
 
+  .signup__form-input {
+    @apply w-full rounded-md font-medium focus:font-bold duration-300 ease-out transition-all border-none focus:ring-violet-light px-4 py-3 text-lg focus:shadow-lg bg-gray-200/60 focus:bg-violet-light outline-none font-magistral text-text-medium;
+  }
+
   /* Random components */
   .tool__tip {
     @apply p-1.5 rounded-md shadow-md z-10  bg-black-bg/70 text-white-off text-xs absolute w-max bottom-0 pointer-events-none hidden group-hover:-bottom-10 group-hover:block transition-all duration-200 ease-out;

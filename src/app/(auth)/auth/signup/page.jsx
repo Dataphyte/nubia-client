@@ -3,11 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import UserIconLocal from '@/src/assets/icons/user-icon';
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  updateProfile,
-} from 'firebase/auth';
+import useUserQuery from '@/hooks/query-hooks/useUserQuery';
+import { useRouter } from 'next/navigation';
 
 // ======= Icon imports -->
 import EyeIconLocal from '@/src/assets/icons/eye-icon';
@@ -16,26 +13,21 @@ import { classNames } from '@/src/utils/classnames';
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [auth, setAuth] = useState(null);
-  // free | firebaseLoading | firebaseSuccess | databaseLoading **
-  const [singupStatus, setSignupStatus] = useState('free');
+  const router = useRouter();
   const [userData, setUserData] = useState({
     firstname: '',
     lastname: '',
     email: '',
     password: '',
     confirmPassword: '',
-    accountType: 'personal',
+    accountType: 'individual',
     organization: {},
   });
-
-  // ======= set Auth object -->
-  useEffect(() => {
-    setAuth(() => {
-      const { auth } = require('@/utils/firebase/firebase');
-      return auth;
-    });
-  }, []);
+  const { Query, localState: singupStatus } = useUserQuery(
+    'user-sign-up',
+    userData
+  );
+  const { data, isSuccess, isLoading, error, refetch } = Query;
 
   // ======= handle form change -->
   const handleFormChange = (e, field) => {
@@ -50,31 +42,16 @@ const SignUp = () => {
     if (userData.password !== userData.confirmPassword)
       alert('Passwords do not match!');
     else {
-      // Proceed to signup
-      setSignupStatus('firebaseLoading');
-      createUserWithEmailAndPassword(auth, userData.email, userData.password)
-        .then(async (userCred) => {
-          setSignupStatus('firebaseSuccess');
-          console.log(auth.currentUser);
-
-          // send email verification
-          sendEmailVerification(auth.currentUser).then(() => {
-            // update the users profile
-            updateProfile(auth.currentUser, {
-              displayName: `${userData.firstname} ${userData.lastname}`,
-            });
-            setTimeout(() => {
-              setSignupStatus('databaseLoading');
-            }, 2000);
-          });
-        })
-        .catch((error) => {
-          alert('Error creating user');
-          setSignupStatus('free');
-          console.log('ERROR', error);
-        });
+      refetch();
     }
   };
+
+  useEffect(() => {
+    singupStatus === 'databaseSuccess' &&
+      setTimeout(() => {
+        router.push('/tool/dashboard');
+      }, 1000);
+  }, [singupStatus]);
 
   return (
     <div className='flex- w-full h-screen flex items-center justify-center overflow-hidden'>
@@ -201,24 +178,26 @@ const SignUp = () => {
               value={userData.accountType}
               onChange={(e) => handleFormChange(e, 'accountType')}
             >
-              <option value='personal'>Personal</option>
+              <option value='individual'>Individual (Personal)</option>
               <option value='organization'>Organization</option>
             </select>
           </div>
 
           <button
             type='submit'
-            disabled={singupStatus !== 'free'}
+            disabled={singupStatus}
             className={classNames(
               'w-full sm:w-[60%] py-2 rounded-md border shadow text-lg duration-300 ease-out transition-all mt-10 flex items-center justify-center gap-3',
-              singupStatus === 'free'
-                ? 'bg-violet-dark text-white-off  font-medium hover:shadow-lg cursor-pointer hover:bg-violet-main'
+              !singupStatus
+                ? 'bg-violet-600 text-white-off font-medium hover:shadow-lg cursor-pointer hover:bg-violet-500'
+                : singupStatus === 'error'
+                ? 'border-red-main text-red-main'
                 : 'bg-transparent text-violet-dark border-violet-dark font-bold cursor-not-allowed'
             )}
           >
             {
               {
-                free: 'Sign me up!',
+                null: 'Sign me up!',
                 firebaseLoading: (
                   <>
                     <lord-icon
@@ -252,6 +231,28 @@ const SignUp = () => {
                     <p>Saving profile...</p>
                   </>
                 ),
+                databaseSuccess: (
+                  <>
+                    <lord-icon
+                      src='https://cdn.lordicon.com/jvihlqtw.json'
+                      trigger='loop'
+                      colors='primary:#121331,secondary:#6d28d9'
+                      style={{ width: '40px', height: '40px' }}
+                    />
+                    <p>Profile saved</p>
+                  </>
+                ),
+                error: (
+                  <>
+                    <lord-icon
+                      src='https://cdn.lordicon.com/tdrtiskw.json'
+                      trigger='loop'
+                      colors='primary:#121331,secondary:#d6460c'
+                      style={{ width: '40px', height: '40px' }}
+                    />
+                    <p>An Error occured</p>
+                  </>
+                ),
               }[singupStatus]
             }
           </button>
@@ -259,7 +260,7 @@ const SignUp = () => {
       </section>
 
       {/* -- Singin Section */}
-      <section className='hidden w-2/5 bg-violet-dark h-full lg:flex relative items-center justify-center overflow-hidden'>
+      <section className='hidden w-2/5 bg-violet-600 h-full lg:flex relative items-center justify-center overflow-hidden'>
         {/* -- animated background blobs ## see below for object ## */}
         {blobData.map((blob) => (
           <AnimatedSVGBlob

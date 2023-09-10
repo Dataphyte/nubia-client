@@ -4,6 +4,8 @@ import '../styles/globals.css';
 import '../styles/fonts.css';
 import Script from 'next/script';
 import { useState, useEffect } from 'react';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { subscribeStore } from '@/global/subscribeStore';
 // import FeaturePopup from '@/components/pop-ups/feature-popup';
 
@@ -12,6 +14,7 @@ import 'react-quill/dist/quill.snow.css';
 export default function RootLayout({ children }) {
   const [subModalOpen, setSubModalOpen] = useState(false);
   const { seen, setSeen } = subscribeStore();
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     // 30 secs delay before showing pop-up
@@ -27,7 +30,7 @@ export default function RootLayout({ children }) {
 
       <body className='bg-white-off'>
         <Script src='https://cdn.lordicon.com/qjzruarw.js' />
-        {/* {subModalOpen && (
+        {subModalOpen && (
           <FeaturePopup
             state={subModalOpen}
             setState={setSubModalOpen}
@@ -40,8 +43,11 @@ export default function RootLayout({ children }) {
               body: 'Nubia is constantly growing and new features would continue to be added at the speed of light ⚡️. Subscribe to be notified of important features!',
             }}
           />
-        )} */}
-        {children}
+        )}
+        <QueryClientProvider client={queryClient}>
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
         <Script
           async
           id='g-analytics-script'

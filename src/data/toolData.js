@@ -5,6 +5,7 @@ import {
   BriefcaseIcon,
   HomeIcon,
 } from '@heroicons/react/24/outline';
+import { signOut } from 'next-auth/react';
 
 export const navigation = [
   {
@@ -41,5 +42,9 @@ export const navigation = [
 export const userNavigation = [
   { name: 'Your Profile', href: 'profile' },
   { name: 'Settings', href: 'settings' },
-  { name: 'Sign out', href: '/auth', action: (setUser) => setUser(null) },
+  {
+    name: 'Sign out',
+    href: '/auth/signup',
+    action: () => signOut({ callbackUrl: '/' }),
+  },
 ];

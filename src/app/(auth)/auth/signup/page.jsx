@@ -5,14 +5,29 @@ import Link from 'next/link';
 import UserIconLocal from '@/src/assets/icons/user-icon';
 import useUserQuery from '@/hooks/query-hooks/useUserQuery';
 import { useRouter } from 'next/navigation';
+import { classNames } from '@/src/utils/classnames';
+import { getProviders, signIn } from 'next-auth/react';
 
 // ======= Icon imports -->
 import EyeIconLocal from '@/src/assets/icons/eye-icon';
 import EyeSlashIconLocal from '@/src/assets/icons/eye-slash-icon';
-import { classNames } from '@/src/utils/classnames';
+import { FcGoogle } from 'react-icons/fc';
+
+//=============================================>
+// ======= Load providers -->
+//=============================================>
+
+export async function loadProviders() {
+  // const session = await getServerSession(context.req, context.res, authOptions);
+
+  return (await getProviders()) ?? [];
+}
+
+//=============================================>
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [providers, setProviders] = useState([]);
   const router = useRouter();
   const [userData, setUserData] = useState({
     firstname: '',
@@ -51,7 +66,12 @@ const SignUp = () => {
       setTimeout(() => {
         router.push('/tool/dashboard');
       }, 1000);
+    (async () => setProviders(await loadProviders()))();
   }, [singupStatus]);
+
+  useEffect(() => {
+    console.log(providers);
+  }, [providers]);
 
   return (
     <div className='flex- w-full h-screen flex items-center justify-center overflow-hidden'>
@@ -176,6 +196,7 @@ const SignUp = () => {
             <select
               className='w-2/3 bg-gray-200/60 text-base text-text-medium duration-300 transition-all ease-out focus:ring-violet-light outline-none focus:ring-1 border-none focus:bg-violet-50 focus:shadow-lg rounded-md'
               value={userData.accountType}
+              name='account-type'
               onChange={(e) => handleFormChange(e, 'accountType')}
             >
               <option value='individual'>Individual (Personal)</option>
@@ -187,7 +208,7 @@ const SignUp = () => {
             type='submit'
             disabled={singupStatus}
             className={classNames(
-              'w-full sm:w-[60%] py-2 rounded-md border shadow text-lg duration-300 ease-out transition-all mt-10 flex items-center justify-center gap-3',
+              'w-full sm:w-[60%] py-2 rounded-md border shadow text-lg duration-300 ease-out transition-all mt-5 flex items-center justify-center gap-3',
               !singupStatus
                 ? 'bg-violet-600 text-white-off font-medium hover:shadow-lg cursor-pointer hover:bg-violet-500'
                 : singupStatus === 'error'
@@ -255,6 +276,22 @@ const SignUp = () => {
                 ),
               }[singupStatus]
             }
+          </button>
+          <div className='-mt-1.5 -mb-1.5 flex items-center justify-center gap-4 w-full sm:[w-60%]'>
+            <span className=' w-28 h-[0.5px] border-gray-300 border' />
+            <p className='text-xs text-text-light'>OR</p>
+            <span className=' w-28 h-[0.5px] border-gray-300 border' />
+          </div>
+          <button
+            type='button'
+            className='flex items-center justify-center gap-3 py-2 w-full sm:w-[60%] rounded-md shadow transition-300 ease-out duration-300 border hover:shadow-lg border-gray-400'
+            onClick={() =>
+              providers.google &&
+              signIn(providers.google.id, { callbackUrl: '/tool/dashboard' })
+            }
+          >
+            <FcGoogle fontSize={23} />
+            Continue with Google
           </button>
         </form>
       </section>

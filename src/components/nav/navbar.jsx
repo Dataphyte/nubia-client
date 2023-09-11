@@ -8,6 +8,8 @@ import { usePathname } from 'next/navigation';
 import useScrolled from '@/hooks/useScrolled';
 import { classNames } from 'src/utils/classnames';
 import CloseIcon from '@/icons/close-icon';
+import { useRouter } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -17,9 +19,12 @@ const navItems = [
 ];
 
 const Navbar = () => {
+  const { data: session, status: sessionStatus } = useSession();
   const pathname = usePathname();
   const scrolled = useScrolled();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showMiniProfile, setShowMiniProfile] = useState(true);
 
   const handleMenu = () => {
     setMenuOpen((state) => !state);
@@ -29,36 +34,87 @@ const Navbar = () => {
     <nav
       className={classNames(
         'w-full flex px-10 md:px-16 items-center justify-between fixed top-0 z-40 duration-300 ease-out transition-all',
-        scrolled ? 'bg-white-main shadow-md lg:px-32 h-16' : ' h-20 lg:px-48'
+        scrolled
+          ? 'bg-white-main shadow-md md:px-5 lg:px-28 h-16'
+          : ' h-20 lg:px-32 md:px-10'
       )}
     >
-      <Link className='nav__logo-text' href='/'>
-        NUBIA
-      </Link>
-
-      {/* ====== NAV LINKS */}
-      <span className='hidden md:flex  px-4 gap-8'>
-        {navItems.map((item, index) => (
-          <Link
-            href={item.href}
-            key={index}
-            className={classNames(
-              'nav__link',
-              pathname.indexOf(item.href) !== -1 && 'text-violet-main'
-            )}
-          >
-            {item.label}
-          </Link>
-        ))}
+      <span className='flex items-center justify-center'>
+        <Link className='nav__logo-text flex' href='/'>
+          NUBIA <p className='hidden md:block'>&nbsp;&nbsp;&nbsp;|</p>
+        </Link>
+        {/* ====== NAV LINKS */}
+        <span className='hidden md:flex px-3 gap-8 md:text-xs lg:text-base'>
+          {navItems.map((item, index) => (
+            <Link
+              href={item.href}
+              key={index}
+              className={classNames(
+                'nav__link',
+                pathname.indexOf(item.href) !== -1 && 'text-violet-main'
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </span>
       </span>
 
       {/* ====== CALL TO ACTION */}
-      <Link
-        href='https://github.com/Dataphyte/Nubia-server'
-        className='hidden md:block py-2 px-5 text-sm rounded-lg shadow font-inter bg-violet-dark text-white-off duration-150 ease-out hover:shadow-lg'
-      >
-        Add a story
-      </Link>
+      <div>
+        {
+          {
+            authenticated: (
+              <span className='items-center justify-center gap-2 hidden md:flex'>
+                <span
+                  className={classNames(
+                    'flex items-center justify-center gap-4 border border-gray-300 rounded-md shadow-md py-1 px-2 lg:py-2 lg:px-4 duration-500 ease-out relative',
+                    showMiniProfile
+                      ? 'opacity-100 left-0 pointer-events-auto'
+                      : 'opacity-0 left-8 pointer-events-none'
+                  )}
+                >
+                  <p className='text-text-light text-sm'>
+                    Welcome,&nbsp;
+                    <b className='text-violet-main'>
+                      {session?.user?.name.split(' ')[0]}
+                    </b>
+                  </p>
+                  <button
+                    className={classNames(
+                      'hidden md:block py-1.5 px-3 text-xs rounded-lg shadow font-inter bg-red-main text-white-off duration-150 ease-out hover:shadow-lg'
+                    )}
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                  >
+                    Sign out
+                  </button>
+                </span>
+                <lord-icon
+                  src='https://cdn.lordicon.com/eszyyflr.json'
+                  trigger='click'
+                  colors='primary:#121331,secondary:#6d28d9'
+                  style={{
+                    width: '55px',
+                    height: '55px',
+                    cursor: 'pointer',
+                    position: 'relative',
+                  }}
+                  onClick={() => setShowMiniProfile((state) => !state)}
+                />
+              </span>
+            ),
+            unauthenticated: (
+              <button
+                // href='https://github.com/Dataphyte/Nubia-server'
+                className='hidden md:block py-2 px-5 text-sm rounded-lg shadow font-inter bg-violet-dark text-white-off duration-150 ease-out hover:shadow-lg'
+                onClick={() => router.push('/auth/signup')}
+              >
+                Sign in
+              </button>
+            ),
+          }[sessionStatus]
+        }
+      </div>
 
       {/* ====== MOBILE MENU */}
       <span

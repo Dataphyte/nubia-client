@@ -1,13 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { GoogleAuthProvider, getAuth } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { getApps, getApp } from 'firebase/app';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: 'AIzaSyCxOkKqQIuS0MwLXZon_kd4cx0Iut9v8ag',
   authDomain: 'nubia-test-001.firebaseapp.com',
@@ -20,8 +18,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-export { auth, provider };
+export { auth, db, storage };

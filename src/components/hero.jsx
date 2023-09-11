@@ -3,11 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import CursorArrowRays from '@/icons/cursor-arrow-rays';
-import MailIcon from '@/icons/mail-icon';
+import { useSession } from 'next-auth/react';
 import { userStore } from '../global/userStore';
 
 const Hero = ({ heading, subHeading = '' }) => {
   const { user } = userStore();
+  const { data: session, status: sessionStatus } = useSession();
 
   return (
     <header className='hero__container'>
@@ -19,8 +20,13 @@ const Hero = ({ heading, subHeading = '' }) => {
       </p>
 
       {/* ====== CALL TO ACTION */}
-      <Link href={user ? 'tool/dashboard' : 'auth'} className='hero-link group'>
-        Try it out
+      <Link
+        href={
+          sessionStatus === 'authenticated' ? 'tool/dashboard' : 'auth/signup'
+        }
+        className='hero-link group'
+      >
+        {sessionStatus === 'authenticated' ? 'Dashboard' : 'Try it out'}
         <CursorArrowRays sx='w-5 h-5 duration-300 ease-out -translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 absolute right-8 group-hover:right-5' />
       </Link>
     </header>

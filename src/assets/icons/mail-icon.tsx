@@ -1,7 +1,7 @@
 import React from 'react';
 import { classNames } from '@/utils/classnames';
 
-const MailIcon = ({ fill, sx, action }) => {
+const MailIcon = ({ fill, sx, action }: IconProps) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -9,7 +9,7 @@ const MailIcon = ({ fill, sx, action }) => {
       viewBox='0 0 24 24'
       strokeWidth='1.5'
       stroke='currentColor'
-      class={classNames('w-6 h-6', sx)}
+      className={classNames('w-6 h-6', sx)}
       onClick={action}
     >
       <path

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FacebookIcon = (props) => (
+const FacebookIcon = (props: any) => (
   <svg fill='currentColor' viewBox='0 0 24 24' {...props}>
     <path
       fillRule='evenodd'

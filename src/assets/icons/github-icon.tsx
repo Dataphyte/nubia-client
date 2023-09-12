@@ -1,4 +1,4 @@
-const GitHubIcon = (props) => (
+const GitHubIcon = (props: any) => (
   <svg fill='currentColor' viewBox='0 0 24 24' {...props}>
     <path
       fillRule='evenodd'

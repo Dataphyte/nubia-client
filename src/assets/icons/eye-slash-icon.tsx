@@ -1,7 +1,7 @@
 import React from 'react';
 import { classNames } from '@/src/utils/classnames';
 
-const EyeSlashIconLocal = ({ fill, sx, action }) => {
+const EyeSlashIconLocal = ({ fill, sx, action }: IconProps) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

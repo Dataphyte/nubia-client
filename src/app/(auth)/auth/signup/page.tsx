@@ -5,7 +5,7 @@ import Link from 'next/link';
 import UserIconLocal from '@/src/assets/icons/user-icon';
 import { useRouter } from 'next/navigation';
 import { classNames } from '@/src/utils/classnames';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 // ======= Icon imports -->

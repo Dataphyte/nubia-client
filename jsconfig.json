@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
       "@/src/*": ["./src/*"],
@@ -11,7 +12,8 @@
       "@/hooks/*": ["./src/hooks/*"],
       "@/data/*": ["./src/data/*"],
       "@/utils/*": ["./src/utils/*"],
-      "@/global/*": ["./src/global/*"]
+      "@/global/*": ["./src/global/*"],
+      "@/server/*": ["./src/server/*"]
     }
   },
 

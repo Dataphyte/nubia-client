@@ -3,16 +3,16 @@
 import '../styles/globals.css';
 import '../styles/fonts.css';
 import Script from 'next/script';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { subscribeStore } from '@/global/subscribeStore';
 import FeaturePopup from '@/components/pop-ups/feature-popup';
 import { SessionProvider } from 'next-auth/react';
-
 import 'react-quill/dist/quill.snow.css';
+import React from 'react';
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   const [subModalOpen, setSubModalOpen] = useState(false);
   const { seen, setSeen } = subscribeStore();
   const queryClient = new QueryClient();

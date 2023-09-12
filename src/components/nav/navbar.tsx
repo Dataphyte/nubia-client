@@ -35,8 +35,8 @@ const Navbar = () => {
       className={classNames(
         'w-full flex px-10 md:px-16 items-center justify-between fixed top-0 z-40 duration-300 ease-out transition-all',
         scrolled
-          ? 'bg-white-main shadow-md md:px-5 lg:px-28 h-16'
-          : ' h-20 lg:px-32 md:px-10'
+          ? 'bg-white-main shadow-md md:px-5 lg:px-20 h-20'
+          : ' h-24 lg:px-28 md:px-10'
       )}
     >
       <span className='flex items-center justify-center'>
@@ -62,22 +62,22 @@ const Navbar = () => {
 
       {/* ====== CALL TO ACTION */}
       <div>
-        {
+        {sessionStatus &&
           {
             authenticated: (
               <span className='items-center justify-center gap-2 hidden md:flex'>
                 <span
                   className={classNames(
-                    'flex items-center justify-center gap-4 border border-gray-300 rounded-md shadow-md py-1 px-2 lg:py-2 lg:px-4 duration-500 ease-out relative',
+                    'flex items-center justify-center gap-4 border border-gray-400 rounded-md shadow-md py-1 px-2 lg:py-2 lg:px-4 duration-500 ease-out relative ',
                     showMiniProfile
                       ? 'opacity-100 left-0 pointer-events-auto'
-                      : 'opacity-0 left-8 pointer-events-none'
+                      : 'opacity-0 left-7 pointer-events-none'
                   )}
                 >
                   <p className='text-text-light text-sm'>
                     Welcome,&nbsp;
                     <b className='text-violet-main'>
-                      {session?.user?.name.split(' ')[0]}
+                      {session?.user?.name?.split(' ')[0]}
                     </b>
                   </p>
                   <button
@@ -89,6 +89,7 @@ const Navbar = () => {
                     Sign out
                   </button>
                 </span>
+                {/* @ts-ignore */}
                 <lord-icon
                   src='https://cdn.lordicon.com/eszyyflr.json'
                   trigger='click'
@@ -99,6 +100,7 @@ const Navbar = () => {
                     cursor: 'pointer',
                     position: 'relative',
                   }}
+                  class='hover:shadow-md border border-violet-light/0 ml-2 hover:border-violet-main/80 rounded-lg transition-all duration-200 ease-out'
                   onClick={() => setShowMiniProfile((state) => !state)}
                 />
               </span>
@@ -112,8 +114,8 @@ const Navbar = () => {
                 Sign in
               </button>
             ),
-          }[sessionStatus]
-        }
+          }[sessionStatus]}
+        {!sessionStatus && <p>Loading...</p>}
       </div>
 
       {/* ====== MOBILE MENU */}

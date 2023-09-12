@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import { useQuery } from 'react-query';
 import { auth } from '@/utils/firebase/firebase';
 import {
@@ -16,6 +17,7 @@ import {
  */
 const useUserQuery = (target, payload) => {
   let Query;
+  const { update: sessionUpdate } = useSession();
   const [localState, setLocalState] = useState(null);
   const noAutoFetchOptions = {
     enabled: false,
@@ -51,6 +53,15 @@ const useUserQuery = (target, payload) => {
                   })
                   .then((res) => {
                     console.log(res);
+                    console.log('userCredentials==>' + userCredentials);
+                    console.log(auth.currentUser);
+                    sessionUpdate({
+                      data: {
+                        user: auth.currentUser,
+                        accessToken: auth.currentUser?.accessToken,
+                      },
+                      status: 'authenticated',
+                    });
                     setTimeout(() => {
                       setLocalState('databaseSuccess');
                     }, 1200);

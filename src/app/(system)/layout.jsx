@@ -3,7 +3,7 @@
 import Head from './head';
 import Link from 'next/link';
 import Lottie from 'lottie-react';
-import LoadingLottie from '@/assets/animations/loading-lottie-2.json';
+import LoadingLottie from '@/assets/animations/loading-lottie.json';
 import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';

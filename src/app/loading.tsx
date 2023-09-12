@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Lottie from 'lottie-react';
-import LoadingLottie from '../assets/animations/loading-lottie.json';
+// @ts-ignore
+import LoadingLottie from '@/assets/animations/loading-lottie.json';
 
 const Loading = () => {
   return (

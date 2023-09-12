@@ -1,9 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Link from 'next/link';
+import { NextPage } from 'next';
 
-const Error = ({ error }) => {
+const Error = ({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}): ReactNode => {
   console.error(error);
 
   return (

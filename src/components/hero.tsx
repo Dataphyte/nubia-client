@@ -4,10 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import CursorArrowRays from '@/icons/cursor-arrow-rays';
 import { useSession } from 'next-auth/react';
-import { userStore } from '../global/userStore';
 
 const Hero = ({ heading, subHeading = '' }) => {
-  const { user } = userStore();
   const { data: session, status: sessionStatus } = useSession();
 
   return (

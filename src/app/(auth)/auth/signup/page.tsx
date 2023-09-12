@@ -3,104 +3,108 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import UserIconLocal from '@/src/assets/icons/user-icon';
-import useUserQuery from '@/hooks/query-hooks/useUserQuery';
 import { useRouter } from 'next/navigation';
 import { classNames } from '@/src/utils/classnames';
-import { getProviders, signIn } from 'next-auth/react';
+import { getProviders, signIn, useSession } from 'next-auth/react';
+import { getCsrfToken } from 'next-auth/react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import Lottie from 'lottie-react';
+import LoadingLottie from '@/assets/animations/loading-lottie.json';
 
 // ======= Icon imports -->
 import EyeIconLocal from '@/src/assets/icons/eye-icon';
 import EyeSlashIconLocal from '@/src/assets/icons/eye-slash-icon';
 import { FcGoogle } from 'react-icons/fc';
+import axios from 'axios';
 
 //=============================================>
-// ======= Load providers -->
+// ======= Load providers and Email csrf token-->
 //=============================================>
 
-export async function loadProviders() {
-  // const session = await getServerSession(context.req, context.res, authOptions);
+export const loadProviders = async (): Promise<any> =>
+  (await getProviders()) ?? [];
 
-  return (await getProviders()) ?? [];
-}
+export const loadCsrfToken = async (): Promise<any> =>
+  (await getCsrfToken()) ?? '';
 
 //=============================================>
+
+type NewUser = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  account_type: 'individual' | 'organization';
+};
 
 const SignUp = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const { data: session, status: sessionStatus } = useSession();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [providers, setProviders] = useState([]);
-  const router = useRouter();
-  const [userData, setUserData] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    accountType: 'individual',
-    organization: {},
-  });
-  const { Query, localState: singupStatus } = useUserQuery(
-    'user-sign-up',
-    userData
+  const [csrfToken, setcsrfToken] = useState(null);
+  const [signupStatus, setsignupStatus] = useState<{
+    isLoading: boolean;
+    error: boolean;
+    isSuccess: boolean;
+  }>({ isLoading: false, error: false, isSuccess: false });
+  const [userData, setUserData] = useState<{ email: string; password: string }>(
+    { email: '', password: '' }
   );
-  const { data, isSuccess, isLoading, error, refetch } = Query;
-
-  // ======= handle form change -->
-  const handleFormChange = (e, field) => {
-    setUserData((state) => ({ ...state, [field]: e.target.value }));
-  };
+  const router = useRouter();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewUser>();
+  // const { Query, localState: singupStatus } = useUserQuery('user-sign-up');
 
   // ======= handle signup -->
-  const handleSignup = (e) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<NewUser> = async (data) => {
+    setsignupStatus((state) => ({ ...state, isLoading: true }));
+    try {
+      const userInfo = await axios.post('/api/users/create', data, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      userInfo.data &&
+        setUserData({ email: data.email, password: data.password });
 
-    // ======= form check -->
-    if (userData.password !== userData.confirmPassword)
-      alert('Passwords do not match!');
-    else {
-      refetch();
+      setsignupStatus((state) => ({ ...state, isLoading: false }));
+    } catch (error) {
+      console.trace(error);
     }
   };
-
   useEffect(() => {
-    singupStatus === 'databaseSuccess' &&
-      setTimeout(() => {
-        router.push('/tool/dashboard');
-      }, 1000);
     (async () => setProviders(await loadProviders()))();
-  }, [singupStatus]);
-
-  useEffect(() => {
-    console.log(providers);
-  }, [providers]);
+    (async () => setcsrfToken(await loadCsrfToken()))();
+  }, []);
 
   return (
     <div className='flex- w-full h-screen flex items-center justify-center overflow-hidden'>
       {/* -- SIgnup section */}
       <section className='w-full lg:w-3/5 h-full flex flex-col items-center justify-center relative'>
         <Link
-          className='absolute top-5 left-5 font-bold text-lg text-violet-dark py-0.5 px-3 rounded-md border border-violet-main shadow-md lg:hidden'
+          className='absolute top-5 left-5 font-black-ops text-lg text-violet-dark py-0.5 px-3 rounded-md border border-violet-main shadow-md lg:hidden'
           href='/'
         >
           NUBIA
         </Link>
         <form
           className='w-4/5 h-max py-5 bg-gren-400 flex flex-col items-center justify-center gap-4'
-          onSubmit={handleSignup}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <p className='mb-5 text-4xl font-bold text-text-dark'>
             Create Account
           </p>
+          {/* <input name='csrfToken' type='hidden' defaultValue={csrfToken} /> */}
           {/* -- first name */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
             <input
               type='text'
-              required
-              placeholder='First name'
-              autoComplete='given-name'
-              minLength={3}
+              placeholder='Firstname'
               className='signup__form-input'
-              value={userData.firstname}
-              onChange={(e) => handleFormChange(e, 'firstname')}
+              {...register('firstname', { required: true })}
             />
           </div>
 
@@ -108,13 +112,9 @@ const SignUp = () => {
           <div className='w-full sm:w-[60%] relative flex items-center'>
             <input
               type='text'
-              required
-              placeholder='Last name'
-              autoComplete='family-name'
-              minLength={3}
+              placeholder='Lastname'
               className='signup__form-input'
-              value={userData.lastname}
-              onChange={(e) => handleFormChange(e, 'lastname')}
+              {...register('lastname', { required: true })}
             />
           </div>
 
@@ -122,82 +122,69 @@ const SignUp = () => {
           <div className='w-full sm:w-[60%] relative flex items-center'>
             <input
               type='email'
-              placeholder='example@email.com'
-              required
-              autoComplete='email'
+              defaultValue=''
+              placeholder='email'
               className='signup__form-input'
-              value={userData.email}
-              onChange={(e) => handleFormChange(e, 'email')}
+              {...register('email', { required: true })}
             />
           </div>
 
           {/* -- password */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
-            {
-              {
-                true: (
-                  <EyeIconLocal
-                    sx='absolute right-3 text-text-medium cursor-pointer'
-                    action={() => setShowPassword(false)}
-                  />
-                ),
-                false: (
-                  <EyeSlashIconLocal
-                    sx='absolute right-3 text-text-medium cursor-pointer'
-                    action={() => setShowPassword(true)}
-                  />
-                ),
-              }[showPassword]
-            }
+            {showPassword ? (
+              <EyeIconLocal
+                fill=''
+                sx='absolute right-3 text-text-medium cursor-pointer'
+                action={() => setShowPassword(false)}
+              />
+            ) : (
+              <EyeSlashIconLocal
+                fill=''
+                sx='absolute right-3 text-text-medium cursor-pointer'
+                action={() => setShowPassword(true)}
+              />
+            )}
             <input
               type={showPassword ? 'text' : 'password'}
+              defaultValue=''
               placeholder='Password'
-              required
-              minLength={6}
+              {...register('password', { required: true })}
               className='signup__form-input'
-              value={userData.password}
-              onChange={(e) => handleFormChange(e, 'password')}
             />
           </div>
 
           {/* -- confirm password */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
-            {
-              {
-                true: (
-                  <EyeIconLocal
-                    sx='absolute right-3 text-text-medium cursor-pointer'
-                    action={() => setShowPassword(false)}
-                  />
-                ),
-                false: (
-                  <EyeSlashIconLocal
-                    sx='absolute right-3 text-text-medium cursor-pointer'
-                    action={() => setShowPassword(true)}
-                  />
-                ),
-              }[showPassword]
-            }
+            {showPassword ? (
+              <EyeIconLocal
+                fill=''
+                sx='absolute right-3 text-text-medium cursor-pointer'
+                action={() => setShowPassword(false)}
+              />
+            ) : (
+              <EyeSlashIconLocal
+                fill=''
+                sx='absolute right-3 text-text-medium cursor-pointer'
+                action={() => setShowPassword(true)}
+              />
+            )}
             <input
+              placeholder='Confim password'
               type={showPassword ? 'text' : 'password'}
-              placeholder='Confirm Password'
-              required
+              {...register('confirmPassword', { required: true })}
               className='signup__form-input'
-              value={userData.confirmPassword}
-              onChange={(e) => handleFormChange(e, 'confirmPassword')}
             />
           </div>
 
           {/* -- Account type */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
-            <label htmlFor='account-type' className='w-1/3 font-medium text-lg'>
+            <label htmlFor='accountType' className='w-1/3 font-medium text-lg'>
               Account type
             </label>
             <select
               className='w-2/3 bg-gray-200/60 text-base text-text-medium duration-300 transition-all ease-out focus:ring-violet-light outline-none focus:ring-1 border-none focus:bg-violet-50 focus:shadow-lg rounded-md'
-              value={userData.accountType}
-              name='account-type'
-              onChange={(e) => handleFormChange(e, 'accountType')}
+              defaultValue='individual'
+              {...register('account_type', { required: true })}
             >
               <option value='individual'>Individual (Personal)</option>
               <option value='organization'>Organization</option>
@@ -206,76 +193,69 @@ const SignUp = () => {
 
           <button
             type='submit'
-            disabled={singupStatus}
+            disabled={signupStatus.isLoading ? true : false}
             className={classNames(
               'w-full sm:w-[60%] py-2 rounded-md border shadow text-lg duration-300 ease-out transition-all mt-5 flex items-center justify-center gap-3',
-              !singupStatus
-                ? 'bg-violet-600 text-white-off font-medium hover:shadow-lg cursor-pointer hover:bg-violet-500'
-                : singupStatus === 'error'
+              !signupStatus.isLoading &&
+                'bg-violet-600 text-white-off font-medium hover:shadow-lg cursor-pointer hover:bg-violet-500',
+              signupStatus.error
                 ? 'border-red-main text-red-main'
                 : 'bg-transparent text-violet-dark border-violet-dark font-bold cursor-not-allowed'
             )}
           >
-            {
-              {
-                null: 'Sign me up!',
-                firebaseLoading: (
-                  <>
-                    <lord-icon
-                      src='https://cdn.lordicon.com/ukodqrxd.json'
-                      trigger='loop'
-                      colors='primary:#121331,secondary:#6d28d9'
-                      style={{ width: '40px', height: '40px' }}
-                    />
-                    <p>Creating profile...</p>
-                  </>
-                ),
-                firebaseSuccess: (
-                  <>
-                    <lord-icon
-                      src='https://cdn.lordicon.com/jvihlqtw.json'
-                      trigger='loop'
-                      colors='primary:#121331,secondary:#6d28d9'
-                      style={{ width: '40px', height: '40px' }}
-                    />
-                    <p>Profile created</p>
-                  </>
-                ),
-                databaseLoading: (
-                  <>
-                    <lord-icon
-                      src='https://cdn.lordicon.com/ukodqrxd.json'
-                      trigger='loop'
-                      colors='primary:#121331,secondary:#6d28d9'
-                      style={{ width: '40px', height: '40px' }}
-                    />
-                    <p>Saving profile...</p>
-                  </>
-                ),
-                databaseSuccess: (
-                  <>
-                    <lord-icon
-                      src='https://cdn.lordicon.com/jvihlqtw.json'
-                      trigger='loop'
-                      colors='primary:#121331,secondary:#6d28d9'
-                      style={{ width: '40px', height: '40px' }}
-                    />
-                    <p>Profile saved</p>
-                  </>
-                ),
-                error: (
-                  <>
-                    <lord-icon
-                      src='https://cdn.lordicon.com/tdrtiskw.json'
-                      trigger='loop'
-                      colors='primary:#121331,secondary:#d6460c'
-                      style={{ width: '40px', height: '40px' }}
-                    />
-                    <p>An Error occured</p>
-                  </>
-                ),
-              }[singupStatus]
-            }
+            {/* -- Null */}
+            {!signupStatus.isLoading &&
+              !signupStatus.isSuccess &&
+              !signupStatus.error &&
+              'Sing me up!'}
+
+            {/* -- is Loading */}
+            {signupStatus.isLoading &&
+              !signupStatus.isSuccess &&
+              !signupStatus.error && (
+                <>
+                  {/* @ts-ignore */}
+                  <lord-icon
+                    src='https://cdn.lordicon.com/ukodqrxd.json'
+                    trigger='loop'
+                    colors='primary:#121331,secondary:#6d28d9'
+                    style={{ width: '40px', height: '40px' }}
+                  />
+                  <p>Creating profile...</p>
+                </>
+              )}
+
+            {/* -- is Success */}
+            {!signupStatus.isLoading &&
+              signupStatus.isSuccess &&
+              !signupStatus.error && (
+                <>
+                  {/* @ts-ignore */}
+                  <lord-icon
+                    src='https://cdn.lordicon.com/jvihlqtw.json'
+                    trigger='loop'
+                    colors='primary:#121331,secondary:#6d28d9'
+                    style={{ width: '40px', height: '40px' }}
+                  />
+                  <p>Profile created</p>
+                </>
+              )}
+
+            {/* -- is Error  */}
+            {!signupStatus.isLoading &&
+              !signupStatus.isSuccess &&
+              signupStatus.error && (
+                <>
+                  {/* @ts-ignore */}
+                  <lord-icon
+                    src='https://cdn.lordicon.com/tdrtiskw.json'
+                    trigger='loop'
+                    colors='primary:#121331,secondary:#d6460c'
+                    style={{ width: '40px', height: '40px' }}
+                  />
+                  <p>An Error occured</p>
+                </>
+              )}
           </button>
           <div className='-mt-1.5 -mb-1.5 flex items-center justify-center gap-4 w-full sm:[w-60%]'>
             <span className=' w-28 h-[0.5px] border-gray-300 border' />
@@ -287,7 +267,9 @@ const SignUp = () => {
             className='flex items-center justify-center gap-3 py-2 w-full sm:w-[60%] rounded-md shadow transition-300 ease-out duration-300 border hover:shadow-lg border-gray-400'
             onClick={() =>
               providers.google &&
-              signIn(providers.google.id, { callbackUrl: '/tool/dashboard' })
+              signIn(providers.google.id, {
+                callbackUrl: '/tool/dashboard',
+              })
             }
           >
             <FcGoogle fontSize={23} />
@@ -310,7 +292,7 @@ const SignUp = () => {
 
         <div className='w-2/3 h-[75%] bg-white-off/80 rounded-xl shadow-lg z-20 flex flex-col items-center justify-center py-10 px-5 text-center gap-5 duration-300 ease-out transition-all hover:bg-white-off/90 hover:scale-[101%] hover:shadow-2xl relative'>
           <Link
-            className='font-bold text-2xl absolute top-8 left-4 text-text-dark hover:text-violet-dark hover:border border-violet-main rounded-lg py-1 px-3 duration-300 ease-out transition-all hover:shadow-md'
+            className=' text-xl lg:text-2xl absolute top-8 left-4 text-text-dark hover:text-violet-dark hover:border border-violet-main rounded-lg py-1 px-3 duration-300 ease-out transition-all hover:shadow-md font-black-ops'
             href='/'
           >
             NUBIA
@@ -324,7 +306,10 @@ const SignUp = () => {
           </p>
           <Link href='/auth' className='hero-link group px-20 mt-20'>
             Sign In
-            <UserIconLocal sx='w-5 h-3 duration-300 ease-out -translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 absolute right-8 group-hover:right-5' />
+            <UserIconLocal
+              fill=''
+              sx='w-5 h-3 duration-300 ease-out -translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 absolute right-8 group-hover:right-5'
+            />
           </Link>
         </div>
       </section>

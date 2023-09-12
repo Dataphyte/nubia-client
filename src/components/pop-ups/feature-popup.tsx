@@ -4,6 +4,19 @@ import { classNames } from '@/utils/classnames';
 import { Transition, Dialog } from '@headlessui/react';
 import Link from 'next/link';
 
+type FeaturePopupProps = {
+  state: boolean;
+  setState: React.Dispatch<React.SetStateAction<Boolean>>;
+  content: {
+    icon: string | null;
+    title: string;
+    body: string;
+    bg: string | null;
+    btnText: string;
+    btnLink: string;
+  };
+};
+
 export default function FeaturePopup({
   state,
   setState,
@@ -15,7 +28,7 @@ export default function FeaturePopup({
     btnText: '',
     btnLink: '/',
   },
-}) {
+}: FeaturePopupProps) {
   const router = useRouter();
 
   return (
@@ -46,6 +59,7 @@ export default function FeaturePopup({
             >
               <Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white-main px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6'>
                 <div className='flex flex-col items-center justify-center'>
+                  {/* @ts-ignore */}
                   <lord-icon
                     src={content.icon}
                     trigger='loop'

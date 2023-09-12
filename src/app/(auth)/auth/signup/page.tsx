@@ -5,29 +5,14 @@ import Link from 'next/link';
 import UserIconLocal from '@/src/assets/icons/user-icon';
 import { useRouter } from 'next/navigation';
 import { classNames } from '@/src/utils/classnames';
-import { getProviders, signIn, useSession } from 'next-auth/react';
-import { getCsrfToken } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import Lottie from 'lottie-react';
-import LoadingLottie from '@/assets/animations/loading-lottie.json';
 
 // ======= Icon imports -->
 import EyeIconLocal from '@/src/assets/icons/eye-icon';
 import EyeSlashIconLocal from '@/src/assets/icons/eye-slash-icon';
 import { FcGoogle } from 'react-icons/fc';
 import axios from 'axios';
-
-//=============================================>
-// ======= Load providers and Email csrf token-->
-//=============================================>
-
-export const loadProviders = async (): Promise<any> =>
-  (await getProviders()) ?? [];
-
-export const loadCsrfToken = async (): Promise<any> =>
-  (await getCsrfToken()) ?? '';
-
-//=============================================>
 
 type NewUser = {
   firstname: string;
@@ -39,10 +24,7 @@ type NewUser = {
 };
 
 const SignUp = () => {
-  const { data: session, status: sessionStatus } = useSession();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [providers, setProviders] = useState([]);
-  const [csrfToken, setcsrfToken] = useState(null);
   const [signupStatus, setsignupStatus] = useState<{
     isLoading: boolean;
     error: boolean;
@@ -75,10 +57,6 @@ const SignUp = () => {
       console.trace(error);
     }
   };
-  useEffect(() => {
-    (async () => setProviders(await loadProviders()))();
-    (async () => setcsrfToken(await loadCsrfToken()))();
-  }, []);
 
   return (
     <div className='flex- w-full h-screen flex items-center justify-center overflow-hidden'>
@@ -266,8 +244,7 @@ const SignUp = () => {
             type='button'
             className='flex items-center justify-center gap-3 py-2 w-full sm:w-[60%] rounded-md shadow transition-300 ease-out duration-300 border hover:shadow-lg border-gray-400'
             onClick={() =>
-              providers.google &&
-              signIn(providers.google.id, {
+              signIn('google', {
                 callbackUrl: '/tool/dashboard',
               })
             }
@@ -307,6 +284,7 @@ const SignUp = () => {
           <Link href='/auth' className='hero-link group px-20 mt-20'>
             Sign In
             <UserIconLocal
+              action={() => {}}
               fill=''
               sx='w-5 h-3 duration-300 ease-out -translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 absolute right-8 group-hover:right-5'
             />

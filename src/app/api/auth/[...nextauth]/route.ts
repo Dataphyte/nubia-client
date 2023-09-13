@@ -1,20 +1,13 @@
 import NextAuth, { User } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import bcrypt from 'bcrypt';
-import { MongoDBAdapter } from '@auth/mongodb-adapter';
-import clientPromise from '@/src/server/mongodb';
-import UserModel from '@/src/server/models/user.model';
-import { UserInterface } from '@/src/server/server';
-import connectDB from '@/src/server/mongoose';
-import mongoose from 'mongoose';
-
-const mongo = connectDB();
+import prisma from '@/src/server/db';
 
 const handler = NextAuth({
   // ======= ADAPTER -->
-  adapter: MongoDBAdapter(clientPromise)
-  ),
+  adapter: PrismaAdapter(prisma),
 
   // ======= PROVIDERS -->
   providers: [
@@ -38,10 +31,12 @@ const handler = NextAuth({
         password: { label: 'password', type: 'password' },
       },
 
-      async authorize(credentials): Promise<any | null> {
+      async authorize(credentials): Promise<User | null> {
         if (!credentials!.email || !credentials!.password) return null;
         try {
-          const user = await UserModel.findOne({ email: credentials?.email });
+          const user = await prisma.user.findUnique({
+            where: { email: credentials!.email },
+          });
           if (!user) return null;
 
           const passwordMatch = await bcrypt.compare(
@@ -49,8 +44,8 @@ const handler = NextAuth({
             user.password as string
           );
 
-          if (!passwordMatch) return null;
-          return user;
+          if (!passwordMatch) return null
+          return user
         } catch (error) {
           return null;
         }

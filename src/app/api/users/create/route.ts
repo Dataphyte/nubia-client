@@ -1,8 +1,7 @@
 import { CustomResponse, UserInterface } from '@/src/server/server';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
-import UserModel from '@/src/server/models/user.model';
-import connectDB from '@/src/server/mongoose';
+import prisma from '@/src/server/db';
 
 interface NewUser {
   firstname: string;
@@ -13,7 +12,6 @@ interface NewUser {
   account_type: 'individual' | 'organization';
 }
 
-connectDB();
 export async function POST(request: Request) {
   let Query: CustomResponse;
 
@@ -21,11 +19,12 @@ export async function POST(request: Request) {
   delete userDetails.confirmPassword;
 
   const { firstname, lastname, account_type, email, password } = userDetails;
-  const exists = await UserModel.findOne({ email: email });
-
+  const exists = await prisma.user.findUnique({
+    where: { email: email },
+  });
   if (!exists) {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const User = await UserModel.create({
+    const User = await prisma.user.create({
       data: {
         name: `${firstname} ${lastname}`,
         email,

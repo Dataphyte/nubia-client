@@ -4,7 +4,7 @@ import { classNames } from '@/utils/classnames';
 import { Transition, Dialog } from '@headlessui/react';
 import Link from 'next/link';
 
-export type FeaturePopupProps = {
+type FeaturePopupProps = {
   state: boolean;
   setState: React.Dispatch<React.SetStateAction<Boolean>>;
   content: {

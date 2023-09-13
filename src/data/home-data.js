@@ -2,7 +2,6 @@ import PopImage1 from '../assets/images/hero-coding.jpg';
 import PopImage2 from '../assets/images/hero-coding-2.jpg';
 import PopImage3 from '../assets/images/hero-data-sheet.jpg';
 import PopImage4 from '../assets/images/hero-data-sheet-2.jpg';
-import { FeaturePopupProps } from '../components/pop-ups/feature-popup';
 
 export const heroPopCards = [
   {
@@ -107,7 +106,6 @@ export const featureContent = {
     body: 'Nubia Improves accuracy in story telling by taking off the burdern of Journalists from drawing insight from raw and dense data.',
     icon: 'https://cdn.lordicon.com/flqcnwch.json',
     btnText: 'Ok',
-    btnLink: '/',
   },
   feat_2: {
     title: 'Data analysis',
@@ -115,7 +113,6 @@ export const featureContent = {
     body: 'The stories produced by Nubia have been pre-analyzed, restructured and sorted well enough to be used right away for story telling.',
     icon: 'https://cdn.lordicon.com/nbdmfygb.json',
     btnText: 'Ok',
-    btnLink: '/',
   },
   feat_3: {
     title: 'Repetitive tasks',
@@ -123,6 +120,5 @@ export const featureContent = {
     body: 'Due to the ability of Nubia to treat each entry point one after the other, There is no need for manual generation of stories that use the same template or have the same format.',
     icon: 'https://cdn.lordicon.com/jvucoldz.json',
     btnText: 'Ok',
-    btnLink: '/',
   },
 };

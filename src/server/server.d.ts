@@ -1,7 +1,9 @@
 import { ObjectId } from 'mongoose';
 import { NextResponse } from 'next/server';
+import { ParseResult } from 'papaparse';
 
-// user types
+//========== MODEL INTERFACES ========>
+// USER
 declare interface UserInterface {
   name: string;
   firstname: string;
@@ -18,6 +20,33 @@ declare interface UserInterface {
     org_size: number;
     org_niche: string;
   };
+}
+
+// PROJECT
+declare interface ProjectSchema {
+  name: string;
+  description: string;
+  stories: { title: string; content: string; tone: 'base' | string }[];
+  data: {
+    parsed: ParseResult<string>;
+    contents: string;
+    details: { file_name: string; file_size: string };
+    file_url: string;
+  };
+  template: string;
+  features: {
+    _id: ObjectId;
+    name: string;
+    type: 'data' | 'custom';
+    field_ref: string;
+    formula: string;
+  }[];
+  status: {
+    id: number;
+    text: string;
+    complete: boolean;
+  }[];
+  user: ObjectId;
 }
 
 declare interface CustomResponse {

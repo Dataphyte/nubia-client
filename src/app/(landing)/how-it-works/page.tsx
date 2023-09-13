@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Head from './head';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ import ParserImage from '../../../assets/images/parser-snapshot.png';
 import ServiceImage from '../../../assets/images/service-snapshot.png';
 import RouteImage from '../../../assets/images/route-snapshot.png';
 
-const HowItWorks = () => {
+const HowItWorks = (): ReactNode => {
   return (
     <div className='page_container'>
       <Head />

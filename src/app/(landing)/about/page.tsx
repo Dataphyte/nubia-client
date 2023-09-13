@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Head from './head';
@@ -14,7 +14,7 @@ const stats = [
   { label: 'Cost', value: 'Free' },
 ];
 
-const About = () => {
+const About = (): ReactNode => {
   return (
     <div className='page__container'>
       <Head />
@@ -188,6 +188,7 @@ const About = () => {
         </div>
 
         <div className='w-full max-w-lg h-400 flex items-center justify-center px-0 md:px-10 py-10 relative'>
+          {/* @ts-ignore */}
           <lord-icon
             src='https://cdn.lordicon.com/fazmtdnb.json'
             trigger='loop'
@@ -195,6 +196,7 @@ const About = () => {
             class='w-32 h-32 absolute z-10 -left-10 md:left-12 lg:top-5 hover:animate-spin cursor-pointer'
           />
           <span className='bg-white-main w-80 h-80 shadow-lg hover:shadow-2xl rounded-full mt-16 ml-0 md:ml-16 border border-black-thin relative flex items-center justify-center duration-300 ease-out cursor-pointer'>
+            {/* @ts-ignore */}
             <lord-icon
               src='https://cdn.lordicon.com/utzmfilx.json'
               trigger='hover'

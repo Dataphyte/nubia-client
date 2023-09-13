@@ -6,20 +6,17 @@ import { motion } from 'framer-motion';
 import Hero from '../../components/hero';
 import { classNames } from 'src/utils/classnames';
 import ScrollTexts from '@/components/scroll-texts';
-import {
-  heroPopCards,
-  stepCards,
-  featureContent,
-  popCardData,
-} from '@/data/home-data';
-import FeaturePopup from '@/components/pop-ups/feature-popup';
+import { heroPopCards, stepCards, featureContent } from '@/data/home-data';
+import FeaturePopup, {
+  FeaturePopupProps,
+} from '@/components/pop-ups/feature-popup';
 import Head from './head';
 
 export default function Home() {
   const [featureModalOpen, setFeatureModalOpen] = useState(false);
   const [currentFeature, setCurrentFeature] = useState(featureContent.feat_1);
 
-  const handleFeat = (feat) => {
+  const handleFeat = (feat): void => {
     setFeatureModalOpen(true);
     setCurrentFeature(feat);
   };
@@ -209,6 +206,7 @@ export default function Home() {
                 card.shadow
               )}
             >
+              {/* @ts-ignore */}
               <lord-icon
                 src={card.iconUrl}
                 trigger='loop'

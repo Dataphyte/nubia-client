@@ -1,8 +1,9 @@
 'use client';
 
 import axios from 'axios';
-import { UseQueryOptions, useQuery } from 'react-query';
+import { UseQueryOptions, UseQueryResult, useQuery } from 'react-query';
 import { useSession } from 'next-auth/react';
+import { ProjectSchema } from '@/src/app/decs';
 
 const manualFetchOptions: UseQueryOptions = {
   enabled: false,
@@ -71,12 +72,24 @@ export const useCreateProject = (projectData: {
 // ======= GET SINGLE PROJECT -->
 //=============================================>
 export const useGetSingleProject = (projectId: string) => {
-  const Query = useQuery('get-single-project', async () => {
-    try {
-      const project = await axios.get(`/api/project/${projectId}`);
-      return project;
-    } catch (error) {
-      console.log(error);
+  const Query = useQuery<ProjectSchema>(
+    'get-single-project',
+    async () => {
+      try {
+        const project = await axios.get(`/api/projects/${projectId}`);
+        return project.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    {
+      enabled: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+      staleTime: Infinity,
     }
-  });
+  );
+
+  return Query;
 };

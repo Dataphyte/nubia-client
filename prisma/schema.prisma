@@ -7,6 +7,9 @@ generator client {
   provider = "prisma-client-js"
 }
 
+//===============================================>
+// MODELS ===========================>
+//===============================================>
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @map("user_id") @db.ObjectId
@@ -38,15 +41,19 @@ model Session {
 }
 
 model User {
-  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  id            String                @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?       @unique
-  emailVerified DateTime?     @map("email_verified")
-  account_type  account_type? @default(individual)
+  email         String?               @unique
+  emailVerified DateTime?             @map("email_verified")
+  account_type  account_type_enum?    @default(individual)
   image         String?
   password      String?
   accounts      Account[]
   sessions      Session[]
+  preferences   User_Preference_type?
+  organization  Organization_type?
+  createdAt     DateTime              @default(now())
+  Project       Project[]
 
   @@map("users")
 }
@@ -61,8 +68,92 @@ model VerificationToken {
   @@map("verificationtokens")
 }
 
-// ENUMS
-enum account_type {
+model Project {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String         @map("user_id") @db.ObjectId
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String
+  stories     Stories_type[]
+  data_url    String?
+  template    String?
+  features    Feature_type[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @default(now())
+
+  @@map("projects")
+}
+
+//===============================================>
+// TYPES ===========================>
+//===============================================>
+
+type User_Preference_type {
+  english_style English_Style_enum
+  abbrievations Preference_abv_type[]
+}
+
+type Stories_type {
+  content String
+  tone    String
+}
+
+type Preference_abv_type {
+  full         String
+  abbrievation String
+}
+
+type Feature_type {
+  featureName String
+  featureType Feature_type_enum
+  fieldRef    String
+  formula     Formula_type[]
+  status      TaskStatus_type[]
+}
+
+type Organization_type {
+  name     String
+  position String
+  size     Int
+  niche    String
+}
+
+type Formula_type {
+  type    Feature_type_enum
+  field   String? // This is optional because of the '?' in the provided structure.
+  value   String
+  operand Operand_enum?
+}
+
+type TaskStatus_type {
+  id       Int
+  text     String
+  complete Boolean
+}
+
+//===============================================>
+// ENUMS ===========================>
+//===============================================>
+enum account_type_enum {
   individual
   organization
+}
+
+enum Feature_type_enum {
+  Data
+  Custom
+}
+
+enum English_Style_enum {
+  british
+  american
+  international
+}
+
+enum Operand_enum {
+  ADDITION
+  SUBTRACTION
+  MULTIPLICATION
+  DIVISION
+  NONE
 }

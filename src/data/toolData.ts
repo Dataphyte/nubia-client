@@ -6,6 +6,7 @@ import {
   HomeIcon,
 } from '@heroicons/react/24/outline';
 import { signOut } from 'next-auth/react';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
 export const navigation = [
   {
@@ -39,9 +40,21 @@ export const navigation = [
   },
 ];
 
-export const userNavigation = [
-  { name: 'Your Profile', href: 'profile' },
-  { name: 'Settings', href: 'settings' },
+export const userNavigation: {
+  name: string;
+  href: string;
+  action: (router?: AppRouterInstance) => any | Promise<boolean>;
+}[] = [
+  {
+    name: 'Your Profile',
+    href: 'profile',
+    action: (router: AppRouterInstance) => router.push('/tool/profile'),
+  },
+  {
+    name: 'Settings',
+    href: 'settings',
+    action: (router: AppRouterInstance) => router.push('/tool/settings'),
+  },
   {
     name: 'Sign out',
     href: '/auth/signup',

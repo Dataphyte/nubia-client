@@ -1,4 +1,4 @@
-import { CustomResponse, UserInterface } from '@/src/server/server';
+import { CustomResponse } from '@/src/server/server';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import prisma from '@/src/server/db';

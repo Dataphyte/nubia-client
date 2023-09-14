@@ -28,6 +28,7 @@ import { classNames } from 'src/utils/classnames';
 // ======= data imports -->
 import { navigation, userNavigation } from '@/data/toolData';
 import Notification from '@/src/components/pop-ups/notification';
+import { Router } from 'next/router';
 
 const Layout = ({ children }) => {
   const { data: session, status: sessionStatus } = useSession();
@@ -51,7 +52,7 @@ const Layout = ({ children }) => {
   // TODO: Uncomment to check for user
   useEffect(() => {
     if (sessionStatus === 'unauthenticated') router.replace('/auth/signup');
-    console.log(session);
+    // console.log(session);
   }, [session, sessionStatus]);
 
   // ======= Story effect -->
@@ -315,7 +316,7 @@ const Layout = ({ children }) => {
                                 className='h-8 w-8 rounded-full'
                                 src={
                                   (sessionStatus === 'authenticated' &&
-                                    session.user.image) ||
+                                    session?.user!.image) ||
                                   'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
                                 }
                                 alt=''
@@ -335,7 +336,8 @@ const Layout = ({ children }) => {
                               {userNavigation.map((item) => (
                                 <Menu.Item
                                   key={item.name}
-                                  onClick={() => item.action()}
+                                  // @ts-ignore
+                                  onClick={() => item?.action(router)}
                                 >
                                   {({ active }) => (
                                     <p

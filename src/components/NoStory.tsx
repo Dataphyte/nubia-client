@@ -4,6 +4,7 @@ import Link from 'next/link';
 const NoStory = ({ toBeViewed }) => {
   return (
     <div className='w-full h-full min-h-[600px] border-2 border-dashed border-gray-300 flex flex-col gap-8 items-center justify-center'>
+      {/* @ts-ignore */}
       <lord-icon
         src='https://cdn.lordicon.com/nocovwne.json'
         trigger='loop'

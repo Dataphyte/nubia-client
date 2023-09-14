@@ -44,8 +44,8 @@ const handler = NextAuth({
             user.password as string
           );
 
-          if (!passwordMatch) return null
-          return user
+          if (!passwordMatch) return null;
+          return user;
         } catch (error) {
           return null;
         }
@@ -64,6 +64,22 @@ const handler = NextAuth({
     error: '/auth/signup',
   },
 
+  callbacks: {
+    jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = user?.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      // I skipped the line below coz it gave me a TypeError
+      // session.accessToken = token.accessToken;
+      session.user.id = token.id;
+
+      return session;
+    },
+  },
   // ======= EVENT MONITOR -->
   //   events: {
   //     async signIn(message) {

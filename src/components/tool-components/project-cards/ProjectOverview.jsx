@@ -10,7 +10,7 @@ const ProjectOverview = () => {
   const [prompt, setPrompt] = useState('');
   const { projectData } = projectStore();
   const openai = new OpenAI({
-    apiKey: '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',
+    apiKey: process.env.NEXT_PUBLIC_OPEN_AI_API_KEY,
     dangerouslyAllowBrowser: true,
   });
 
@@ -29,7 +29,7 @@ const ProjectOverview = () => {
         messages: [
           {
             role: 'user',
-            content: `Give me 10 question in list format about cars`,
+            content: `What can you say about the data ${projectData.contents}`,
           },
         ],
         temperature: 0,
@@ -46,9 +46,9 @@ const ProjectOverview = () => {
       });
   };
 
-  // useEffect(() => {
-  //   console.log(JSON.stringify(projectData.parsed.data));
-  // }, [projectData]);
+  useEffect(() => {
+    console.log(projectData?.contents.length);
+  }, [projectData]);
 
   return (
     <div>

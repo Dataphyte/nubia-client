@@ -1,11 +1,12 @@
 'use client';
 
 import axios from 'axios';
-import { UseQueryOptions, UseQueryResult, useQuery } from 'react-query';
+import { UseQueryOptions, useQuery } from 'react-query';
 import { useSession } from 'next-auth/react';
-import { ProjectSchema } from '@/src/app/decs';
+import { ProjectSchema } from '@/src/typescript/project';
+import { notFound } from 'next/navigation';
 
-const manualFetchOptions: UseQueryOptions = {
+const manualFetchOptions: UseQueryOptions<any> = {
   enabled: false,
   refetchOnMount: false,
   refetchOnWindowFocus: false,
@@ -18,20 +19,22 @@ const manualFetchOptions: UseQueryOptions = {
 //=============================================>
 export const useGetProjectList = () => {
   const { data: session } = useSession();
-  const Query = useQuery(
+  const Query = useQuery<LocalCustomResponse<ProjectSchema[]>>(
     'get-project-list',
     async () => {
-      return await axios
-        .get(`/api/projects?session_id=${session?.user.id}`, {
-          headers: { Authorization: session?.user.id! },
-        })
-        .then((res) => {
-          console.table(res.data);
-          return res.data;
-        })
-        .catch((error) => console.log(error));
+      try {
+        const project = await axios.get(
+          `/api/projects?session_id=${session?.user?.id}`,
+          {
+            headers: { Authorization: session?.user?.id! },
+          }
+        );
+        return project.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
-    manualFetchOptions
+    { refetchInterval: 3000, staleTime: 3000 }
   );
   return Query;
 };
@@ -44,7 +47,7 @@ export const useCreateProject = (projectData: {
   description: string;
 }) => {
   const { data: session } = useSession();
-  const Query = useQuery(
+  const Query = useQuery<LocalCustomResponse<ProjectSchema>>(
     'create-new-project',
     async () => {
       try {
@@ -55,11 +58,9 @@ export const useCreateProject = (projectData: {
             userId: session?.user.id,
           }
         );
-        console.log(newProject);
-        return newProject;
+        return newProject.data;
       } catch (error) {
         console.log(error);
-        return;
       }
     },
     manualFetchOptions
@@ -72,23 +73,19 @@ export const useCreateProject = (projectData: {
 // ======= GET SINGLE PROJECT -->
 //=============================================>
 export const useGetSingleProject = (projectId: string) => {
-  const Query = useQuery<ProjectSchema>(
+  const Query = useQuery<LocalCustomResponse<ProjectSchema>>(
     'get-single-project',
     async () => {
       try {
         const project = await axios.get(`/api/projects/${projectId}`);
+        // console.log(project);
+
         return project.data;
       } catch (error) {
-        console.log(error);
+        return null;
       }
     },
-    {
-      enabled: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
-      staleTime: Infinity,
-    }
+    manualFetchOptions
   );
 
   return Query;

@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 export const storyStore = create(
   persist(
@@ -16,6 +16,6 @@ export const storyStore = create(
       setCurrentStoryCategory: (currentStoryCategory) =>
         set({ currentStoryCategory }),
     }),
-    { name: 'story-details', getStorage: () => sessionStorage }
+    { name: 'story-details', storage: createJSONStorage(() => sessionStorage) }
   )
 );

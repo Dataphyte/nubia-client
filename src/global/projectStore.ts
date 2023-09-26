@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { ProjectStore } from '../typescript/project';
 
-export const projectStore = create(
+export const projectStore = create<ProjectStore>()(
   persist(
     (set, get) => ({
       currentTab: 'Overview',

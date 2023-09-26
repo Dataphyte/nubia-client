@@ -8,8 +8,9 @@ generator client {
 }
 
 //===============================================>
-// MODELS ===========================>
+//==========  MODELS ============================>
 //===============================================>
+
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @map("user_id") @db.ObjectId
@@ -41,19 +42,21 @@ model Session {
 }
 
 model User {
-  id            String                @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?               @unique
-  emailVerified DateTime?             @map("email_verified")
-  account_type  account_type_enum?    @default(individual)
-  image         String?
-  password      String?
-  accounts      Account[]
-  sessions      Session[]
-  preferences   User_Preference_type?
-  organization  Organization_type?
-  createdAt     DateTime              @default(now())
-  Project       Project[]
+  id                 String                  @id @default(auto()) @map("_id") @db.ObjectId
+  name               String?
+  email              String?                 @unique
+  emailVerified      DateTime?               @map("email_verified")
+  account_type       account_type_enum?      @default(individual)
+  image              String?
+  password           String?
+  accounts           Account[]
+  sessions           Session[]
+  preferences        User_Preference_type?
+  organization       Organization_type?
+  createdAt          DateTime                @default(now())
+  Project            Project[]
+  subscription       Subscription_plans_enum @default(FREE)
+  subscription_renew Subscription_renew_enum @default(MONTHLY)
 
   @@map("users")
 }
@@ -69,23 +72,35 @@ model VerificationToken {
 }
 
 model Project {
-  id          String         @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String         @map("user_id") @db.ObjectId
-  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String            @map("user_id") @db.ObjectId
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   name        String
   description String
   stories     Stories_type[]
-  data_url    String?
+  data        Project_data_type?
   template    String?
   features    Feature_type[]
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @default(now())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @default(now())
 
   @@map("projects")
 }
 
+model Subscriptions {
+  id          String                  @id @default(auto()) @map("_id") @db.ObjectId
+  name        Subscription_plans_enum @default(FREE)
+  projects    Int
+  storyLength Int
+  fileSize    Int
+  rewrites    Int
+  features    Int
+
+  @@map("subscriptions")
+}
+
 //===============================================>
-// TYPES ===========================>
+//========== TYPES ==============================>
 //===============================================>
 
 type User_Preference_type {
@@ -111,6 +126,12 @@ type Feature_type {
   status      TaskStatus_type[]
 }
 
+type Project_data_type {
+  fields String[]
+  file_url String 
+  file_size String
+}
+
 type Organization_type {
   name     String
   position String
@@ -118,9 +139,14 @@ type Organization_type {
   niche    String
 }
 
+type Subscription_type {
+  plan  Subscription_plans_enum
+  renew Subscription_renew_enum
+}
+
 type Formula_type {
   type    Feature_type_enum
-  field   String? // This is optional because of the '?' in the provided structure.
+  field   String?
   value   String
   operand Operand_enum?
 }
@@ -132,7 +158,7 @@ type TaskStatus_type {
 }
 
 //===============================================>
-// ENUMS ===========================>
+//==========  ENUMS =============================>
 //===============================================>
 enum account_type_enum {
   individual
@@ -156,4 +182,17 @@ enum Operand_enum {
   MULTIPLICATION
   DIVISION
   NONE
+}
+
+enum Subscription_plans_enum {
+  FREE
+  STANDARD
+  PREMIUM
+  GOLD
+  ENTREPRENEUR
+}
+
+enum Subscription_renew_enum {
+  MONTHLY
+  YEARLY
 }

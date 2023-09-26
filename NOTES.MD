@@ -28,67 +28,123 @@
 
 ### Project Schema
 
-```js
-{
-  projectName: String, // Name of project
-  projectDesc: String, // Description of project
-  stories: [String], // Generated stories from data
+```ts
+type ProjectSchema = {
+  projectName: string; // Name of project
+  projectDesc: string; // Description of project
+  stories: [string]; // Generated stories from data
   projectData: {
-    parsed: { // PaoaParseObject
-      data: [{Any}],
-      errors: [{Any}],
-      meta:{Any}
-    },
-    contents: String, // String version of the parsed dataset
+    parsed: {
+      // PaoaParseObject
+      data: any[];
+      errors: any[];
+      meta: Object<any>;
+    };
+    contents: string; // string version of the parsed dataset
     details: {
-      fileName: String, // Name of file that has been parsed
-      fileSize: String, // Size of parsed file
-    },
-   },
-  dataFileUrl: String, // path to data file location
-  template: String, // String from template Editor
+      fileName: string; // Name of file that has been parsed
+      fileSize: string; // Size of parsed file
+    };
+  };
+  dataFileUrl: string; // path to data file location
+  template: string; // string from template Editor
   features: [
     {
-      featureName: String, // Name of feature
-      featureType: 'Data' | 'Custom', // Type of feature
-      fieldRef: String, // Field reference to dataset (if type is Data)
+      featureName: string; // Name of feature
+      featureType: 'Data' | 'Custom'; // Type of feature
+      fieldRef: string; // Field reference to dataset (if type is Data)
       formula: [
-            {
-              type: 'Data' | 'Custom', // Type of value
-              field?: String,  // Field from dataset (if the type is data)
-              value: String // Value to add (if the type is custom)
-              operand: '+' | '-' | '*' | '/' | null, // Operant to prefix with the next value
-            }
-       ],
-       status: [
-            {
-              id: Number, // id of task for iterable key
-              text: String, // Text for the task represnted
-              complete: Boolean, // completeness of task
-            }
-       ]
-    },
+        {
+          type: 'Data' | 'Custom'; // Type of value
+          field?: string; // Field from dataset (if the type is data)
+          value: string; // Value to add (if the type is custom)
+          operand: '+' | '-' | '*' | '/' | null; // Operant to prefix with the next value
+        }
+      ];
+      status: [
+        {
+          id: number; // id of task for iterable key
+          text: string; // Text for the task represnted
+          complete: boolean; // completeness of task
+        }
+      ];
+    }
   ];
-}
+};
 ```
 
 ### Signup Schema
 
-```js
-{
-  firstname: String,
-  lastname: String,
-  email: String,
-  password: String,
-  confirmPassword: String,
-  accountType: 'personal'| 'organization',
+```ts
+type SignupSchema = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  accountType: 'personal' | 'organization';
   organization: {
-    orgName: String,
-    position: String, // position of account crerator in organization
-    companySize: Number,
-    niche: String // Niche of the company
-  }
-}
+    orgName: string;
+    position: string; // position of account crerator in organization
+    companySize: number;
+    niche: string; // Niche of the company
+  };
+};
 ```
 
-### ProjectData Schema
+### Subscription Schema
+
+```ts
+
+type SubType = {
+  projects: number;
+}
+
+type SubSchema:{standard:subType, premium:subType} ={
+standard: SubType;
+}
+
+const Subsobject:SubSchema = {
+  FREE: {
+    projects: 2
+    storyLength: 200,
+    fileSize: '20kb',
+    rewrites: 3,
+    features: 10
+  },
+
+  STANDARD: {
+    projects: 3
+    storyLength: 500,
+    fileSize: '50kb',
+    rewrites: 5,
+    features: 20
+  },
+
+   PREMIUM: {
+    projects: 5
+    storyLength: 1000,
+    fileSize: '2000kb',
+    rewrites: 10,
+    features: 50
+  },
+
+   GOLD: {
+    projects: Infinity
+    storyLength: 2000,
+    fileSize: '10000kb',
+    rewrites: INFINITY,
+    features: INFINITY
+  },
+
+   ENTREPRENEUR: {
+    projects: Infinity
+    storyLength: 2000,
+    fileSize: INFINITY,
+    rewrites: INFINITY,
+    features: INFINITY
+  },
+};
+
+
+```

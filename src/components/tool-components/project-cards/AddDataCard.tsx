@@ -1,23 +1,34 @@
 'use client';
 
+import { ProjectSchema } from '@/src/typescript/project';
 import { notificationStore } from '@/src/global/notificationStore';
 import { projectStore } from '@/src/global/projectStore';
 import { fileLoader } from '@/src/utils/file-loader';
 import React, { useState, useEffect, useRef } from 'react';
 
-const AddDataCard = () => {
-  const fileInputRef = useRef(null);
+type PageProps = {
+  projectDetails: ProjectSchema;
+};
+
+const AddDataCard = ({ projectDetails }: PageProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { projectData, setProjectData, setStatus, status } = projectStore();
   const { setContent, setShow } = notificationStore();
 
   // ======= handle file change -->
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && {
       fileName: e.target.files[0]?.name,
-      fileSize: `${e.target.files[0].size}Kb`,
+      fileSize: `${(e.target.files[0].size / 1000).toFixed(2)} Kb`,
     };
 
-    fileLoader(e, setProjectData, file, setShow, setContent);
+    fileLoader({
+      event: e,
+      setState: setProjectData,
+      details: file!,
+      setNotificationContent: setContent,
+      setShow,
+    });
   };
 
   useEffect(() => {
@@ -29,9 +40,13 @@ const AddDataCard = () => {
       : setStatus(2, false);
   }, [projectData]);
 
+  useEffect(() => {
+    console.log(projectDetails.dataurl);
+  }, []);
+
   return (
     <div className='grid w-full grid-cols-4 gap-3'>
-      <div className='w-full h-max bg-white-main shadow-md px-3 py-3 flex flex-col border rounded border-gray-400 col-span-4 gap-4 lg:col-span-1'>
+      <div className='w-max h-max bg-white-main shadow-md px-3 py-3 flex flex-col border rounded border-gray-400 col-span-4 gap-4'>
         <p className='text-lg font-bold text-text-light'>
           Select a dataset to add
         </p>
@@ -42,17 +57,17 @@ const AddDataCard = () => {
           ref={fileInputRef}
           className='hidden'
         />
-        <span className='flex items-center gap-2'>
+        <span className='flex items-center gap-2 w-max'>
           <button
             className='py-1.5 px-6 rounded shadow border text-white-off bg-violet-main transition-all ease-out duration-200 hover:shadow-lg w-max text-sm'
-            onClick={() => fileInputRef.current.click()}
+            onClick={() => fileInputRef.current?.click()}
           >
             Browse files
           </button>
           {projectData && (
             <button
               className='py-1.5 px-6 rounded shadow border text-white-off bg-green-main transition-all ease-out duration-200 hover:shadow-lg w-max text-sm'
-              onClick={() => fileInputRef.current.click()}
+              onClick={() => fileInputRef.current?.click()}
             >
               Add to project
             </button>
@@ -112,7 +127,7 @@ const AddDataCard = () => {
                   Field count
                 </dt>
                 <dd className='mt-1 text-3xl font-semibold tracking-tight text-gray-900'>
-                  {projectData.parsed?.meta?.fields.length}
+                  {projectData.parsed?.meta?.fields!.length}
                 </dd>
               </div>
 
@@ -149,7 +164,7 @@ const AddDataCard = () => {
                           >
                             s/n
                           </th>
-                          {projectData.parsed?.meta?.fields.map(
+                          {projectData.parsed?.meta?.fields!.map(
                             (entry, idx) => (
                               <th
                                 scope='col'
@@ -175,7 +190,7 @@ const AddDataCard = () => {
                                   className='whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0'
                                   key={idx}
                                 >
-                                  {data}
+                                  {data as string}
                                 </td>
                               ))}
                             </tr>

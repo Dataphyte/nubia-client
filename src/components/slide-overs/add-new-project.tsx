@@ -2,7 +2,7 @@ import { Fragment, SetStateAction, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { NewProjectFormInputs } from '@/src/app/decs';
+import { NewProjectFormInputs } from '@/src/typescript/project';
 
 type AddNewProjectProps = {
   state: boolean;
@@ -36,7 +36,6 @@ export default function AddNewProjectSlideOver({
     }
   };
 
-  console.log(watch('name'));
   return (
     <Transition.Root show={state} as={Fragment}>
       <Dialog as='div' className='relative z-10' onClose={setState}>

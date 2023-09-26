@@ -6,10 +6,11 @@ import React, { useEffect } from 'react';
 import AddDataCard from '@/src/components/tool-components/project-cards/AddDataCard';
 import StoryTemplateCard from '@/src/components/tool-components/project-cards/StoryTemplateCard';
 import { projectStore } from '@/src/global/projectStore';
-import { useParams } from 'next/navigation';
+import { notFound, useParams, useRouter } from 'next/navigation';
 import CustomizeFeatures from '@/src/components/tool-components/project-cards/customizeFeature/CustomizeFeatures';
 import ProjectOverview from '@/src/components/tool-components/project-cards/ProjectOverview';
 import { useGetSingleProject } from '@/src/hooks/queries/useProject';
+import { queryClient } from '@/src/app/layout';
 
 type QuickActions = {
   title: string;
@@ -37,21 +38,26 @@ const EditProject = () => {
   const { currentTab, setCurrentTab } = projectStore();
 
   useEffect(() => {
-    console.log(singleProjectData);
-  }, [status, singleProjectData]);
+    if (singleProjectData?.data === null) notFound();
+    console.log(singleProjectData?.data);
+  }, [status, singleProjectData, isLoading]);
+
   useEffect(() => {
     getSingleProject();
   }, []);
 
   return (
     <>
-      {status === 'success' && singleProjectData && (
+      {status === 'success' && singleProjectData.data && (
         <div className='w-full min-h-screen flex flex-col gap-3 relative'>
           <ProjectStatus />
           <h1 className='text-3xl font-magistral font-bold'>
-            {singleProjectData.name.toLocaleUpperCase()}
+            {singleProjectData.data.name.toLocaleUpperCase()}
           </h1>
-          <p>{singleProjectData.id}</p>
+          <p className='text-sm text-text-light font-thin relative -mt-1 lg:-mt-2'>
+            <b>Project id: </b>&nbsp;
+            {singleProjectData.data.id}
+          </p>
 
           {/* -- Quick actions */}
           <section className='w-full mt-2 flex flex-col gap-3 border-2 py-5 px-3 rounded-lg bg-white-off'>
@@ -84,7 +90,9 @@ const EditProject = () => {
             {
               {
                 Overview: <ProjectOverview />,
-                'Add Data': <AddDataCard />,
+                'Add Data': (
+                  <AddDataCard projectDetails={singleProjectData.data} />
+                ),
                 'Write Template': <StoryTemplateCard />,
                 'Customize features': <CustomizeFeatures />,
               }[currentTab]

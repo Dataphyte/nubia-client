@@ -185,7 +185,7 @@ const SignUp = () => {
             {!signupStatus.isLoading &&
               !signupStatus.isSuccess &&
               !signupStatus.error &&
-              'Sing me up!'}
+              'Create Account'}
 
             {/* -- is Loading */}
             {signupStatus.isLoading &&

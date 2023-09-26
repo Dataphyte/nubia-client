@@ -1,16 +1,27 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/src/server/db';
+import { ProjectSchema } from '@/src/typescript/project';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+type RequestParams = { params: { id: string } };
+
+export async function GET(request: Request, { params }: RequestParams) {
+  let QueryResponse: LocalCustomResponse<any | null>;
+  const action = 'get-single-project';
   const id = params.id;
 
   try {
-    const project = await prisma.project.findUnique({ where: { id } });
-    return NextResponse.json(project);
+    QueryResponse = {
+      message: 'Found project',
+      data: await prisma.project.findUnique({ where: { id } }),
+      action,
+    };
   } catch (error) {
-    return NextResponse.json({ message: 'Failed to get project' });
+    QueryResponse = {
+      message: 'Project not found',
+      data: null,
+      action,
+    };
   }
+
+  return NextResponse.json(QueryResponse);
 }

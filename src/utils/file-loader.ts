@@ -1,6 +1,13 @@
 import Papa from 'papaparse';
+import { FileLoaderProps } from '../typescript/file-loader';
 
-export const fileLoader = (event, setState, details, setShow, setContent) => {
+export const fileLoader = ({
+  event,
+  setState,
+  details,
+  setShow,
+  setNotificationContent,
+}: FileLoaderProps) => {
   const file = event.target.files?.[0];
 
   // ======= check for file availability -->
@@ -17,7 +24,7 @@ export const fileLoader = (event, setState, details, setShow, setContent) => {
         parsed: Papa.parse(contents, {
           header: true,
           complete: () => {
-            setContent({
+            setNotificationContent({
               text: 'Parsing Complete',
               type: 'success',
               description:

@@ -10,14 +10,17 @@ import {
   useCreateProject,
   useGetProjectList,
 } from '@/src/hooks/queries/useProject';
-import { NewProjectFormInputs, ProjectSchema } from '@/src/app/decs';
+import { NewProjectFormInputs, ProjectSchema } from '@/src/typescript/project';
 import AddNewProjectSlideOver from '@/src/components/slide-overs/add-new-project';
+import { notificationStore } from '@/src/global/notificationStore';
 
 const Projects = () => {
   const router = useRouter();
   const [Projects, setProjects] = useState<ProjectSchema[] | null>(null);
   const [showAddProject, setShowAddProject] = useState<boolean>(false);
   const [newProjectdata, setNewProjectdata] = useState<NewProjectFormInputs>();
+  const { setShow: showNotification, setContent: setNotificationContent } =
+    notificationStore();
 
   const {
     refetch: getProjectList,
@@ -34,10 +37,18 @@ const Projects = () => {
   }, []);
 
   useEffect(() => {
-    isSuccess && setProjects(data as ProjectSchema[]);
+    isSuccess && setProjects(data.data as ProjectSchema[]);
   }, [data, isSuccess]);
 
   useEffect(() => {
+    if (NewProject) {
+      showNotification(true);
+      setNotificationContent({
+        text: 'Project created',
+        type: 'success',
+        description: NewProject.message,
+      });
+    }
     getProjectList();
   }, [NewProject]);
 
@@ -133,11 +144,11 @@ const NoProjectComponent = ({
       <p className='text-2xl font-magistral font-medium text-text-light text-center'>
         <strong> OH MY!!!,</strong> there&apos;s nothing here
       </p>
-      <p className='text-sm font-inter text-text-thin -mt-2'>
-        Add a project and lets begin
+      <p className='text-sm font-inter text-text-thin -mt-1'>
+        Add a project to get started.
       </p>
       <button
-        className='px-10 py-2 rounded-md shadow hover:shadow-lg transition-all duration-200 ease-in-out border bg-violet-main mt-2 text-white-off flex gap-2 items-center'
+        className='px-10 py-2 rounded-md shadow hover:shadow-lg transition-all duration-200 ease-in-out border bg-violet-main mt-4 text-white-off flex gap-2 items-center'
         onClick={() => action(true)}
       >
         Create new <PlusIcon className='w-6 h-6' />

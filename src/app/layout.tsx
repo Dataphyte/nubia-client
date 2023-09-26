@@ -12,7 +12,7 @@ import { SessionProvider } from 'next-auth/react';
 import 'react-quill/dist/quill.snow.css';
 import React from 'react';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [subModalOpen, setSubModalOpen] = useState(false);

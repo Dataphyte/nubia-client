@@ -12,7 +12,7 @@ import { XMarkIcon } from '@heroicons/react/20/solid';
 import { notificationStore } from '@/global/notificationStore';
 import { classNames } from '@/src/utils/classnames';
 
-const Notification = () => {
+const Notification = (): React.ReactNode => {
   const { show, setShow, content } = notificationStore();
 
   // ======= set the show prop to false after 3 seconds -->

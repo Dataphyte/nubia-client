@@ -14,7 +14,7 @@ const ProjectStatus = () => {
   return (
     <div
       className={classNames(
-        'absolute top-0 right-5 bg-white-main shadow-lg origin-right transition-all duration-300 ease-out cursor-pointer border rounded-md flex',
+        'absolute top-0 right-0 md:right-5 bg-white-main shadow-lg origin-right transition-all duration-300 ease-out cursor-pointer border rounded-md flex z-10',
         open ? 'w-200 h-max border-violet-light' : 'w-max h-max'
       )}
     >

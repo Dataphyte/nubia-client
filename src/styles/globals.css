@@ -92,3 +92,18 @@ html {
     @apply p-1.5 rounded-md shadow-md z-10  bg-black-bg/70 text-white-off text-xs absolute w-max bottom-0 pointer-events-none hidden group-hover:-bottom-10 group-hover:block transition-all duration-200 ease-out;
   }
 }
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}

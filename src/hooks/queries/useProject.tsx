@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
 import axios from 'axios';
 import { UseQueryOptions, useQuery } from 'react-query';
 import { useSession } from 'next-auth/react';
 import { ProjectSchema } from '@/src/typescript/project';
-import { notFound } from 'next/navigation';
+import { projectStore } from '@/src/global/projectStore';
 
 const manualFetchOptions: UseQueryOptions<any> = {
   enabled: false,
@@ -24,10 +25,7 @@ export const useGetProjectList = () => {
     async () => {
       try {
         const project = await axios.get(
-          `/api/projects?session_id=${session?.user?.id}`,
-          {
-            headers: { Authorization: session?.user?.id! },
-          }
+          `/api/projects?session_id=${session?.user?.id}`
         );
         return project.data;
       } catch (error) {
@@ -83,6 +81,36 @@ export const useGetSingleProject = (projectId: string) => {
         return project.data;
       } catch (error) {
         return null;
+      }
+    },
+    manualFetchOptions
+  );
+
+  return Query;
+};
+
+//=============================================>
+// ======= UPDATE SINGLE PROJECT -->
+//=============================================>
+export const useUpdateProjectData = (projectId: string) => {
+  const { updateData } = projectStore();
+  // useEffect(() => {
+  //   console.log(updateData);
+  // }, [updateData]);
+
+  const Query = useQuery<LocalCustomResponse<any>>(
+    'update-single-project',
+    async () => {
+      try {
+        const queryData = await axios.put(
+          `/api/projects/${projectId}`,
+          updateData
+        );
+
+        return queryData.data;
+      } catch (error) {
+        console.error(error);
+        console.log(error);
       }
     },
     manualFetchOptions

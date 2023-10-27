@@ -14,8 +14,10 @@ export const projectStore = create<ProjectStore>()(
         { id: 4, text: 'Customize features', complete: false },
         { id: 5, text: 'Submit project', complete: false },
       ],
-      template: '',
+      template: { editor: '', content: '' },
       features: [],
+      updateData: null,
+      data_url: '',
       setFeatures: (features) => set({ features }),
       editFeatures: (action, data, id) => {
         if (action === 'add')
@@ -34,6 +36,8 @@ export const projectStore = create<ProjectStore>()(
         })),
       setProjectData: (projectData) => set({ projectData }),
       setCurrentTab: (currentTab) => set({ currentTab }),
+      setUpdateData: (updateData) => set({ updateData }),
+      setDataUrl: (data_url) => set({ data_url }),
     }),
     {
       name: 'project-data',

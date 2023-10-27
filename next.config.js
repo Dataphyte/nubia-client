@@ -4,7 +4,11 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['images.unsplash.com', 'www.tutorialsteacher.com'],
+    domains: [
+      'images.unsplash.com',
+      'www.tutorialsteacher.com',
+      'lh3.googleusercontent.com',
+    ],
   },
   webpack: (config) => {
     let modularizeImports = null;

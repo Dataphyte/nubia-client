@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const NotFound = () => {
   const router = useRouter();
@@ -29,13 +30,19 @@ const NotFound = () => {
           >
             Go to Dashboard
           </p>
-          <p
-            onClick={() => router.replace('/tool/projects')}
+          <Link
+            href='/tool/projects'
             className='text-sm font-semibold text-text-light hover:text-violet-main cursor-pointer'
           >
             Project list <span aria-hidden='true'>&rarr;</span>
-          </p>
+          </Link>
         </div>
+        <span className='text-xs text-text-light mt-24 flex gap-2 items-end'>
+          <p>If you&apos;re sure you have this project on your profile,</p>
+          <p className='text-sm'>
+            <strong> Refresh this page</strong>
+          </p>
+        </span>
       </div>
     </main>
   );

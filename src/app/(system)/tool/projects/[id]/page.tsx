@@ -3,14 +3,14 @@
 import { classNames } from '@/src/utils/classnames';
 import ProjectStatus from '@/src/components/tool-components/ProjectStatus';
 import React, { useEffect } from 'react';
-import AddDataCard from '@/src/components/tool-components/project-cards/AddDataCard';
+import ManageDataCard from '@/src/components/tool-components/project-cards/ManageDataCard';
 import StoryTemplateCard from '@/src/components/tool-components/project-cards/StoryTemplateCard';
 import { projectStore } from '@/src/global/projectStore';
 import { notFound, useParams, useRouter } from 'next/navigation';
-import CustomizeFeatures from '@/src/components/tool-components/project-cards/customizeFeature/CustomizeFeatures';
 import ProjectOverview from '@/src/components/tool-components/project-cards/ProjectOverview';
 import { useGetSingleProject } from '@/src/hooks/queries/useProject';
 import { queryClient } from '@/src/app/layout';
+import CreateStories from '@/src/components/tool-components/project-cards/CreateStories';
 
 type QuickActions = {
   title: string;
@@ -19,10 +19,10 @@ type QuickActions = {
 
 const quickActions: QuickActions[] = [
   { title: 'Overview', icon: 'https://cdn.lordicon.com/gmzxduhd.json' },
-  { title: 'Add Data', icon: 'https://cdn.lordicon.com/wrprwmwt.json' },
+  { title: 'Manage Data', icon: 'https://cdn.lordicon.com/wrprwmwt.json' },
   { title: 'Write Template', icon: 'https://cdn.lordicon.com/ufezupnm.json' },
   {
-    title: 'Customize features',
+    title: 'Create Stories',
     icon: 'https://cdn.lordicon.com/tvyxmjyo.json',
   },
 ];
@@ -66,7 +66,7 @@ const EditProject = () => {
               {quickActions.map((action, idx) => (
                 <div
                   className={classNames(
-                    'col-span-2 lg:col-span-1 border rounded-lg  flex items-center justify-center py-3 transition-all ease-out cursor-pointer duration-200 hover:shadow-lg gap-3 ',
+                    'col-span-2 lg:col-span-1 border rounded-lg  flex items-center justify-center py-1 md:py-3 transition-all ease-out cursor-pointer duration-200 hover:shadow-lg gap-3 text-xs md:text-sm lg:text-base',
                     currentTab === action.title
                       ? 'shadow-xl border-black-light bg-white-main'
                       : 'shadow-md'
@@ -89,12 +89,18 @@ const EditProject = () => {
           <section className='mt-6'>
             {
               {
-                Overview: <ProjectOverview />,
-                'Add Data': (
-                  <AddDataCard projectDetails={singleProjectData.data} />
+                Overview: (
+                  <ProjectOverview projectDetails={singleProjectData.data} />
                 ),
-                'Write Template': <StoryTemplateCard />,
-                'Customize features': <CustomizeFeatures />,
+                'Manage Data': (
+                  <ManageDataCard projectDetails={singleProjectData.data} />
+                ),
+                'Write Template': (
+                  <StoryTemplateCard projectDetails={singleProjectData.data} />
+                ),
+                'Create Stories': (
+                  <CreateStories projectDetails={singleProjectData.data} />
+                ),
               }[currentTab]
             }
           </section>

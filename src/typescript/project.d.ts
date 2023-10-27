@@ -7,12 +7,16 @@ interface ProjectSchema {
   description: string;
   stories?: { content: string; tone: string }[];
   data: {
-    fields: string;
+    fields: string[];
     file_url: string | null;
     file_size: string;
+    file_name: string;
+    insight?: string;
   };
-  template?: string | null;
-  features?: ProjectFeatureType[];
+  template?: { editor: string; content: string };
+  chat_logs: [
+    { role: 'user' | 'system' | 'function' | 'assistant'; content: string }
+  ];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,36 +28,23 @@ type NewProjectFormInputs = {
 
 type ProjectDataType = {
   parsed: ParseResult<any>;
-  contents: string;
-  details: { fileName: string; fileSize: string };
-};
-
-type ProjectFeatureType = {
-  name: string;
-  fieldType: 'data' | 'custom';
-  fieldRef?: string;
-  formula: [
-    {
-      type: 'data' | 'custom';
-      field?: string;
-      value?: string;
-      operand: '+' | '-' | '*' | '/' | null;
-    }
-  ];
 };
 
 interface ProjectStore {
   currentTab: string;
   projectData: ProjectDataType | null;
   status: { id: number; text: string; complete: boolean }[];
-  template: string;
-  features: ProjectFeatureType[];
+  template: { editor: string; content: string };
+  updateData: ProjectUpdateDataType | null;
+  data_url: string;
   setFeatures: (features: any[]) => void;
   editFeatures: (action: string, data: any, id: number) => void;
   setTemplate: (template: string) => void;
   setStatus: (id: number, status: boolean) => void;
   setProjectData: (projectData: ProjectDataType) => void;
   setCurrentTab: (currentTab: string) => void;
+  setUpdateData: (updateData: any) => void;
+  setDataUrl: (dataUrl: string) => void;
 }
 
 //=============================================>

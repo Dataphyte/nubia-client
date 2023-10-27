@@ -4,19 +4,31 @@ import { classNames } from '@/src/utils/classnames';
 import { projectStore } from '@/src/global/projectStore';
 import React, { useState, useEffect, useRef } from 'react';
 import { PlusSmallIcon, XMarkIcon } from '@heroicons/react/20/solid';
+import { ProjectSchema } from '@/src/typescript/project';
+import { useUpdateProjectData } from '@/src/hooks/queries/useProject';
+import { notificationStore } from '@/src/global/notificationStore';
 
-const StoryTemplateCard = () => {
-  const editorRef = useRef(null);
+type ComponentProps = {
+  projectDetails: ProjectSchema;
+};
+
+const StoryTemplateCard = ({ projectDetails }: ComponentProps) => {
+  const editorRef = useRef<any>(null);
   const [cursorPositiuon, setCursorPosition] = useState(0);
   const [showFeatMenu, setShowFeatMenu] = useState(false);
+  const { data, refetch: updateTemplate } = useUpdateProjectData(
+    projectDetails.id
+  );
   const [Editor, setEditor] = useState(
     <div>
       <p>Loading</p>
     </div>
   );
-  const { template, setTemplate, setStatus, projectData } = projectStore();
-  const [value, setValue] = useState(template);
+  const { template, setStatus, setUpdateData } = projectStore();
+  const [value, setValue] = useState(template.editor);
   const [isAvailable, setIsAvailable] = useState(false);
+  const { setShow: showNotification, setContent: setNotificationContent } =
+    notificationStore();
 
   useEffect(() => {
     // ======= Avoid Nextjs runtime error "document is not defined" -->
@@ -29,27 +41,51 @@ const StoryTemplateCard = () => {
   }, []);
 
   useEffect(() => {
-    console.log(template);
-    template.length > 20 ? setStatus(3, true) : setStatus(3, false);
-  }, [template]);
+    setValue(projectDetails.template ? projectDetails.template.editor : '');
+    // prettier-ignore
+    projectDetails.template && projectDetails.template.content.length > 20
+      ? setStatus(3, true)
+      : setStatus(3, false);
+  }, [projectDetails.template]);
+
+  useEffect(() => {
+    setUpdateData({
+      template: {
+        editor: value,
+        content: editorRef.current?.getEditor().getText(),
+      },
+      updatedAt: new Date(),
+    });
+  }, [value]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   // ======= handle save button -->
   const handleSave = () => {
     // TODO: Make it save to database
-    setTemplate(value);
+    updateTemplate().then(() => {
+      setNotificationContent({
+        text: 'Template Updated',
+        type: 'success',
+        description: 'Project template data has successfully been updated.',
+      });
+      showNotification(true);
+    });
 
     console.log(editorRef.current);
     console.log('Clicked!!');
   };
 
   // ======= handle add feature -->
-  const addFeat = (data) => {
-    const cursorPosition = editorRef.current.unprivilegedEditor.getSelection();
+  const addFeat = (data: string): void => {
+    const cursorPosition = editorRef.current?.unprivilegedEditor.getSelection();
     cursorPosition
-      ? editorRef.current.editor?.insertText(
+      ? editorRef.current?.editor?.insertText(
           cursorPosition,
           ` {{ ${data} }} `,
-          'bold',
+          '',
           true
         )
       : alert(
@@ -91,16 +127,16 @@ const StoryTemplateCard = () => {
                 : 'opacity-0 top-0 pointer-events-none'
             )}
           >
-            <ul className='flex flex-col items-start justify-center gap-1.5 w-full'>
-              {projectData ? (
-                projectData.features.map((data, idx) => {
+            <ul className='flex flex-col items-start justify-center gap-1.5 w-full max-h-56 overflow-y-scroll'>
+              {projectDetails.data ? (
+                projectDetails.data.fields.map((data, idx) => {
                   return (
                     <li
                       key={idx}
                       className='text-text-dark w-full hover:bg-violet-light hover:shadow-md rounded-md py-1'
-                      onClick={() => addFeat(data.name)}
+                      onClick={() => addFeat(data)}
                     >
-                      {data.name}
+                      {data}
                     </li>
                   );
                 })
@@ -116,17 +152,22 @@ const StoryTemplateCard = () => {
         <button
           className={classNames(
             'text-sm shadow-md rounded-md py-2 px-8 duration-300 ease-out transition-allhover:shadow-lg w-max',
-            value === template
+            value === (projectDetails?.template?.editor || '')
               ? 'bg-black-thin text-black-main cursor-not-allowed'
               : 'bg-green-main cursor-pointer text-white-off'
           )}
-          disabled={value === template}
+          disabled={value === (projectDetails?.template?.editor || '')}
           onClick={handleSave}
         >
           Save
         </button>
 
-        <button className='text-sm shadow-md rounded-md py-2 px-8 bg-violet-main text-white-off duration-300 ease-out transition-all cursor-pointer hover:shadow-lg w-max'>
+        <button
+          className='text-sm shadow-md rounded-md py-2 px-8 bg-violet-main text-white-off duration-300 ease-out transition-all cursor-pointer hover:shadow-lg w-max'
+          onClick={() =>
+            console.log(editorRef.current.getEditor().getContents())
+          }
+        >
           Show RawText
         </button>
       </span>

@@ -9,6 +9,6 @@ export const subscribeStore = create<SubscribeStore>()(
       seen: false,
       setSeen: () => set({ seen: true }),
     }),
-    { name: 'seen-subscribe' }
+    { name: 'seen-subscribe', storage: createJSONStorage(() => localStorage) }
   )
 );

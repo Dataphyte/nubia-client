@@ -54,7 +54,6 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
 
   // ======= handle request -->
   const openAICall = async () => {
-    console.log(data);
     setLoading(true);
     if (!data) {
       setLoading(false);
@@ -95,9 +94,14 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
     return;
   };
 
+  // ======= Clear user chat  -->
+  const clearChat = () => {
+    setMessages((state) => state.slice(0, 1));
+  };
+
   useEffect(() => {
     if (data) {
-      projectData && projectData?.data.chat_logs.length > 0
+      projectData && projectData?.data.chat_logs.length > 2
         ? setMessages(projectData?.data.chat_logs)
         : setMessages(() => [
             {
@@ -106,7 +110,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
             },
             {
               role: 'system',
-              content: `Give journalistic insight into the data ${data}`,
+              content: `Give journalistic insight into the data ${data}, explaining the columns and values of the data while giving statistical analysis of the data`,
             },
           ]);
     }
@@ -123,7 +127,13 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
   }, [messages]);
 
   useEffect(() => {
-    data && updateProjectData().then(() => fetchSingleProject());
+    // TODO: check if this works
+    updateData &&
+      data &&
+      updateProjectData().then(() => {
+        fetchSingleProject();
+        setUpdateData(null);
+      });
   }, [updateData]);
 
   return (
@@ -191,9 +201,10 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                         }
                         /10
                       </p>
+                      <button onClick={clearChat}>Clear chat</button>
                     </div>
                     {loading && (
-                      <p className='text-orange-400 absolute right-10 bg-black-bg py-1 px-3 rounded-md shadow-lg border border-orange-400 top-20 z-50'>
+                      <p className='text-orange-400 absolute right-10 bg-black-bg py-1 px-3 rounded-md shadow-lg border border-orange-400 top-20 z-50 animate-pulse'>
                         loading...
                       </p>
                     )}
@@ -201,7 +212,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                       {/* Your content */}
                       <div className='w-full h-full flex flex-col items-center justify-center'>
                         {user ? (
-                          <span className='w-full flex flex-col h-full px-3 py-5 overflow-hidden overflow-y-scroll no-scrollbar gap-5'>
+                          <span className='w-full flex flex-col h-full px-3 py-5 overflow-hidden overflow-y-scroll no-scrollbar gap-8'>
                             {projectData &&
                               projectData.data.chat_logs.map((item, idx) => (
                                 <div key={idx} className='flex gap-2 w-full'>
@@ -237,7 +248,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                                   {item.role !== 'system' && (
                                     <div
                                       className={classNames(
-                                        'prose prose-sm xl:prose-lg max-w-none text-white-off/70 w-full  px-2 lg:px-4 py-5 rounded-lg shadow-lg prose-h1:text-white-main prose-h1:text-xl prose-h2:text-lg text-sm prose-h2:text-white-main prose-h3:text-base prose-h3:text-white-main prose-strong:text-white-main',
+                                        'prose prose-sm max-w-none text-white-off/70 w-full  px-2 lg:px-4 py-5 rounded-lg shadow-lg prose-h1:text-white-main prose-h1:text-xl prose-h2:text-lg text-sm prose-h2:text-white-main prose-h3:text-base prose-h3:text-white-main prose-strong:text-white-main overflow-x-auto',
                                         item.role !== 'user'
                                           ? 'bg-gray-700'
                                           : 'bg-white-main/10'

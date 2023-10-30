@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UseQueryOptions, useQuery } from 'react-query';
 import { useSession } from 'next-auth/react';
 import { userStore } from '@/src/global/userStore';
+import { LocalCustomResponse } from '@/src/typescript/server';
 
 const manualFetchOptions: UseQueryOptions<any> = {
   enabled: false,

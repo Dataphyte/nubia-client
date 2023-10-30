@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/src/server/db';
 import { NewProjectFormInputs } from '@/src/typescript/project';
+import { LocalCustomResponse } from '@/src/typescript/server';
 
 export async function POST(request: Request) {
   let QueryResponse: LocalCustomResponse<any | null>;

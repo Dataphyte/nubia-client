@@ -1,6 +1,7 @@
 import prisma from '@/src/server/db';
 import { getServerSession } from 'next-auth';
 import { NextResponse, NextRequest } from 'next/server';
+import { LocalCustomResponse } from '@/src/typescript/server';
 
 export async function GET(request: NextRequest) {
   let QueryResponse: LocalCustomResponse<any | null>;

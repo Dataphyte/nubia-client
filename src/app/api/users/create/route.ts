@@ -1,4 +1,4 @@
-import { CustomResponse } from '@/src/typescript/server';
+import { LocalCustomResponse } from '@/src/typescript/server';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import prisma from '@/src/server/db';
@@ -13,7 +13,7 @@ interface NewUser {
 }
 
 export async function POST(request: Request) {
-  let Query: CustomResponse;
+  let Query: LocalCustomResponse<any>;
 
   const userDetails: NewUser = await request.json();
   delete userDetails.confirmPassword;

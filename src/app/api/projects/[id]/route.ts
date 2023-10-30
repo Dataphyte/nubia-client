@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import prisma from '@/src/server/db';
 import { ProjectSchema } from '@/src/typescript/project';
 import { getServerSession } from 'next-auth';
-import { HttpStatusCode } from 'axios';
+import { LocalCustomResponse } from '@/src/typescript/server';
 
 type RequestParams = { params: { id: string } };
 

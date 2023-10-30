@@ -1,4 +1,4 @@
-interface LocalCustomResponse<T> {
+export interface LocalCustomResponse<T> {
   data: T;
   message: string;
   action: string;

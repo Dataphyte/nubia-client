@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { LocalCustomResponse } from '@/src/typescript/server';
 import axios from 'axios';
 import { UseQueryOptions, useQuery } from 'react-query';
 import { useSession } from 'next-auth/react';

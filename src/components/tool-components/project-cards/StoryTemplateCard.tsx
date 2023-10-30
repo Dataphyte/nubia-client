@@ -7,6 +7,7 @@ import { PlusSmallIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import { ProjectSchema } from '@/src/typescript/project';
 import { useUpdateProjectData } from '@/src/hooks/queries/useProject';
 import { notificationStore } from '@/src/global/notificationStore';
+// import ReactQuill from 'react-quill'
 
 type ComponentProps = {
   projectDetails: ProjectSchema;
@@ -34,10 +35,7 @@ const StoryTemplateCard = ({ projectDetails }: ComponentProps) => {
     // ======= Avoid Nextjs runtime error "document is not defined" -->
     window && document && setIsAvailable(true);
 
-    setEditor(() => {
-      const ReactQuill = require('react-quill');
-      return ReactQuill;
-    });
+    setEditor(() => require('react-quill'));
   }, []);
 
   useEffect(() => {

@@ -111,12 +111,11 @@ const StoryTemplateCard = ({ projectDetails }: ComponentProps) => {
             // console.log(projectData.features);
           }}
         >
-          {
-            {
-              false: <PlusSmallIcon className='w-8 h-8 text-black-main' />,
-              true: <XMarkIcon className='w-5 h-5 text-black-main' />,
-            }[showFeatMenu]
-          }
+          {showFeatMenu ? (
+            <PlusSmallIcon className='w-8 h-8 text-black-main' />
+          ) : (
+            <XMarkIcon className='w-5 h-5 text-black-main' />
+          )}
           <span
             className={classNames(
               'w-44 min-h-20 py-3 px-1.5 h-max bg-white-main border transition-all duration-300 ease-out hover:border-violet-main absolute -right-3 rounded-md shadow-lg',

@@ -24,7 +24,7 @@ export const fileLoader = ({
     setState &&
       contents &&
       setState({
-        parsed: Papa.parse<string | ArrayBuffer>(contents, {
+        parsed: Papa.parse(contents as string, {
           header: true,
           complete: () => {
             setNotificationContent({

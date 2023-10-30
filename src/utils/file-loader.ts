@@ -19,9 +19,10 @@ export const fileLoader = ({
   reader.onload = (e) => {
     const contents = e.target?.result;
 
+    // @ts-ignore
     setState &&
       setState({
-        parsed: Papa.parse(contents, {
+        parsed: Papa.parse<string>(contents, {
           header: true,
           complete: () => {
             setNotificationContent({

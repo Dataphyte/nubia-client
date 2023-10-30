@@ -22,19 +22,23 @@ export const fileLoader = ({
 
     // @ts-ignore
     setState &&
+      contents &&
       setState({
-        parsed: Papa.parse<string | LocalFile | undefined>(contents, {
-          header: true,
-          complete: () => {
-            setNotificationContent({
-              text: 'Parsing Complete',
-              type: 'success',
-              description:
-                'Your data has been parsed. You may continue to preview or customize your features.',
-            });
-            setShow(true);
-          },
-        }),
+        parsed: Papa.parse<string | LocalFile | ArrayBuffer | undefined>(
+          contents,
+          {
+            header: true,
+            complete: () => {
+              setNotificationContent({
+                text: 'Parsing Complete',
+                type: 'success',
+                description:
+                  'Your data has been parsed. You may continue to preview or customize your features.',
+              });
+              setShow(true);
+            },
+          }
+        ),
         contents,
         features: [],
         details,

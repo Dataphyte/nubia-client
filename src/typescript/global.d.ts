@@ -24,3 +24,8 @@ type NotificationStoreInterface = {
   setContent: (params: NotificationContentType) => void;
   setShow: (state: boolean) => void;
 };
+
+type SubscribeStore = {
+  seen: boolean;
+  setSeen: () => void;
+};

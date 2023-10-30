@@ -1,9 +1,9 @@
 'use client';
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
-export const subscribeStore = create(
+export const subscribeStore = create<SubscribeStore>()(
   persist(
     (set) => ({
       seen: false,

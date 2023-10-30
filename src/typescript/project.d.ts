@@ -37,9 +37,7 @@ interface ProjectStore {
   template: { editor: string; content: string };
   updateData: ProjectUpdateDataType | null;
   data_url: string;
-  setFeatures: (features: any[]) => void;
-  editFeatures: (action: string, data: any, id: number) => void;
-  setTemplate: (template: string) => void;
+  setTemplate: (template: { editor: string; content: string }) => void;
   setStatus: (id: number, status: boolean) => void;
   setProjectData: (projectData: ProjectDataType) => void;
   setCurrentTab: (currentTab: string) => void;

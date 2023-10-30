@@ -15,18 +15,8 @@ export const projectStore = create<ProjectStore>()(
         { id: 5, text: 'Submit project', complete: false },
       ],
       template: { editor: '', content: '' },
-      features: [],
       updateData: null,
       data_url: '',
-      setFeatures: (features) => set({ features }),
-      editFeatures: (action, data, id) => {
-        if (action === 'add')
-          set((state) => ({ features: state.features.push(data) }));
-        else if (action === 'delete')
-          set((state) => ({
-            features: state.features.pop((feat) => feat.id === id),
-          }));
-      },
       setTemplate: (template) => set({ template }),
       setStatus: (id, status) =>
         set((state) => ({

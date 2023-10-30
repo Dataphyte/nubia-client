@@ -1,5 +1,6 @@
 import Papa from 'papaparse';
 import { FileLoaderProps } from '../typescript/file-loader';
+import { LocalFile } from 'papaparse';
 
 export const fileLoader = ({
   event,
@@ -22,7 +23,7 @@ export const fileLoader = ({
     // @ts-ignore
     setState &&
       setState({
-        parsed: Papa.parse<string>(contents, {
+        parsed: Papa.parse<string | LocalFile | undefined>(contents, {
           header: true,
           complete: () => {
             setNotificationContent({

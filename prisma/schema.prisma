@@ -1,0 +1,203 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+//===============================================>
+//==========  MODELS ============================>
+//===============================================>
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @map("user_id") @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id") @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model User {
+  id                 String                  @id @default(auto()) @map("_id") @db.ObjectId
+  name               String?
+  email              String?                 @unique
+  emailVerified      DateTime?               @map("email_verified")
+  account_type       account_type_enum?      @default(individual)
+  image              String?
+  password           String?
+  accounts           Account[]
+  sessions           Session[]
+  projects           Project[]               @relation()
+  preferences        User_Preference_type?
+  organization       Organization_type?
+  createdAt          DateTime                @default(now())
+  subscription       Subscription_plans_enum @default(FREE)
+  subscription_renew Subscription_renew_enum @default(MONTHLY)
+
+  @@map("users")
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
+}
+
+model Project {
+  id          String                 @id @default(auto()) @map("_id") @db.ObjectId
+  user        User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String                 @map("user_id") @db.ObjectId
+  name        String
+  description String
+  stories     Stories_type[]
+  data        Project_data_type?
+  template    Project_template_type?
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @default(now())
+  status      Task_Status_type[]
+  chat_logs   Chat_Logs_type[]
+
+  @@map("projects")
+}
+
+model Subscriptions {
+  id          String                  @id @default(auto()) @map("_id") @db.ObjectId
+  name        Subscription_plans_enum @default(FREE)
+  projects    Int
+  storyLength Int
+  fileSize    Int
+  rewrites    Int
+  features    Int
+
+  @@map("subscriptions")
+}
+
+//===============================================>
+//========== TYPES ==============================>
+//===============================================>
+
+type User_Preference_type {
+  english_style English_Style_enum
+  abbrievations Preference_abv_type[]
+}
+
+type Stories_type {
+  content String
+  tone    String
+}
+
+type Preference_abv_type {
+  full         String
+  abbrievation String
+}
+
+type Project_data_type {
+  fields    String[]
+  file_url  String
+  file_size String
+  file_name String
+  insight   String?
+}
+
+type Organization_type {
+  name     String
+  position String
+  size     Int
+  niche    String
+}
+
+type Subscription_type {
+  plan  Subscription_plans_enum
+  renew Subscription_renew_enum
+}
+
+type Project_template_type {
+  editor  String
+  content String
+}
+
+type Task_Status_type {
+  id       Int
+  text     String
+  complete Boolean
+}
+
+type Chat_Logs_type {
+  role    Chat_Logs_enum
+  content String
+}
+
+//===============================================>
+//==========  ENUMS =============================>
+//===============================================>
+enum account_type_enum {
+  individual
+  organization
+}
+
+enum Feature_type_enum {
+  Data
+  Custom
+}
+
+enum English_Style_enum {
+  british
+  american
+  international
+}
+
+enum Operand_enum {
+  ADDITION
+  SUBTRACTION
+  MULTIPLICATION
+  DIVISION
+  NONE
+}
+
+enum Subscription_plans_enum {
+  FREE
+  STANDARD
+  PREMIUM
+  GOLD
+  ENTREPRENEUR
+}
+
+enum Subscription_renew_enum {
+  MONTHLY
+  YEARLY
+}
+
+enum Chat_Logs_enum {
+  system
+  user
+  assistant
+  function
+}

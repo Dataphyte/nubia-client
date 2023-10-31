@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
+      "@/src/*": ["./src/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/svg/*": ["./src/assets/svg/*"],
       "@/icons/*": ["./src/assets/icons/*"],
@@ -10,7 +12,8 @@
       "@/hooks/*": ["./src/hooks/*"],
       "@/data/*": ["./src/data/*"],
       "@/utils/*": ["./src/utils/*"],
-      "@/global/*": ["./src/global/*"]
+      "@/global/*": ["./src/global/*"],
+      "@/server/*": ["./src/server/*"]
     }
   },
 

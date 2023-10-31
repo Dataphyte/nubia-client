@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { userStore } from '@/src/global/userStore';
 import { useGetUser } from '@/src/hooks/queries/useUser';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 
 const dataCards = [
-  { name: 'Projects', stat: '71,897' },
-  { name: 'Account Usage', stat: '58.16%' },
-  { name: 'Stories Generated', stat: '24.57%' },
-  { name: 'Insights generated', stat: '24.57%' },
+  { name: 'Projects', stat: '0' },
+  { name: 'Account Usage', stat: '13%' },
+  { name: 'Stories Generated', stat: '0' },
+  { name: 'Insights generated', stat: '0' },
 ];
 
 const Dashboard = () => {
@@ -33,10 +34,38 @@ const Dashboard = () => {
         </>
         {user ? (
           <span className='text-sm'>
-            <p>Email Verified: {user.email_verified ? '✅' : '❌'} </p>
-            <p>profile image: </p>
-            <p>Password: </p>
-            <p>Preferences: </p>
+            <p className='flex items-center gap-1'>
+              Email Verified:
+              {user.email_verified ? (
+                <CheckCircleIcon className='h-4 text-green-main' />
+              ) : (
+                <XCircleIcon className='w-4 h-4 text-red-main' />
+              )}
+            </p>
+            <p className='flex items-center gap-1'>
+              profile image:
+              {user.image ? (
+                <CheckCircleIcon className='h-4 text-green-main' />
+              ) : (
+                <XCircleIcon className='w-4 h-4 text-red-main' />
+              )}
+            </p>
+            <p className='flex items-center gap-1'>
+              Password:{' '}
+              {user.password ? (
+                <CheckCircleIcon className='h-4 text-green-main' />
+              ) : (
+                <XCircleIcon className='w-4 h-4 text-red-main' />
+              )}
+            </p>
+            <p className='flex items-center gap-1'>
+              Preferences:{' '}
+              {user.image ? (
+                <CheckCircleIcon className='h-4 text-green-main' />
+              ) : (
+                <XCircleIcon className='w-4 h-4 text-red-main' />
+              )}
+            </p>
           </span>
         ) : (
           'Loading...'

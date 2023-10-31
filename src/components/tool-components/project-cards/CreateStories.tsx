@@ -15,6 +15,11 @@ import {
   useUpdateProjectData,
 } from '@/src/hooks/queries/useProject';
 import NoStoriesLottie from '@/assets/animations/no-stories-lottie.json';
+import {
+  ClipboardDocumentCheckIcon,
+  CodeBracketIcon,
+} from '@heroicons/react/24/outline';
+import { htmlToText } from 'html-to-text';
 
 type ComponentProps = {
   projectDetails: ProjectSchema;
@@ -56,6 +61,17 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
         .then((res) => {
           console.log(res);
           setResponse(res.choices[0].message.content as string);
+          projectDetails.stories &&
+            setUpdateData({
+              stories: [
+                ...projectDetails?.stories,
+                {
+                  tone: 'The economist style guide',
+                  content: res.choices[0].message.content as string,
+                },
+              ],
+            });
+
           setLoading(false);
         })
         .catch((error) => {
@@ -106,15 +122,7 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
       });
   }, [updateData]);
 
-  useEffect(() => {
-    projectDetails.stories &&
-      setUpdateData({
-        stories: [
-          ...projectDetails?.stories,
-          { tone: 'The economist style guide', content: response },
-        ],
-      });
-  }, [response]);
+  useEffect(() => {}, [updateData]);
 
   useEffect(() => {
     prompt && !response && openAICall();
@@ -144,20 +152,60 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
       {/* -- ############################### */}
       <div className='w-full h-max flex flex-col gap-4'>
         <h3 className='text-2xl'>Generate Your story</h3>
-        {loading && (
-          <p className='py-2 px-5 w-max border border-orange-400 text-orange-400 animate-pulse rounded-md shadow-lg '>
-            Loading...
-          </p>
-        )}
-        <div className='w-full border border-gray-300 rounded min-h-[400px] h-auto flex flex-col items-center justify-center gap-4 py-14 py-10 px-4'>
+
+        <div className='w-full border border-gray-300 rounded min-h-[400px] h-auto flex flex-col items-center justify-center gap-4 py-5 px-4'>
           {(projectDetails.stories && projectDetails.stories?.length > 0) ||
           response ? (
             <>
-              {response && (
-                <div className='prose max-w-none prose-sm w-full h-auto'>
-                  {parse(response as string)}
-                </div>
-              )}
+              {queryProjectData?.data.stories &&
+                queryProjectData.data.stories.map((story, idx) => (
+                  <div key={idx}>
+                    <>
+                      <p>Story {idx + 1}</p>
+                      <p>Tone - {story.tone}</p>
+                      <div>
+                        <button className='py-1 px-3 text-sm border border-gray-300 rounded-lg shadow duration-200 ease-out tranistion-all hoverL:shadow-lg m-2 w-max'>
+                          &larr; Prev
+                        </button>
+                        <button className='py-1 px-3 text-sm border border-gray-300 rounded-lg shadow duration-200 ease-out tranistion-all hoverL:shadow-lg m-2 w-max'>
+                          Next &rarr;
+                        </button>
+                      </div>
+                      <div className='flex flex-col p-2 lg:px-4 shadow-lg rounded-lg bg-orange-100 mt-5 prose max-w-none'>
+                        {parse(story.content)}
+                        <div className='flex items-center gap-3 flex-wrap w-full mt-3'>
+                          <button
+                            className='py-1 px-6 text-sm text-white-off rounded-md shadow duration-300 ease-out hover:shadow-lg bg-violet-main w-max flex gap-1 items-center justify-center'
+                            onClick={() =>
+                              navigator.clipboard
+                                .writeText(htmlToText(story.content))
+                                .then(() =>
+                                  alert('✅ Your story has been copied!')
+                                )
+                            }
+                          >
+                            Copy story
+                            <ClipboardDocumentCheckIcon className='w-5 h-5 text-white-off' />
+                          </button>
+                          <button
+                            className='py-1 px-6 text-sm text-white-off rounded-md shadow duration-300 ease-out hover:shadow-lg bg-green-main w-max flex gap-1 items-center justify-center'
+                            onClick={() =>
+                              navigator.clipboard
+                                .writeText(story.content)
+                                .then(() =>
+                                  alert('✅ Your story has been copied!')
+                                )
+                            }
+                          >
+                            Copy HTML
+                            <CodeBracketIcon className='w-5 h-5 text-white-off' />
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                    <div></div>
+                  </div>
+                ))}
             </>
           ) : (
             <>
@@ -168,51 +216,57 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
                 style={{ width: '200px', height: '50%' }}
               />
               <p>This project has no stories</p>
-              <div className='flex items-center gap-4 flex-wrap'>
-                <button
-                  className='py-1.5 text-sm px-4 rounded-md shadow duration-300 ease-out transition-all hover:shadow-lg text-white-off bg-green-main'
-                  onClick={() =>
-                    setPrompt(() => [
-                      {
-                        role: 'system',
-                        content: `Act like a journalist. Give all of your responses using the economics style guide. enclose your response in html tags without the doctype, html, head, body and style tags`,
-                      },
-                      {
-                        role: 'user',
-                        content: `Writing in the economist style guide, write an 800 word news story article from the dataset ${JSON.stringify(
-                          localProjectdata?.data
-                        )}`,
-                      },
-                    ])
-                  }
-                >
-                  Autogenerate with AI
-                </button>
-                <button
-                  className='py-1.5 text-sm px-4 rounded-md shadow duration-300 ease-out transition-all hover:shadow-lg text-white-off bg-violet-main'
-                  onClick={() => {
-                    if (!projectDetails.template?.content) {
-                      return alert('Project has no template!');
+              {loading ? (
+                <p className='py-1 text-sm px-8 w-max border border-orange-500 text-orange-500 animate-pulse rounded-md shadow-lg '>
+                  Loading...
+                </p>
+              ) : (
+                <div className='flex items-center gap-4 flex-wrap'>
+                  <button
+                    className='py-1.5 text-sm px-4 rounded-md shadow duration-300 ease-out transition-all hover:shadow-lg text-white-off bg-green-main'
+                    onClick={() =>
+                      setPrompt(() => [
+                        {
+                          role: 'system',
+                          content: `Act like a journalist. Give all of your responses using the economics style guide. enclose your response in html tags without the doctype, html, head, body and style tags`,
+                        },
+                        {
+                          role: 'user',
+                          content: `Writing in the economist style guide, write an 800 word news story article from the dataset ${JSON.stringify(
+                            localProjectdata?.data
+                          )}`,
+                        },
+                      ])
                     }
-                    setPrompt(() => [
-                      {
-                        role: 'system',
-                        content: `A template would be sent alongside a dataset snapshot. return the exact template while only replacing the variable points enclosed in "{{}}" tags`,
-                      },
-                      {
-                        role: 'user',
-                        content: `Replacing the variables enclosed in "{{}}" in the template ${
-                          projectDetails.template?.content
-                        } with values from the data ${JSON.stringify(
-                          localProjectdata?.data
-                        )}, return the exact same template as a complete story.`,
-                      },
-                    ]);
-                  }}
-                >
-                  Generate from template
-                </button>
-              </div>
+                  >
+                    Autogenerate with AI
+                  </button>
+                  <button
+                    className='py-1.5 text-sm px-4 rounded-md shadow duration-300 ease-out transition-all hover:shadow-lg text-white-off bg-violet-main'
+                    onClick={() => {
+                      if (!projectDetails.template?.content) {
+                        return alert('Project has no template!');
+                      }
+                      setPrompt(() => [
+                        {
+                          role: 'system',
+                          content: `A template would be sent alongside a dataset snapshot. return the exact template while only replacing the variable points enclosed in "{{}}" tags`,
+                        },
+                        {
+                          role: 'user',
+                          content: `Replacing the variables enclosed in "{{}}" in the template ${
+                            projectDetails.template?.content
+                          } with values from the data ${JSON.stringify(
+                            localProjectdata?.data
+                          )}, return the exact same template as a complete story.`,
+                        },
+                      ]);
+                    }}
+                  >
+                    Generate from template
+                  </button>
+                </div>
+              )}
             </>
           )}
         </div>

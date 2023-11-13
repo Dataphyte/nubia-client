@@ -20,58 +20,36 @@ import {
 } from '@heroicons/react/24/outline';
 
 // ======= utils imports -->
-import useSWR from 'swr';
-import { fetcher } from '@/utils/fetcher';
-import { storyStore } from '@/global/storyStore';
 import { classNames } from 'src/utils/classnames';
 
 // ======= data imports -->
 import { navigation, userNavigation } from '@/data/toolData';
 import Notification from '@/src/components/pop-ups/notification';
-import { Router } from 'next/router';
+import { userStore } from '@/src/global/userStore';
+import { useGetUser } from '@/src/hooks/queries/useUser';
 
 const Layout = ({ children }) => {
+  const { data: queryUser, refetch } = useGetUser();
   const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
 
   const pathname = usePathname();
-  const { storyRoute, setCurrentStoryCategory, setCurrentData } = storyStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { data: Story, error } = useSWR(
-    storyRoute ? `https://nubia-server.oa.r.appspot.com/${storyRoute}` : null,
-    fetcher
-  );
-  const { data: StoryData, error: dataError } = useSWR(
-    storyRoute
-      ? `https://nubia-server.oa.r.appspot.com/${storyRoute}/data`
-      : null,
-    fetcher
-  );
+
+  const { setUser, user } = userStore();
+
+  useEffect(() => {
+    setUser(queryUser?.data);
+    // console.log(user.data);
+  }, [queryUser]);
 
   // ======= user effect -->
   // TODO: Uncomment to check for user
   useEffect(() => {
+    refetch();
     if (sessionStatus === 'unauthenticated') router.replace('/auth/signup');
     // console.log(session);
   }, [session, sessionStatus]);
-
-  // ======= Story effect -->
-  useEffect(() => {
-    (() => {
-      if (error) return console.error(error);
-      !error && Story && setCurrentStoryCategory(Story.data);
-      Story && console.log(Story);
-    })();
-  }, [Story, error]);
-
-  // ======= data effect -->
-  useEffect(() => {
-    (() => {
-      if (dataError) return console.error(dataError);
-      !error && StoryData && setCurrentData(StoryData.data);
-      StoryData && console.log(StoryData);
-    })();
-  }, [StoryData, dataError]);
 
   return (
     <>

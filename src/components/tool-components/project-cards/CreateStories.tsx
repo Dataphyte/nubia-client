@@ -18,8 +18,12 @@ import NoStoriesLottie from '@/assets/animations/no-stories-lottie.json';
 import {
   ClipboardDocumentCheckIcon,
   CodeBracketIcon,
+  PencilIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline';
-import { htmlToText } from 'html-to-text';
+import removeMarkdown from 'markdown-to-text';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 type ComponentProps = {
   projectDetails: ProjectSchema;
@@ -32,7 +36,9 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
     | null
   >(null);
   const [response, setResponse] = useState<null | string>(null);
+  const [tone, setTone] = useState<string>('The economist style');
   const [openInsight, setOpenInsight] = useState<boolean>(false);
+  const [storyToShow, setStoryToShow] = useState<number>(0);
   const [localProjectdata, setLocalProjectData] =
     useState<ParseResult<any> | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -53,7 +59,7 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
     prompt &&
       (await openai.chat.completions
         .create({
-          model: 'gpt-4-0314',
+          model: 'gpt-4-1106-preview',
           messages: prompt,
           temperature: 0,
           max_tokens: 2048,
@@ -66,17 +72,19 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
               stories: [
                 ...projectDetails?.stories,
                 {
-                  tone: 'The economist style guide',
+                  tone,
                   content: res.choices[0].message.content as string,
                 },
               ],
             });
 
           setLoading(false);
+          setPrompt(null);
         })
         .catch((error) => {
           console.log(error);
           setLoading(false);
+          setPrompt(null);
         }));
 
     return;
@@ -153,59 +161,146 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
       <div className='w-full h-max flex flex-col gap-4'>
         <h3 className='text-2xl'>Generate Your story</h3>
 
-        <div className='w-full border border-gray-300 rounded min-h-[400px] h-auto flex flex-col items-center justify-center gap-4 py-5 px-4'>
+        <div className='w-full border border-gray-300 rounded min-h-[400px] h-auto flex flex-col items-center justify-center gap-4 py-5 px-1 lg:px-4'>
           {(projectDetails.stories && projectDetails.stories?.length > 0) ||
           response ? (
             <>
               {queryProjectData?.data.stories &&
-                queryProjectData.data.stories.map((story, idx) => (
-                  <div key={idx}>
-                    <>
-                      <p>Story {idx + 1}</p>
-                      <p>Tone - {story.tone}</p>
-                      <div>
-                        <button className='py-1 px-3 text-sm border border-gray-300 rounded-lg shadow duration-200 ease-out tranistion-all hoverL:shadow-lg m-2 w-max'>
-                          &larr; Prev
-                        </button>
-                        <button className='py-1 px-3 text-sm border border-gray-300 rounded-lg shadow duration-200 ease-out tranistion-all hoverL:shadow-lg m-2 w-max'>
-                          Next &rarr;
-                        </button>
+                queryProjectData.data.stories.map(
+                  (story, idx) =>
+                    idx === storyToShow && (
+                      <div key={idx}>
+                        <>
+                          <p className='tracking-widest'>
+                            Story {idx + 1} of&nbsp;
+                            {queryProjectData?.data.stories?.length}
+                          </p>
+                          <p>Tone - {story.tone}</p>
+                          <div>
+                            <button
+                              className='py-1 px-3 text-sm border border-gray-300 rounded-lg shadow-sm duration-200 ease-out tranistion-all hoverL:shadow-lg m-2 w-max hover:shadow-lg'
+                              disabled={storyToShow === 0}
+                              onClick={() =>
+                                setStoryToShow((state) => (state -= 1))
+                              }
+                            >
+                              &larr; Prev
+                            </button>
+                            <button
+                              className='py-1 px-3 text-sm border border-gray-300 rounded-lg shadow-sm duration-200 ease-out tranistion-all hoverL:shadow-lg m-2 w-max hover:shadow-lg'
+                              disabled={
+                                storyToShow ===
+                                queryProjectData?.data.stories?.length! - 1
+                              }
+                              onClick={() =>
+                                setStoryToShow((state) => (state += 1))
+                              }
+                            >
+                              Next &rarr;
+                            </button>
+                          </div>
+                          <div className='flex items-center py-1 my-2 px-2 gap-3 flex-wrap'>
+                            <select
+                              className='focus:border-violet-main rounded-lg shadow-md text-sm cursor-pointer'
+                              onChange={(e) => setTone(e.target.value)}
+                            >
+                              <option>~ Selct Story tone ~</option>
+                              <option value='The economist style'>
+                                The economist style
+                              </option>
+                              <option value='persuasive'>Persuasive</option>
+                              <option value='professional'>Professional</option>
+                              <option value='journalistic'>Journalistic</option>
+                              <option value='funny'>Funny</option>
+                              <option value='statistical'>Statistical</option>
+                              <option value='sad'>Sad</option>
+                            </select>
+                            {loading ? (
+                              <p className='py-1 text-sm px-8 w-max border border-orange-500 text-orange-500 animate-pulse rounded-md shadow-lg'>
+                                Loading...
+                              </p>
+                            ) : (
+                              <button
+                                className='py-1.5 text-sm px-4 rounded-md shadow duration-300 ease-out transition-all hover:shadow-lg text-white-off bg-green-main z-20'
+                                onClick={() =>
+                                  queryProjectData?.data.stories?.length! <= 10
+                                    ? setPrompt(() => [
+                                        {
+                                          role: 'system',
+                                          content:
+                                            'Embed all your responses in markdown format',
+                                        },
+                                        {
+                                          role: 'system',
+                                          content: `Act like a journalist whose wrting style is ${tone}`,
+                                        },
+                                        {
+                                          role: 'user',
+                                          content: `write a full news report article using the dataset ${JSON.stringify(
+                                            localProjectdata?.data
+                                          )}`,
+                                        },
+                                      ])
+                                    : alert('⚠️Maximum of 10 stories allowed!')
+                                }
+                              >
+                                Generate again with AI
+                              </button>
+                            )}
+                          </div>
+                          <div className='flex flex-col py-5 px-2 lg:px-4 shadow-2xl border-2 border-gray-400 rounded-lg bg-orange-100 mt-5 prose max-w-none'>
+                            {/* {parse(story.content)} */}
+                            <Markdown remarkPlugins={[remarkGfm]}>
+                              {story.content}
+                            </Markdown>
+                            <div className='flex items-center justify-center px-1 lg:px-5 w-full gap-4 flex-wrap bg-white-main/10 border py-4 my-5 shadow-lg border-gray-400 rounded-md'>
+                              <button
+                                className='py-2 px-6 text-sm text-black-bg hover:text-white-off rounded-md shadow duration-300 ease-out hover:shadow-lg border border-gray-300 bg-white-main/10 hover:bg-violet-main w-max flex gap-1 items-center justify-center'
+                                onClick={() =>
+                                  navigator.clipboard
+                                    .writeText(removeMarkdown(story.content))
+                                    .then(() =>
+                                      alert('✅ Your story has been copied!')
+                                    )
+                                }
+                              >
+                                Copy story
+                                <ClipboardDocumentCheckIcon className='w-5 h-5 text-white-off' />
+                              </button>
+                              <button
+                                className='py-2 px-6 text-sm text-black-bg hover:text-white-off rounded-md shadow duration-300 ease-out hover:shadow-lg border border-gray-300 bg-white-main/10 hover:bg-green-main w-max flex gap-1 items-center justify-center'
+                                onClick={() =>
+                                  navigator.clipboard
+                                    .writeText(story.content)
+                                    .then(() =>
+                                      alert('✅ Your story has been copied!')
+                                    )
+                                }
+                              >
+                                Copy Markdown
+                                <CodeBracketIcon className='w-5 h-5 text-white-off' />
+                              </button>
+
+                              <button
+                                className='py-2 px-6 text-sm text-black-bg hover:text-white-off rounded-md shadow duration-300 ease-out hover:shadow-lg border border-gray-300 bg-white-main/10 hover:bg-red-main w-max flex gap-1 items-center justify-center'
+                                onClick={() =>
+                                  navigator.clipboard
+                                    .writeText(story.content)
+                                    .then(() =>
+                                      alert('✅ Your story has been copied!')
+                                    )
+                                }
+                              >
+                                Delete story
+                                <TrashIcon className='w-5 h-5 text-white-off' />
+                              </button>
+                            </div>
+                          </div>
+                        </>
+                        <div></div>
                       </div>
-                      <div className='flex flex-col p-2 lg:px-4 shadow-lg rounded-lg bg-orange-100 mt-5 prose max-w-none'>
-                        {parse(story.content)}
-                        <div className='flex items-center gap-3 flex-wrap w-full mt-3'>
-                          <button
-                            className='py-1 px-6 text-sm text-white-off rounded-md shadow duration-300 ease-out hover:shadow-lg bg-violet-main w-max flex gap-1 items-center justify-center'
-                            onClick={() =>
-                              navigator.clipboard
-                                .writeText(htmlToText(story.content))
-                                .then(() =>
-                                  alert('✅ Your story has been copied!')
-                                )
-                            }
-                          >
-                            Copy story
-                            <ClipboardDocumentCheckIcon className='w-5 h-5 text-white-off' />
-                          </button>
-                          <button
-                            className='py-1 px-6 text-sm text-white-off rounded-md shadow duration-300 ease-out hover:shadow-lg bg-green-main w-max flex gap-1 items-center justify-center'
-                            onClick={() =>
-                              navigator.clipboard
-                                .writeText(story.content)
-                                .then(() =>
-                                  alert('✅ Your story has been copied!')
-                                )
-                            }
-                          >
-                            Copy HTML
-                            <CodeBracketIcon className='w-5 h-5 text-white-off' />
-                          </button>
-                        </div>
-                      </div>
-                    </>
-                    <div></div>
-                  </div>
-                ))}
+                    )
+                )}
             </>
           ) : (
             <>
@@ -228,11 +323,16 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
                       setPrompt(() => [
                         {
                           role: 'system',
-                          content: `Act like a journalist. Give all of your responses using the economics style guide. enclose your response in html tags without the doctype, html, head, body and style tags`,
+                          content:
+                            'Embed all your responses in markdown format',
+                        },
+                        {
+                          role: 'system',
+                          content: `Act like a journalist whose wrting style is ${tone}`,
                         },
                         {
                           role: 'user',
-                          content: `Writing in the economist style guide, write an 800 word news story article from the dataset ${JSON.stringify(
+                          content: `Write a full news report article using the dataset ${JSON.stringify(
                             localProjectdata?.data
                           )}`,
                         },
@@ -250,7 +350,12 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
                       setPrompt(() => [
                         {
                           role: 'system',
-                          content: `A template would be sent alongside a dataset snapshot. return the exact template while only replacing the variable points enclosed in "{{}}" tags`,
+                          content:
+                            'Embed all your responses in markdown format',
+                        },
+                        {
+                          role: 'system',
+                          content: `A template would be sent alongside a dataset snapshot. return the exact template while replacing the variable points enclosed in "{{}}" tags.`,
                         },
                         {
                           role: 'user',

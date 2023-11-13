@@ -91,6 +91,10 @@ html {
   .tool__tip {
     @apply p-1.5 rounded-md shadow-md z-10  bg-black-bg/70 text-white-off text-xs absolute w-max bottom-0 pointer-events-none hidden group-hover:-bottom-10 group-hover:block transition-all duration-200 ease-out;
   }
+
+  .prose_colors {
+    @apply prose-h3:text-white-main prose-h4:text-white-main prose-h5:text-white-main prose-th:text-white-main prose-h2:text-white-main prose-h1:text-white-main prose-strong:text-white-main prose-em:text-white-main;
+  }
 }
 
 @layer utilities {

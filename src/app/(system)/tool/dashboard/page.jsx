@@ -13,13 +13,7 @@ const dataCards = [
 ];
 
 const Dashboard = () => {
-  const { data: queryUser } = useGetUser();
-  const { setUser, user } = userStore();
-
-  useEffect(() => {
-    user && setUser(queryUser.data);
-    user && console.log(user.data);
-  }, [queryUser]);
+  const { user } = userStore();
 
   return (
     <div className='w-full py-5 px-2 md:px-5 grid grid-cols-4 gap-7'>

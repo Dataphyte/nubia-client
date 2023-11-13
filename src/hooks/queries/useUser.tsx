@@ -34,6 +34,9 @@ export const useGetUser = () => {
       }
     },
     {
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
       staleTime: 10000,
     }
   );

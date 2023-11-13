@@ -47,6 +47,15 @@ const ProjectOverview = ({ projectDetails }: ComponentProps) => {
           <em>{moment().format('MMMM Do YYYY, h:mm a.')}</em>
         </p>
       </div>
+
+      <div className='w-full border border-gray-400 shadow-md px-3 py-4 my-4 relative rounded-lg'>
+        <p className='absolute -top-3 bg-white-off px-2 font-bold font-inter'>
+          Manage
+        </p>
+        <button className='py-1.5 px-6 text-white-off bg-red-main rounded-md shadow transition-all duration-300 ease-out hover:shadow-lg text-sm'>
+          Delete Project
+        </button>
+      </div>
     </div>
   );
 };

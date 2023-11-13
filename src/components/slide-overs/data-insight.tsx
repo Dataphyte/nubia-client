@@ -21,6 +21,8 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { projectStore } from '@/src/global/projectStore';
 import { classNames } from '@/src/utils/classnames';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 type PageProps = {
   open: boolean;
@@ -39,8 +41,9 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
   const [prompt, setPrompt] = useState<string>('');
   const { setShow, setContent } = notificationStore();
   const [messages, setMessages] = useState<
-    { role: 'user' | 'system' | 'function' | 'assistant'; content: string }[]
-  >([{ role: 'user', content: 'Say there is no data uploaded' }]);
+    | { role: 'user' | 'system' | 'function' | 'assistant'; content: string }[]
+    | null
+  >(null);
   const { refetch: fetchSingleProject, data: projectData } =
     useGetSingleProject(id as string);
   const { refetch: updateProjectData } = useUpdateProjectData(id as string);
@@ -68,21 +71,22 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
     data &&
       (await openai.chat.completions
         .create({
-          model: 'gpt-4-0314',
-          messages: messages,
+          model: 'gpt-4-1106-preview',
+          messages: messages!,
           temperature: 0,
           max_tokens: 2048,
         })
         .then((res) => {
           console.log(res);
           setResponse(res.choices[0].message.content as string);
-          setMessages((state) => [
-            ...state,
-            {
-              role: res.choices[0].message.role,
-              content: res.choices[0].message.content as string,
-            },
-          ]);
+          messages &&
+            setMessages((state) => [
+              ...(state as [any]),
+              {
+                role: res.choices[0].message.role,
+                content: res.choices[0].message.content as string,
+              },
+            ]);
 
           setLoading(false);
         })
@@ -96,7 +100,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
 
   // ======= Clear user chat  -->
   const clearChat = () => {
-    setMessages((state) => state.slice(0, 1));
+    setMessages((state) => state!.slice(0, 1));
   };
 
   useEffect(() => {
@@ -106,7 +110,8 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
         : setMessages(() => [
             {
               role: 'system',
-              content: `Embed all of your responses in html tags without the doctype, head and body tags.`,
+              content:
+                'Embed all your responses in markdown format with tables and lists where neccesary',
             },
             {
               role: 'system',
@@ -120,6 +125,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
     // console.log(messages);
     setUpdateData({ chat_logs: messages });
     !loading &&
+      messages &&
       messages.length > 2 &&
       messages[messages.length - 1]?.role === 'user' &&
       openAICall();
@@ -163,7 +169,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                 leaveFrom='translate-x-0'
                 leaveTo='translate-x-full'
               >
-                <Dialog.Panel className='pointer-events-auto relative w-screen max-w-4xl'>
+                <Dialog.Panel className='pointer-events-auto relative w-screen max-w-5xl'>
                   <Transition.Child
                     as={Fragment}
                     enter='ease-in-out duration-500'
@@ -191,9 +197,9 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                         Data Insight Panel
                       </Dialog.Title>
                       {/* TODO: Delete this line */}
-                      <p>chat count - {projectData?.data.chat_logs.length}</p>
+                      <p>Memory - {projectData?.data.chat_logs.length}</p>
                       <p className='text-sm'>
-                        Memory usage:{' '}
+                        Your messages:{' '}
                         {
                           projectData?.data.chat_logs.filter(
                             (item) => item.role === 'user'
@@ -219,7 +225,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                                   {
                                     {
                                       assistant: (
-                                        <div className='w-12 h-12 rounded-xl shadow-lg flex items-center justify-center bg-gray-700'>
+                                        <div className='w-12 h-12 rounded-xl shadow-lg flex items-center justify-center bg-gray-300'>
                                           {/* @ts-ignore */}
                                           <lord-icon
                                             src='https://cdn.lordicon.com/zorvjzqh.json'
@@ -248,13 +254,18 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                                   {item.role !== 'system' && (
                                     <div
                                       className={classNames(
-                                        'prose prose-sm max-w-none text-white-off/70 w-full  px-2 lg:px-4 py-5 rounded-lg shadow-lg prose-h1:text-white-main prose-h1:text-xl prose-h2:text-lg text-sm prose-h2:text-white-main prose-h3:text-base prose-h3:text-white-main prose-strong:text-white-main overflow-x-auto',
+                                        'prose prose-sm max-w-none text-white-off/70 w-full  px-2 lg:px-4 py-5 rounded-lg shadow-lg prose-h1:text-xl prose-h2:text-lg text-sm  prose-h3:text-base overflow-x-auto prose_colors',
                                         item.role !== 'user'
                                           ? 'bg-gray-700'
                                           : 'bg-white-main/10'
                                       )}
                                     >
-                                      {parse(item.content)}
+                                      <Markdown
+                                        remarkPlugins={[remarkGfm]}
+                                        className='text-white-main'
+                                      >
+                                        {item.content}
+                                      </Markdown>
                                     </div>
                                   )}
                                 </div>
@@ -293,7 +304,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                             className='absolute right-3 lg:right-14 text-white-off shadow bg-violet-main px-2 py-1 flex items-center justify-center transition-all duration-300 ease-out hover:shadow-lg hover:bg-green-main rounded-md cursor-pointer'
                             onClick={() => {
                               setMessages((state) => [
-                                ...state,
+                                ...state!,
                                 {
                                   role: 'user',
                                   content: prompt,

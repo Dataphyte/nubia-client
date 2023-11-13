@@ -257,7 +257,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                                         'prose prose-sm max-w-none text-white-off/70 w-full  px-2 lg:px-4 py-5 rounded-lg shadow-lg prose-h1:text-xl prose-h2:text-lg text-sm  prose-h3:text-base overflow-x-auto prose_colors',
                                         item.role !== 'user'
                                           ? 'bg-gray-700'
-                                          : 'bg-white-main/30'
+                                          : 'bg-white-main/10'
                                       )}
                                     >
                                       <Markdown

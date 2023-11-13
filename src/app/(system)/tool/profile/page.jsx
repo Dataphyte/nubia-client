@@ -12,13 +12,16 @@ const Profile = () => {
   }, [user]);
 
   return (
-    <div className='w-full flex items-center flex-col min-h-[600px]'>
+    <div className='w-full flex items-center flex-col min-h-[600px] gap-6'>
       {/* -- banner */}
-      <div className='w-full h-56 bg-gradient-to-br from-violet-main to-violet-dark rounded-xl shadow-xl flex items-center flex-col justify-center gap-3'>
-        <div className='relative w-32 h-32 rounded-full flex items-center justify-center shadow-md border border-gray-400 overflow-hidden cursor-pointer duration-300 ease-out transition-all hover:shadow-xl'>
+      <div className='w-full h-56 bg-gradient-to-br from-violet-main to-violet-dark rounded-2xl shadow-xl flex items-center flex-col justify-center gap-3'>
+        <div
+          className='relative w-32 h-32 rounded-full flex items-center justify-center shadow-md border border-gray-400 overflow-hidden cursor-pointer duration-300 ease-out transition-all hover:shadow-xl group'
+          onClick={() => profileImageInputRef.current.click()}
+        >
           <input
             type='file'
-            accept='images'
+            accept='image/*'
             className='hidden'
             ref={profileImageInputRef}
           />
@@ -27,6 +30,9 @@ const Profile = () => {
             alt='user image'
             fill
           />
+          <div className='w-full h-full bg-black-bg/70 text-white-off absolute flex items-center justify-center -bottom-32 group-hover:bottom-0 transition-all duration-300 ease-out'>
+            <p className='tracking-wider text-xl'>Edit</p>
+          </div>
         </div>
 
         <h3 className='text-white-main text-xl'>
@@ -35,7 +41,9 @@ const Profile = () => {
       </div>
 
       {/* -- section 2 */}
-      <div className='flex items-center justify-cente'></div>
+      <section className='grid grid-cols-5 w-full'>
+        <div className='col-span-5 lg:col-span-2 h-44 bg-white-main shadow-lg rounded-lg'></div>
+      </section>
     </div>
   );
 };

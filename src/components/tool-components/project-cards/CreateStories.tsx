@@ -221,7 +221,7 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
                               </p>
                             ) : (
                               <button
-                                className='py-1.5 text-sm px-4 rounded-md shadow duration-300 ease-out transition-all hover:shadow-lg text-white-off bg-green-main z-20'
+                                className='py-1.5 text-sm px-4 rounded-md shadow duration-300 ease-out transition-all hover:shadow-lg text-white-off bg-green-main'
                                 onClick={() =>
                                   queryProjectData?.data.stories?.length! <= 10
                                     ? setPrompt(() => [

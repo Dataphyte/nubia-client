@@ -52,11 +52,31 @@ const SignUp = () => {
       userInfo.data &&
         setUserData({ email: data.email, password: data.password });
 
-      setsignupStatus((state) => ({ ...state, isLoading: false }));
+      setsignupStatus((state) => ({
+        ...state,
+        isLoading: false,
+        isSuccess: true,
+      }));
     } catch (error) {
       console.trace(error);
+      setsignupStatus((state) => ({
+        ...state,
+        isLoading: false,
+        erroor: true,
+      }));
     }
   };
+
+  useEffect(() => {
+    // success
+    if (signupStatus.isSuccess) {
+      alert('✅Your account has been created successfully!');
+      router.push('/auth');
+    } // Error
+    else if (signupStatus.error) {
+      alert('⚠️ Error creating account!');
+    }
+  }, [signupStatus]);
 
   return (
     <div className='flex- w-full h-screen flex items-center justify-center overflow-hidden'>

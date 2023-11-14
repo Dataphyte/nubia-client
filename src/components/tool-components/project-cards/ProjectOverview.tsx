@@ -69,7 +69,14 @@ const ProjectOverview = ({ projectDetails }: ComponentProps) => {
         </p>
         <button
           className='py-1.5 px-6 text-white-off bg-red-main rounded-md shadow transition-all duration-300 ease-out hover:shadow-lg text-sm w-max'
-          onClick={() => deleteProject()}
+          onClick={() => {
+            const toBeDeleted = prompt(
+              `Write in the name of the project "${projectDetails.name}"`
+            );
+            toBeDeleted === projectDetails.name
+              ? deleteProject()
+              : alert('Wrong project spelling');
+          }}
         >
           Delete Project
         </button>

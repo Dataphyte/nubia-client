@@ -1,20 +1,32 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import OpenAI from 'openai';
 import { projectStore } from '@/src/global/projectStore';
 import { ProjectSchema } from '@/src/typescript/project';
 import moment from 'moment';
+import { useRouter } from 'next/navigation';
+import { useDeleteProject } from '@/src/hooks/queries/useProject';
 
 type ComponentProps = {
   projectDetails: ProjectSchema;
 };
 
 const ProjectOverview = ({ projectDetails }: ComponentProps) => {
-  const [response, setResponse] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [prompt, setPrompt] = useState('');
+  const router = useRouter();
   const { projectData } = projectStore();
+  const {
+    refetch: deleteProject,
+    data: deleteData,
+    isSuccess,
+  } = useDeleteProject(projectDetails.id);
+
+  useEffect(() => {
+    if (isSuccess) {
+      alert('✅ Project deleted Successfully');
+      router.replace('/tool/projects');
+    }
+    deleteData && console.log(deleteData.data);
+  }, [deleteData]);
 
   return (
     <div className='flex flex-col gap-3 w-full h-content pb-24'>
@@ -55,7 +67,10 @@ const ProjectOverview = ({ projectDetails }: ComponentProps) => {
         <p className='absolute -top-3 bg-white-off px-2 font-bold font-inter'>
           Manage
         </p>
-        <button className='py-1.5 px-6 text-white-off bg-red-main rounded-md shadow transition-all duration-300 ease-out hover:shadow-lg text-sm w-max'>
+        <button
+          className='py-1.5 px-6 text-white-off bg-red-main rounded-md shadow transition-all duration-300 ease-out hover:shadow-lg text-sm w-max'
+          onClick={() => deleteProject()}
+        >
           Delete Project
         </button>
       </div>

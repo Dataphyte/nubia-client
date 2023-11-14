@@ -37,7 +37,7 @@ export async function PUT(request: NextRequest, { params }: RequestParams) {
   const action = 'update-single-project';
   const projectId = params.id;
   const updateData = await request.json();
-  console.log(updateData);
+  // console.log(updateData); TODO: uncomment in development
   const session = await getServerSession();
 
   if (!session?.user) throw new Error('Unauthorized');
@@ -50,6 +50,34 @@ export async function PUT(request: NextRequest, { params }: RequestParams) {
         data: updateData,
       }),
       action,
+    };
+  } catch (error) {
+    QueryResponse = {
+      message: error.message,
+      data: null,
+      action,
+    };
+  }
+
+  return NextResponse.json(QueryResponse);
+}
+
+export async function DELETE(request: NextRequest, { params }: RequestParams) {
+  let QueryResponse: LocalCustomResponse<any | null>;
+  const action = 'delete-single-project';
+  const projectId = params.id;
+
+  const session = await getServerSession();
+
+  if (!session?.user) throw new Error('unauthorized');
+
+  try {
+    QueryResponse = {
+      message: 'Single-project-deleted',
+      action,
+      data: await prisma.project.delete({
+        where: { id: projectId },
+      }),
     };
   } catch (error) {
     QueryResponse = {

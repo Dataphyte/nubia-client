@@ -110,7 +110,27 @@ export const useUpdateProjectData = (projectId: string) => {
         return queryData.data;
       } catch (error) {
         console.error(error);
-        console.log(error);
+      }
+    },
+    manualFetchOptions
+  );
+
+  return Query;
+};
+
+//=============================================>
+// ======= DELETE SINGLE PROJECT -->
+//=============================================>
+export const useDeleteProject = (projectId: string) => {
+  const Query = useQuery<LocalCustomResponse<any>>(
+    'delete-single-project',
+    async () => {
+      try {
+        const queryData = await axios.delete(`/api/projects/${projectId}`);
+
+        return queryData.data;
+      } catch (error) {
+        console.error(error);
       }
     },
     manualFetchOptions

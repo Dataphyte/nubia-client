@@ -3,9 +3,8 @@
 import { ProjectSchema } from '@/src/typescript/project';
 import { notificationStore } from '@/src/global/notificationStore';
 import { projectStore } from '@/src/global/projectStore';
-import { fileLoader } from '@/src/utils/file-loader';
 import Lottie from 'lottie-react';
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import NoDataLottie from '@/assets/animations/no-data-lottie.json';
 import { FirebaseStorage, FirebaseUserStorageRef } from '@/src/server/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';

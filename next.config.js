@@ -8,6 +8,7 @@ const nextConfig = {
       'images.unsplash.com',
       'www.tutorialsteacher.com',
       'lh3.googleusercontent.com',
+      'img.freepik.com',
     ],
   },
   webpack: (config) => {

@@ -241,7 +241,10 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
                                       user: (
                                         <div className='p-1 w-max h-max rounded-xl flex items-center justify-center  relative'>
                                           <Image
-                                            src={user.image}
+                                            src={
+                                              user.image ||
+                                              'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg'
+                                            }
                                             alt='user-image'
                                             className='rounded-xl shadow-lg'
                                             width={45}

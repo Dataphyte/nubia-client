@@ -3,17 +3,41 @@
 import React, { useEffect, useState } from 'react';
 import { userStore } from '@/src/global/userStore';
 import { useGetUser } from '@/src/hooks/queries/useUser';
+import { useRouter } from 'next/navigation';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import { useGetProjectList } from '@/src/hooks/queries/useProject';
+import ActivityLottie from '@/assets/animations/activity-lottie.json';
+import Lottie from 'lottie-react';
 
-const dataCards = [
-  { name: 'Projects', stat: '0' },
-  { name: 'Account Usage', stat: '13%' },
-  { name: 'Stories Generated', stat: '0' },
-  { name: 'Insights generated', stat: '0' },
-];
+interface DataCards {
+  name: string;
+  stat: string;
+}
 
 const Dashboard = () => {
   const { user } = userStore();
+  const router = useRouter();
+  const [dataCards, setDataCards] = useState<DataCards[]>([
+    { name: 'Projects', stat: '0' },
+    { name: 'Account Usage', stat: '13%' },
+    { name: 'Stories Generated', stat: '0' },
+    { name: 'Insights generated', stat: '0' },
+  ]);
+  const { data: projectList } = useGetProjectList();
+
+  useEffect(() => {
+    projectList &&
+      setDataCards((state) =>
+        state.map((item) => {
+          if (item.name === 'Projects')
+            return {
+              name: 'Projects',
+              stat: projectList.data.length.toString(),
+            };
+          return item;
+        })
+      );
+  }, [projectList]);
 
   return (
     <div className='w-full py-5 px-2 md:px-5 grid grid-cols-4 gap-7'>
@@ -90,7 +114,10 @@ const Dashboard = () => {
         )}
 
         <span className='w-full flex items-center gap-5'>
-          <button className='w-full border py-1 px-8 rounded transition-all duration-300 ease-out hover:shadow-lg cursor-pointer bg-violet-main text-white-off '>
+          <button
+            className='w-full border py-1 px-8 rounded transition-all duration-300 ease-out hover:shadow-lg cursor-pointer bg-violet-main text-white-off '
+            onClick={() => router.push('/tool/profile')}
+          >
             View
           </button>
           <button className='w-full border py-1 px-8 rounded transition-all duration-300 ease-out hover:shadow-lg cursor-pointer bg-green-main text-white-off '>
@@ -117,9 +144,15 @@ const Dashboard = () => {
       </dl>
 
       {/* -- section 3 */}
-      <div className='col-span-2 h-500 rounded-md shadow-md bg-white-main'></div>
-
-      <div className='col-span-2 h-500 rounded-md shadow-md bg-white-main'></div>
+      <div className='col-span-4 h-300 rounded-md shadow-md bg-white-main flex items-center justify-center flex-col'>
+        <Lottie
+          animationData={ActivityLottie}
+          autoplay
+          loop
+          style={{ width: '60%', height: '60%' }}
+        />
+        <p>Activity feed coming soon...</p>
+      </div>
     </div>
   );
 };

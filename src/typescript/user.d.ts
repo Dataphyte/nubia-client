@@ -4,12 +4,12 @@ interface UserInterface {
   email: string;
   password: string;
   email_verified: string;
-  account_type: 'individual' | 'organization';
+  account_type: UserAccountTypeEnum;
   image: string;
   organization;
   createdAt: string;
   projects: string[];
-  subscription: 'FREE' | 'STANDARD' | 'PREMIUM' | 'GOLD' | 'ENTREPRENEUR';
+  subscription: SubscriptionEnum;
   subscription_renew: 'MONTHLY' | 'YEARLY';
   preferences: any;
   organization: {
@@ -22,5 +22,14 @@ interface UserInterface {
 
 interface UserStore {
   user: UserInterface | null;
+  userUpdateData: userUpdateData | null;
+  setUserUpdateData: (data: userupdateData) => void;
   setUser: (userData: UserInterface) => void;
+}
+
+interface userUpdateData {
+  name: string;
+  old_password?: string;
+  new_password: string;
+  account_type: UserAccountTypeEnum;
 }

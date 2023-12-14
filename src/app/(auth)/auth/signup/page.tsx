@@ -12,6 +12,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import EyeIconLocal from '@/src/assets/icons/eye-icon';
 import EyeSlashIconLocal from '@/src/assets/icons/eye-slash-icon';
 import { FcGoogle } from 'react-icons/fc';
+import { MdOutlineEmail } from 'react-icons/md';
 import axios from 'axios';
 
 type NewUser = {
@@ -105,7 +106,6 @@ const SignUp = () => {
               {...register('firstname', { required: true })}
             />
           </div>
-
           {/* -- last name */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
             <input
@@ -115,7 +115,6 @@ const SignUp = () => {
               {...register('lastname', { required: true })}
             />
           </div>
-
           {/* -- email */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
             <input
@@ -126,7 +125,6 @@ const SignUp = () => {
               {...register('email', { required: true })}
             />
           </div>
-
           {/* -- password */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
             {showPassword ? (
@@ -150,7 +148,6 @@ const SignUp = () => {
               className='signup__form-input'
             />
           </div>
-
           {/* -- confirm password */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
             {showPassword ? (
@@ -173,7 +170,6 @@ const SignUp = () => {
               className='signup__form-input'
             />
           </div>
-
           {/* -- Account type */}
           <div className='w-full sm:w-[60%] relative flex items-center'>
             <label htmlFor='accountType' className='w-1/3 font-medium text-lg'>
@@ -188,7 +184,6 @@ const SignUp = () => {
               <option value='organization'>Organization</option>
             </select>
           </div>
-
           <button
             type='submit'
             disabled={signupStatus.isLoading ? true : false}
@@ -271,6 +266,15 @@ const SignUp = () => {
           >
             <FcGoogle fontSize={23} />
             Continue with Google
+          </button>
+
+          <button
+            type='button'
+            className='flex items-center justify-center gap-3 py-2 w-full sm:w-[60%] rounded-md shadow transition-300 ease-out duration-300 border hover:shadow-lg border-gray-400 md:hidden'
+            onClick={() => router.push('/auth')}
+          >
+            <MdOutlineEmail fontSize={23} />
+            Sign in with email/password
           </button>
         </form>
       </section>

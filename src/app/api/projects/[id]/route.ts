@@ -9,7 +9,7 @@ type RequestParams = { params: { id: string } };
 export async function GET(request: NextRequest, { params }: RequestParams) {
   let QueryResponse: LocalCustomResponse<any | null>;
   const action = 'get-single-project';
-  const projectId = params.id;
+  const { id: projectId } = params;
 
   const session = await getServerSession();
 

@@ -29,3 +29,19 @@ type SubscribeStore = {
   seen: boolean;
   setSeen: () => void;
 };
+
+//=============================================>
+// ======= ENUMS -->
+//=============================================>
+enum UserAccountTypeEnum {
+  INDIVIDUAL = 'individual',
+  ORGANIZATION = 'organization',
+}
+
+enum SubscriptionEnum {
+  FREE = 'FREE',
+  STANDARD = 'STANDARD',
+  PREMIUM = 'PREMIUM',
+  GOLD = 'GOLD',
+  ENTREPRENEUR = 'ENTREPRENEUR',
+}

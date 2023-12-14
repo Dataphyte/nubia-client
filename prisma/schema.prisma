@@ -52,6 +52,7 @@ model User {
   accounts           Account[]
   sessions           Session[]
   projects           Project[]               @relation()
+  communityProjects  CommunityProject[]      @relation
   preferences        User_Preference_type?
   organization       Organization_type?
   createdAt          DateTime                @default(now())
@@ -98,6 +99,21 @@ model Subscriptions {
   features    Int
 
   @@map("subscriptions")
+}
+
+model CommunityProject {
+  id          String                 @id @default(auto()) @map("_id") @db.ObjectId
+  creator     User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String                 @map("user_id") @db.ObjectId
+  name        String
+  description String
+  data        Project_data_type?
+  stories     Stories_type[]
+  template    Project_template_type?
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @default(now())
+
+  @@map("communityProjects")
 }
 
 //===============================================>

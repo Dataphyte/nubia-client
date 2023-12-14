@@ -1,7 +1,7 @@
 import {
   Cog8ToothIcon,
   UserIcon,
-  DocumentTextIcon,
+  UserGroupIcon,
   BriefcaseIcon,
   HomeIcon,
 } from '@heroicons/react/24/outline';
@@ -20,6 +20,11 @@ export const navigation = [
     icon: BriefcaseIcon,
   },
   {
+    name: 'Community Projects',
+    href: '/tool/community-projects',
+    icon: UserGroupIcon,
+  },
+  {
     name: 'Profile',
     href: '/tool/profile',
     icon: UserIcon,
@@ -33,11 +38,6 @@ export const navigation = [
   // // TODO: move these under projects
   // { name: 'Data', href: '/tool/data', icon: ChartBarIcon },
   // { name: 'Class Names', href: '/tool/class-names', icon: PaperClipIcon },
-  {
-    name: 'Settings',
-    href: '/tool/settings',
-    icon: Cog8ToothIcon,
-  },
 ];
 
 export const userNavigation: {

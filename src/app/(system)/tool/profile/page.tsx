@@ -9,14 +9,31 @@ import {
   SparklesIcon,
   UserIcon,
 } from '@heroicons/react/20/solid';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { classNames } from '@/src/utils/classnames';
+import { useUpdateUser } from '@/src/hooks/queries/useUser';
 
 const Profile = () => {
   const router = useRouter();
-  const profileImageInputRef = useRef(null);
-  const { user } = userStore();
+  const { user, setUserUpdateData, userUpdateData } = userStore();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<userUpdateData>();
+  const profileImageInputRef = useRef<HTMLInputElement>(null);
+  const { refetch: updateUser, data, error } = useUpdateUser();
+
+  const onSubmit: SubmitHandler<userUpdateData> = (data) =>
+    setUserUpdateData(data);
+
   useEffect(() => {
-    console.log(user);
-  }, [user]);
+    userUpdateData !== null && updateUser();
+  }, [userUpdateData]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div className='w-full flex items-center flex-col min-h-[600px] gap-6'>
@@ -41,7 +58,10 @@ const Profile = () => {
 
       {/* -- section 2 */}
       <section className='grid grid-cols-5 w-full mb-10 lg:px-6 gap-3 lg:-mt-20'>
-        <div className='col-span-5 lg:col-span-3 h-auto px-2 lg:px-4 py-5 bg-white-main shadow-lg rounded-lg'>
+        <form
+          className='col-span-5 lg:col-span-3 h-auto px-2 lg:px-4 py-5 bg-white-main shadow-lg rounded-lg'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className='border-b border-gray-900/10 pb-12'>
             <h2 className='text-base font-semibold leading-7 text-gray-900 font-bold'>
               Account Information
@@ -58,12 +78,16 @@ const Profile = () => {
                 <div className='mt-2'>
                   <input
                     type='text'
-                    name='name'
+                    {...register('name', { required: true, minLength: 4 })}
                     id='name'
-                    value={user?.name}
+                    placeholder={user?.name}
                     autoComplete='name'
                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                   />
+                  <p className='text-red-main text-xs mt-2'>
+                    {errors.name?.type === 'required' &&
+                      '⚠️This field is required'}
+                  </p>
                 </div>
               </div>
 
@@ -77,11 +101,11 @@ const Profile = () => {
                 <div className='mt-2'>
                   <input
                     type='email'
-                    name='email'
                     id='email'
                     value={user?.email}
+                    disabled
                     autoComplete='email'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 cursor-not-allowed border-violet-light'
                   />
                 </div>
               </div>
@@ -96,9 +120,10 @@ const Profile = () => {
                 <div className='mt-2'>
                   <select
                     id='country'
-                    name='country'
+                    {...register('account_type')}
                     autoComplete='country-name'
                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                    defaultValue={user?.account_type}
                   >
                     <option value='individual'>Individual</option>
                     <option value='organization'>Organization</option>
@@ -115,11 +140,16 @@ const Profile = () => {
                 </label>
                 <div className='mt-2'>
                   <input
-                    type='password'
-                    name='street-address'
-                    id='street-address'
-                    autoComplete='street-address'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    type={user?.password ? 'password' : 'text'}
+                    {...register('old_password')}
+                    defaultValue={
+                      user?.password ? '' : 'Please create a new password'
+                    }
+                    disabled={!user?.password}
+                    className={classNames(
+                      'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6',
+                      !user?.password && 'text-red-400 cursor-not-allowed'
+                    )}
                   />
                 </div>
               </div>
@@ -134,9 +164,9 @@ const Profile = () => {
                 <div className='mt-2'>
                   <input
                     type='password'
-                    name='street-address'
-                    id='street-address'
-                    autoComplete='street-address'
+                    {...register('new_password')}
+                    id='password'
+                    placeholder='New safe password'
                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                   />
                 </div>
@@ -148,13 +178,13 @@ const Profile = () => {
               Save changes
             </button>
           </div>
-        </div>
+        </form>
 
         <div className='col-span-5 lg:col-span-2 h-max bg-white-main shadow-lg rounded-lg flex flex-col items-center py-10 gap-4 px-2'>
           {/* -- Userv profile image   */}
           <div
             className='relative w-36 h-36 xl:w-44 xl:h-44 rounded-full flex items-center justify-center shadow-xl shadow-gray-300 border-2 border-violet-main overflow-hidden cursor-pointer duration-300 ease-out transition-all hover:shadow-3xl group lg:-mt-20 xl:-mt-24 '
-            onClick={() => profileImageInputRef.current.click()}
+            onClick={() => profileImageInputRef.current?.click()}
           >
             <input
               type='file'

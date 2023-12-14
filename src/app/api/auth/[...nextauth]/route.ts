@@ -91,4 +91,4 @@ const handler = NextAuth({
   debug: process.env.NODE_ENV === 'development',
 });
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, handler as HEAD };

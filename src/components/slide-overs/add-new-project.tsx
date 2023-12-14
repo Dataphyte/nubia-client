@@ -38,7 +38,7 @@ export default function AddNewProjectSlideOver({
 
   return (
     <Transition.Root show={state} as={Fragment}>
-      <Dialog as='div' className='relative z-10' onClose={setState}>
+      <Dialog as='div' className='relative z-50' onClose={setState}>
         <Transition.Child
           as={'div'}
           enter='ease-in-out duration-500'

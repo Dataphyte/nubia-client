@@ -4,7 +4,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import bcrypt from 'bcrypt';
 import prisma from '@/src/server/db';
-import type {NextApIRequest, NextApiResponse}  from 'next';
 
 const handler = NextAuth({
   // ======= ADAPTER -->

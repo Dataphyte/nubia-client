@@ -11,7 +11,17 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
     sessionStatus === 'authenticated' && router.replace('/tool/dashboard');
   }, [session, sessionStatus]);
 
-  return <div>{children}</div>;
+  return (
+    <div>
+      <div className='w-full py-3 flex itesm-center justify-center bg-gray-900 text-gray-50'>
+        <p className='animate-pulse'>
+          ⚠️ This is a test version of Nubia, Use random data to create
+          accounts. ⚠️
+        </p>
+      </div>
+      {children}
+    </div>
+  );
 };
 
 export default AuthLayout;

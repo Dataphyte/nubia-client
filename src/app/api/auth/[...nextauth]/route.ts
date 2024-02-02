@@ -1,9 +1,9 @@
-import NextAuth, { User } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { PrismaAdapter } from '@auth/prisma-adapter';
 import bcrypt from 'bcrypt';
 import prisma from '@/src/server/db';
+import NextAuth, { User } from 'next-auth';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import GoogleProvider from 'next-auth/providers/google';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 const handler = NextAuth({
   // ======= ADAPTER -->

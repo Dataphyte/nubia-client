@@ -258,11 +258,12 @@ const SignUp = () => {
           <button
             type='button'
             className='flex items-center justify-center gap-3 py-2 w-full sm:w-[60%] rounded-md shadow transition-300 ease-out duration-300 border hover:shadow-lg border-gray-400'
-            onClick={() =>
+            onClick={(e) => {
+              e.preventDefault();
               signIn('google', {
                 callbackUrl: '/tool/dashboard',
-              })
-            }
+              });
+            }}
           >
             <FcGoogle fontSize={23} />
             Continue with Google

@@ -33,7 +33,7 @@ function ParallaxText({ children, baseVelocity = 100 }) {
 
   const directionFactor = useRef(1);
   useAnimationFrame((t, delta) => {
-    let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
+    let moveBy = directionFactor.current * baseVelocity * (delta / 3000);
 
     /**
      * This is what changes the direction of the scroll once we
@@ -73,11 +73,11 @@ function ParallaxText({ children, baseVelocity = 100 }) {
 export default function App() {
   return (
     <section className='w-full flex items-center justify-center py-10 flex-col text-text-light'>
-      <ParallaxText baseVelocity={-5}>&nbsp;JOURNALISM-AI &bull;</ParallaxText>
-      <ParallaxText baseVelocity={5}> &nbsp;MEET NUBIA -</ParallaxText>
-      <ParallaxText baseVelocity={-5}>
-        &nbsp;DATAPHYTE NIGERIA &bull;
+      {/* <ParallaxText baseVelocity={-5}>&nbsp; &bull;</ParallaxText> */}
+      <ParallaxText baseVelocity={5}>
+        &nbsp;Data Journalism powered by AI -
       </ParallaxText>
+      <ParallaxText baseVelocity={-5}>&nbsp;DATAPHYTE &bull;</ParallaxText>
     </section>
   );
 }

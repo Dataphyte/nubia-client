@@ -71,10 +71,9 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
     data &&
       (await openai.chat.completions
         .create({
-          model: 'gpt-4-1106-preview',
+          model: 'gpt-4o',
           messages: messages!,
           temperature: 0,
-          max_tokens: 2048,
         })
         .then((res) => {
           console.log(res);

@@ -71,7 +71,7 @@ export default function DataInsight({ open, setOpen, data }: PageProps) {
     data &&
       (await openai.chat.completions
         .create({
-          model: 'gpt-4o',
+          model: 'gpt-4-1106-preview',
           messages: messages!,
           temperature: 0,
         })

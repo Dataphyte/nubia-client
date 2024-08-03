@@ -59,7 +59,7 @@ const CreateStories = ({ projectDetails }: ComponentProps) => {
     prompt &&
       (await openai.chat.completions
         .create({
-          model: 'gpt-4o',
+          model: 'gpt-4-1106-preview',
           messages: prompt,
           temperature: 0,
           max_tokens: 2048,
